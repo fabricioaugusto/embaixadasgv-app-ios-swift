@@ -27,13 +27,11 @@ class LoginVC: UIViewController {
     
     private func addFields() {
         
-        let emailField = buildTextField(placeholder: "E-mail")
+        let emailField = buildTextField(placeholder: "E-mail", icon: String.fontAwesomeIcon(name: .envelope))
         mSVContainerLogin.insertArrangedSubview(emailField, at: 0)
-        //emailField.layoutMargins.top = 48.0
         
-        let passwordField = buildTextField(placeholder: "Senha")
+        let passwordField = buildTextField(placeholder: "Senha", icon: String.fontAwesomeIcon(name: .lock))
         mSVContainerLogin.insertArrangedSubview(passwordField, at: 1)
-        passwordField.layoutMargins.top = 120.0
         
         mSVContainerLogin.alignment = .fill
         mSVContainerLogin.distribution = .fill
@@ -41,7 +39,7 @@ class LoginVC: UIViewController {
         mSVContainerLogin.spacing = 16
     }
     
-    private func buildTextField(placeholder: String) -> SkyFloatingLabelTextField {
+    private func buildTextField(placeholder: String, icon: String) -> SkyFloatingLabelTextField {
         
         let textField = SkyFloatingLabelTextFieldWithIcon(frame: CGRect(x: 10, y: 10, width: 120, height: 64))
         textField.placeholder = placeholder
@@ -52,8 +50,8 @@ class LoginVC: UIViewController {
         textField.selectedTitleColor = AppColors.colorAccent
         textField.selectedLineColor = AppColors.colorAccent
         textField.lineHeight = 1.0 // bottom line height in points
-        textField.iconFont = UIFont.fontAwesome(ofSize: 12, style: .solid)
-        textField.iconText = String.fontAwesomeIcon(name: .envelope)
+        textField.iconFont = UIFont.fontAwesome(ofSize: 14, style: .solid)
+        textField.iconText = icon
         textField.selectedLineHeight = 2.0
         
         return textField
