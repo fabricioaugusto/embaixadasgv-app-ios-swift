@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>25255760166-0rc5m51kq52vc701si4bhajrfkkafvc0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.25255760166-0rc5m51kq52vc701si4bhajrfkkafvc0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>25255760166-3h8pnlrjuupi1o97v6r8a7t1f51v57dv.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCFozKI6ig-2WxfgHbgzdh6LDU3J61RGgQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>25255760166</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.agenciaballoon.EGVApp</string>
+	<key>PROJECT_ID</key>
+	<string>egv-app-f851e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>egv-app-f851e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:25255760166:ios:e2e7e2abf4daa303f7b1e7</string>
+	<key>DATABASE_URL</key>
+	<string>https://egv-app-f851e.firebaseio.com</string>
+</dict>
+</plist>

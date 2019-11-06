@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,13 @@
 		041265F823722A27009C5E2B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 041265F623722A27009C5E2B /* Main.storyboard */; };
 		041265FA23722A2A009C5E2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 041265F923722A2A009C5E2B /* Assets.xcassets */; };
 		041265FD23722A2A009C5E2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 041265FB23722A2A009C5E2B /* LaunchScreen.storyboard */; };
+		0412660D23724D6F009C5E2B /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412660C23724D6F009C5E2B /* LoginVC.swift */; };
+		041266102372554E009C5E2B /* colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412660F2372554E009C5E2B /* colors.swift */; };
+		0412661C237271A7009C5E2B /* fa-solid-900.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04126619237271A5009C5E2B /* fa-solid-900.ttf */; };
+		0412661D237271A7009C5E2B /* fa-brands-400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0412661A237271A6009C5E2B /* fa-brands-400.ttf */; };
+		0412661E237271A7009C5E2B /* fa-regular-400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0412661B237271A6009C5E2B /* fa-regular-400.ttf */; };
+		0412662023727341009C5E2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0412661F23727340009C5E2B /* GoogleService-Info.plist */; };
+		FCB068BBBA7E67593342406C /* Pods_EGVApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC413B72F73A5B3E8CD6D27 /* Pods_EGVApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +29,15 @@
 		041265F923722A2A009C5E2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		041265FC23722A2A009C5E2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		041265FE23722A2A009C5E2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0412660C23724D6F009C5E2B /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginVC.swift; path = Auth/LoginVC.swift; sourceTree = "<group>"; };
+		0412660F2372554E009C5E2B /* colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colors.swift; sourceTree = "<group>"; };
+		04126619237271A5009C5E2B /* fa-solid-900.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-solid-900.ttf"; sourceTree = "<group>"; };
+		0412661A237271A6009C5E2B /* fa-brands-400.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-brands-400.ttf"; sourceTree = "<group>"; };
+		0412661B237271A6009C5E2B /* fa-regular-400.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-regular-400.ttf"; sourceTree = "<group>"; };
+		0412661F23727340009C5E2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		38D16E11099B0B09AD830A39 /* Pods-EGVApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EGVApp.debug.xcconfig"; path = "Target Support Files/Pods-EGVApp/Pods-EGVApp.debug.xcconfig"; sourceTree = "<group>"; };
+		72A69298F46A22B7E769D283 /* Pods-EGVApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EGVApp.release.xcconfig"; path = "Target Support Files/Pods-EGVApp/Pods-EGVApp.release.xcconfig"; sourceTree = "<group>"; };
+		DBC413B72F73A5B3E8CD6D27 /* Pods_EGVApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EGVApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCB068BBBA7E67593342406C /* Pods_EGVApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +57,8 @@
 			children = (
 				041265F123722A27009C5E2B /* EGVApp */,
 				041265F023722A27009C5E2B /* Products */,
+				DFA4A777BBB33BD132D044D6 /* Pods */,
+				8E480A55DCA2311FD0474FB2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +73,101 @@
 		041265F123722A27009C5E2B /* EGVApp */ = {
 			isa = PBXGroup;
 			children = (
+				0412660823724C91009C5E2B /* API */,
+				0412660723724C82009C5E2B /* View */,
+				0412660623724C71009C5E2B /* Model */,
+				0412660523724C62009C5E2B /* Controller */,
+				0412660923724C9A009C5E2B /* Util */,
 				041265F223722A27009C5E2B /* AppDelegate.swift */,
 				041265F423722A27009C5E2B /* ViewController.swift */,
-				041265F623722A27009C5E2B /* Main.storyboard */,
 				041265F923722A2A009C5E2B /* Assets.xcassets */,
-				041265FB23722A2A009C5E2B /* LaunchScreen.storyboard */,
 				041265FE23722A2A009C5E2B /* Info.plist */,
+				0412661F23727340009C5E2B /* GoogleService-Info.plist */,
 			);
 			path = EGVApp;
+			sourceTree = "<group>";
+		};
+		0412660523724C62009C5E2B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0412660E23724D77009C5E2B /* New Group */,
+				0412660C23724D6F009C5E2B /* LoginVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0412660623724C71009C5E2B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0412660723724C82009C5E2B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0412661123726EA0009C5E2B /* assets */,
+				041265F623722A27009C5E2B /* Main.storyboard */,
+				041265FB23722A2A009C5E2B /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0412660823724C91009C5E2B /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		0412660923724C9A009C5E2B /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				0412660F2372554E009C5E2B /* colors.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		0412660E23724D77009C5E2B /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		0412661123726EA0009C5E2B /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				0412661223726EA7009C5E2B /* fonts */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		0412661223726EA7009C5E2B /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0412661A237271A6009C5E2B /* fa-brands-400.ttf */,
+				0412661B237271A6009C5E2B /* fa-regular-400.ttf */,
+				04126619237271A5009C5E2B /* fa-solid-900.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		8E480A55DCA2311FD0474FB2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DBC413B72F73A5B3E8CD6D27 /* Pods_EGVApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DFA4A777BBB33BD132D044D6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				38D16E11099B0B09AD830A39 /* Pods-EGVApp.debug.xcconfig */,
+				72A69298F46A22B7E769D283 /* Pods-EGVApp.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +177,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0412660123722A2A009C5E2B /* Build configuration list for PBXNativeTarget "EGVApp" */;
 			buildPhases = (
+				CC26F4346D80CA85A197545A /* [CP] Check Pods Manifest.lock */,
 				041265EB23722A27009C5E2B /* Sources */,
 				041265EC23722A27009C5E2B /* Frameworks */,
 				041265ED23722A27009C5E2B /* Resources */,
+				7FC93E8C824E79CBF82112F1 /* [CP] Embed Pods Frameworks */,
+				FF114A9C194F4BBE935B2B3A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -123,12 +232,75 @@
 			buildActionMask = 2147483647;
 			files = (
 				041265FD23722A2A009C5E2B /* LaunchScreen.storyboard in Resources */,
+				0412661C237271A7009C5E2B /* fa-solid-900.ttf in Resources */,
 				041265FA23722A2A009C5E2B /* Assets.xcassets in Resources */,
+				0412661E237271A7009C5E2B /* fa-regular-400.ttf in Resources */,
 				041265F823722A27009C5E2B /* Main.storyboard in Resources */,
+				0412661D237271A7009C5E2B /* fa-brands-400.ttf in Resources */,
+				0412662023727341009C5E2B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7FC93E8C824E79CBF82112F1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EGVApp/Pods-EGVApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EGVApp/Pods-EGVApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EGVApp/Pods-EGVApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC26F4346D80CA85A197545A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EGVApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF114A9C194F4BBE935B2B3A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EGVApp/Pods-EGVApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EGVApp/Pods-EGVApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EGVApp/Pods-EGVApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		041265EB23722A27009C5E2B /* Sources */ = {
@@ -136,7 +308,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				041265F523722A27009C5E2B /* ViewController.swift in Sources */,
+				041266102372554E009C5E2B /* colors.swift in Sources */,
 				041265F323722A27009C5E2B /* AppDelegate.swift in Sources */,
+				0412660D23724D6F009C5E2B /* LoginVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +454,7 @@
 		};
 		0412660223722A2A009C5E2B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38D16E11099B0B09AD830A39 /* Pods-EGVApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -298,6 +473,7 @@
 		};
 		0412660323722A2A009C5E2B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72A69298F46A22B7E769D283 /* Pods-EGVApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
