@@ -23,7 +23,7 @@ target 'EGVApp' do
   pod 'ENMBadgedBarButtonItem'
   pod 'FontAwesome.swift'
   pod 'Firebase/Core'
-  pod 'Firebase/Database'
+  pod 'Firebase/Firestore'
   pod 'Firebase/Messaging'
   pod 'Firebase/Analytics'
   pod 'YPImagePicker'

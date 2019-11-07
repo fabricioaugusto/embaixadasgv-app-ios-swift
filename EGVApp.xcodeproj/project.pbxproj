@@ -18,6 +18,11 @@
 		0412661D237271A7009C5E2B /* fa-brands-400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0412661A237271A6009C5E2B /* fa-brands-400.ttf */; };
 		0412661E237271A7009C5E2B /* fa-regular-400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0412661B237271A6009C5E2B /* fa-regular-400.ttf */; };
 		0412662023727341009C5E2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0412661F23727340009C5E2B /* GoogleService-Info.plist */; };
+		7F08B03A23730B710013EE62 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03923730B710013EE62 /* RegisterVC.swift */; };
+		7F08B03C23730BA90013EE62 /* CheckAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03B23730BA90013EE62 /* CheckAuthVC.swift */; };
+		7F08B03E23730BD40013EE62 /* SubmitInviteCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03D23730BD40013EE62 /* SubmitInviteCodeVC.swift */; };
+		7F08B04023730C2A0013EE62 /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03F23730C2A0013EE62 /* ResetPasswordVC.swift */; };
+		7F24CCBB2373102D00D8E74C /* MyFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F24CCBA2373102D00D8E74C /* MyFirebase.swift */; };
 		FCB068BBBA7E67593342406C /* Pods_EGVApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC413B72F73A5B3E8CD6D27 /* Pods_EGVApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,7 +34,7 @@
 		041265F923722A2A009C5E2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		041265FC23722A2A009C5E2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		041265FE23722A2A009C5E2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0412660C23724D6F009C5E2B /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginVC.swift; path = Auth/LoginVC.swift; sourceTree = "<group>"; };
+		0412660C23724D6F009C5E2B /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		0412660F2372554E009C5E2B /* colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colors.swift; sourceTree = "<group>"; };
 		04126619237271A5009C5E2B /* fa-solid-900.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-solid-900.ttf"; sourceTree = "<group>"; };
 		0412661A237271A6009C5E2B /* fa-brands-400.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-brands-400.ttf"; sourceTree = "<group>"; };
@@ -37,6 +42,11 @@
 		0412661F23727340009C5E2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		38D16E11099B0B09AD830A39 /* Pods-EGVApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EGVApp.debug.xcconfig"; path = "Target Support Files/Pods-EGVApp/Pods-EGVApp.debug.xcconfig"; sourceTree = "<group>"; };
 		72A69298F46A22B7E769D283 /* Pods-EGVApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EGVApp.release.xcconfig"; path = "Target Support Files/Pods-EGVApp/Pods-EGVApp.release.xcconfig"; sourceTree = "<group>"; };
+		7F08B03923730B710013EE62 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
+		7F08B03B23730BA90013EE62 /* CheckAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAuthVC.swift; sourceTree = "<group>"; };
+		7F08B03D23730BD40013EE62 /* SubmitInviteCodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitInviteCodeVC.swift; sourceTree = "<group>"; };
+		7F08B03F23730C2A0013EE62 /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
+		7F24CCBA2373102D00D8E74C /* MyFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyFirebase.swift; path = "EGVApp/Controller/New Group/MyFirebase.swift"; sourceTree = SOURCE_ROOT; };
 		DBC413B72F73A5B3E8CD6D27 /* Pods_EGVApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EGVApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -90,8 +100,7 @@
 		0412660523724C62009C5E2B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0412660E23724D77009C5E2B /* New Group */,
-				0412660C23724D6F009C5E2B /* LoginVC.swift */,
+				0412660E23724D77009C5E2B /* Auth */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -116,6 +125,7 @@
 		0412660823724C91009C5E2B /* API */ = {
 			isa = PBXGroup;
 			children = (
+				7F24CCBA2373102D00D8E74C /* MyFirebase.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -128,10 +138,16 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
-		0412660E23724D77009C5E2B /* New Group */ = {
+		0412660E23724D77009C5E2B /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				0412660C23724D6F009C5E2B /* LoginVC.swift */,
+				7F08B03923730B710013EE62 /* RegisterVC.swift */,
+				7F08B03B23730BA90013EE62 /* CheckAuthVC.swift */,
+				7F08B03D23730BD40013EE62 /* SubmitInviteCodeVC.swift */,
+				7F08B03F23730C2A0013EE62 /* ResetPasswordVC.swift */,
 			);
+			name = Auth;
 			path = "New Group";
 			sourceTree = "<group>";
 		};
@@ -310,7 +326,12 @@
 				041265F523722A27009C5E2B /* ViewController.swift in Sources */,
 				041266102372554E009C5E2B /* colors.swift in Sources */,
 				041265F323722A27009C5E2B /* AppDelegate.swift in Sources */,
+				7F08B03C23730BA90013EE62 /* CheckAuthVC.swift in Sources */,
+				7F08B03E23730BD40013EE62 /* SubmitInviteCodeVC.swift in Sources */,
 				0412660D23724D6F009C5E2B /* LoginVC.swift in Sources */,
+				7F24CCBB2373102D00D8E74C /* MyFirebase.swift in Sources */,
+				7F08B03A23730B710013EE62 /* RegisterVC.swift in Sources */,
+				7F08B04023730C2A0013EE62 /* ResetPasswordVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
