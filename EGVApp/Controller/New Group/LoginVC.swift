@@ -9,17 +9,23 @@
 import UIKit
 import SkyFloatingLabelTextField
 import FontAwesome_swift
+import Firebase
 
 class LoginVC: UIViewController {
 
-    
     @IBOutlet weak var mSVContainerLogin: UIStackView!
     @IBOutlet weak var mLoginBT: UIButton!
     @IBOutlet weak var mBtForgotPass: UIButton!
     
+    private var mAuth: Auth?
+    private var mEmailField: SkyFloatingLabelTextField?
+    private var mPassField: SkyFloatingLabelTextField?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.mAuth = MyFirebase.sharedInstance.auth()
+        
         addFields()
         // Do any additional setup after loading the view.
     }
@@ -27,11 +33,11 @@ class LoginVC: UIViewController {
     
     private func addFields() {
         
-        let emailField = buildTextField(placeholder: "E-mail", icon: String.fontAwesomeIcon(name: .envelope))
-        mSVContainerLogin.insertArrangedSubview(emailField, at: 0)
+        self.mEmailField = buildTextField(placeholder: "E-mail", icon: String.fontAwesomeIcon(name: .envelope))
+        mSVContainerLogin.insertArrangedSubview(self.mEmailField!, at: 0)
         
-        let passwordField = buildTextField(placeholder: "Senha", icon: String.fontAwesomeIcon(name: .lock))
-        mSVContainerLogin.insertArrangedSubview(passwordField, at: 1)
+        self.mPassField = buildTextField(placeholder: "Senha", icon: String.fontAwesomeIcon(name: .lock))
+        mSVContainerLogin.insertArrangedSubview(self.mPassField!, at: 1)
         
         mSVContainerLogin.alignment = .fill
         mSVContainerLogin.distribution = .fill
@@ -57,7 +63,17 @@ class LoginVC: UIViewController {
         return textField
     }
     
-
+    private func loginUser() {
+    
+        let email: String = self.mEmailField!.text ?? ""
+        let pass: String =  self.mPassField!.text ?? ""
+    
+        self.mAuth?.signIn(withEmail: email, password: pass) { [weak self] user, error in
+            guard self != nil else { return }
+                print("logado!")
+                // ...
+        }
+    }
     /*
     // MARK: - Navigation
 

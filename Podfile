@@ -24,6 +24,8 @@ target 'EGVApp' do
   pod 'FontAwesome.swift'
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
   pod 'Firebase/Messaging'
   pod 'Firebase/Analytics'
   pod 'YPImagePicker'
