@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MenuItem: Codable {
+struct MenuItem {
     let item_name: String
     let type: String
     let item_icon: Int

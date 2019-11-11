@@ -9,23 +9,23 @@
 import Foundation
 import Firebase
 
-class Post: Codable {
-    var id: String
-    var type: String
-    var date: Timestamp?
-    var schedule: String?
-    var text: String?
-    var picture: String?
-    var picture_file_name: String?
-    var title: String?
-    var post_likes: Int
-    var post_comments: Int
-    var like_verified: Bool
-    var liked: Bool
-    var list_likes: [PostLike]?
-    var user_id: String
-    var user_verified: Bool
-    var likes_ids: [String]?
-    var embassy_id: String?
-    var user: User
+struct Post {
+    let id: String
+    let type: String
+    //let date: Timestamp?
+    let schedule: String?
+    let text: String?
+    let picture: String?
+    let picture_file_name: String?
+    let title: String?
+    let post_likes: Int
+    let post_comments: Int
+    let like_verified: Bool
+    let liked: Bool
+    let list_likes: [PostLike]?
+    let user_id: String
+    let user_verified: Bool
+    let likes_ids: [String]?
+    let embassy_id: String?
+    let user: User
 }

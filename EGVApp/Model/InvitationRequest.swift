@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InvitationRequest: Codable {
+struct InvitationRequest {
     let id: String
     let leaderId: String
     let leaderName: String

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Committee: Codable {
+struct Committee {
     let id: String
     let name: String
 }

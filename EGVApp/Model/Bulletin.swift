@@ -9,10 +9,10 @@
 import Foundation
 import Firebase
 
-class Bulletin: Codable {
+struct Bulletin {
     let id: String
     let type: String
-    let date: Timestamp?
+    let date: String?
     let title: String?
     let resume: String?
     let text: String?

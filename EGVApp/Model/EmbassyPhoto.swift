@@ -9,9 +9,9 @@
 import Foundation
 import Firebase
 
-class EmbassyPhoto: Codable {
+struct EmbassyPhoto {
     let id: String
-    let date: Timestamp?
+    //let date: Timestamp?
     let text: String?
     let picture: String
     let picture_file_name: String?

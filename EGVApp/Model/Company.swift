@@ -8,6 +8,6 @@
 
 import Foundation
 
-class Company: Codable {
+struct Company {
     
 }

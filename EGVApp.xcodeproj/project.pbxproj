@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0406853C23786021000EF764 /* RootUsersTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0406853B23786021000EF764 /* RootUsersTableVC.swift */; };
+		0406853E23786072000EF764 /* RootDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0406853D23786072000EF764 /* RootDashboardVC.swift */; };
+		040685412378E66D000EF764 /* RootPostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040685402378E66D000EF764 /* RootPostsVC.swift */; };
+		040685432378E999000EF764 /* AllPostsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040685422378E999000EF764 /* AllPostsTableVC.swift */; };
+		040685452378E9C6000EF764 /* EmbassyPostsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040685442378E9C6000EF764 /* EmbassyPostsTableVC.swift */; };
+		040685472378EA07000EF764 /* HighlightsPostsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040685462378EA06000EF764 /* HighlightsPostsTableVC.swift */; };
 		041265F323722A27009C5E2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041265F223722A27009C5E2B /* AppDelegate.swift */; };
 		041265F523722A27009C5E2B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041265F423722A27009C5E2B /* ViewController.swift */; };
 		041265F823722A27009C5E2B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 041265F623722A27009C5E2B /* Main.storyboard */; };
@@ -18,6 +24,12 @@
 		0412661D237271A7009C5E2B /* fa-brands-400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0412661A237271A6009C5E2B /* fa-brands-400.ttf */; };
 		0412661E237271A7009C5E2B /* fa-regular-400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0412661B237271A6009C5E2B /* fa-regular-400.ttf */; };
 		0412662023727341009C5E2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0412661F23727340009C5E2B /* GoogleService-Info.plist */; };
+		0471A83023772BE900CF2B9C /* RootAgendaTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A82F23772BE900CF2B9C /* RootAgendaTableVC.swift */; };
+		0471A83223772C2F00CF2B9C /* RootPostsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A83123772C2F00CF2B9C /* RootPostsTableVC.swift */; };
+		0471A83423772C5B00CF2B9C /* RootMenuTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A83323772C5B00CF2B9C /* RootMenuTableVC.swift */; };
+		0471A83723772CBA00CF2B9C /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A83623772CBA00CF2B9C /* UserCell.swift */; };
+		0471A839237730F900CF2B9C /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A838237730F900CF2B9C /* EventCell.swift */; };
+		0471A83B2377313D00CF2B9C /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A83A2377313D00CF2B9C /* PostCell.swift */; };
 		047452652373B600002FDDE7 /* AppMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047452642373B600002FDDE7 /* AppMessage.swift */; };
 		047452672373B704002FDDE7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047452662373B704002FDDE7 /* User.swift */; };
 		047452692373B952002FDDE7 /* Embassy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047452682373B952002FDDE7 /* Embassy.swift */; };
@@ -45,6 +57,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0406853B23786021000EF764 /* RootUsersTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootUsersTableVC.swift; sourceTree = "<group>"; };
+		0406853D23786072000EF764 /* RootDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootDashboardVC.swift; sourceTree = "<group>"; };
+		040685402378E66D000EF764 /* RootPostsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPostsVC.swift; sourceTree = "<group>"; };
+		040685422378E999000EF764 /* AllPostsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPostsTableVC.swift; sourceTree = "<group>"; };
+		040685442378E9C6000EF764 /* EmbassyPostsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyPostsTableVC.swift; sourceTree = "<group>"; };
+		040685462378EA06000EF764 /* HighlightsPostsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightsPostsTableVC.swift; sourceTree = "<group>"; };
 		041265EF23722A27009C5E2B /* EGVApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EGVApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		041265F223722A27009C5E2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		041265F423722A27009C5E2B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +76,12 @@
 		0412661A237271A6009C5E2B /* fa-brands-400.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-brands-400.ttf"; sourceTree = "<group>"; };
 		0412661B237271A6009C5E2B /* fa-regular-400.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-regular-400.ttf"; sourceTree = "<group>"; };
 		0412661F23727340009C5E2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0471A82F23772BE900CF2B9C /* RootAgendaTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAgendaTableVC.swift; sourceTree = "<group>"; };
+		0471A83123772C2F00CF2B9C /* RootPostsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPostsTableVC.swift; sourceTree = "<group>"; };
+		0471A83323772C5B00CF2B9C /* RootMenuTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootMenuTableVC.swift; sourceTree = "<group>"; };
+		0471A83623772CBA00CF2B9C /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		0471A838237730F900CF2B9C /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
+		0471A83A2377313D00CF2B9C /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		047452642373B600002FDDE7 /* AppMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMessage.swift; sourceTree = "<group>"; };
 		047452662373B704002FDDE7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		047452682373B952002FDDE7 /* Embassy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Embassy.swift; sourceTree = "<group>"; };
@@ -120,9 +144,10 @@
 			isa = PBXGroup;
 			children = (
 				0412660823724C91009C5E2B /* API */,
-				0412660723724C82009C5E2B /* View */,
 				0412660623724C71009C5E2B /* Model */,
+				0412660723724C82009C5E2B /* View */,
 				0412660523724C62009C5E2B /* Controller */,
+				0471A83523772C7100CF2B9C /* Cell */,
 				0412660923724C9A009C5E2B /* Util */,
 				041265F223722A27009C5E2B /* AppDelegate.swift */,
 				041265F423722A27009C5E2B /* ViewController.swift */,
@@ -136,6 +161,7 @@
 		0412660523724C62009C5E2B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				0471A82C23772B8100CF2B9C /* Tabs */,
 				0412660E23724D77009C5E2B /* Auth */,
 			);
 			path = Controller;
@@ -221,6 +247,32 @@
 				04126619237271A5009C5E2B /* fa-solid-900.ttf */,
 			);
 			path = fonts;
+			sourceTree = "<group>";
+		};
+		0471A82C23772B8100CF2B9C /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				0406853B23786021000EF764 /* RootUsersTableVC.swift */,
+				0471A82F23772BE900CF2B9C /* RootAgendaTableVC.swift */,
+				0471A83123772C2F00CF2B9C /* RootPostsTableVC.swift */,
+				0471A83323772C5B00CF2B9C /* RootMenuTableVC.swift */,
+				0406853D23786072000EF764 /* RootDashboardVC.swift */,
+				040685402378E66D000EF764 /* RootPostsVC.swift */,
+				040685422378E999000EF764 /* AllPostsTableVC.swift */,
+				040685442378E9C6000EF764 /* EmbassyPostsTableVC.swift */,
+				040685462378EA06000EF764 /* HighlightsPostsTableVC.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		0471A83523772C7100CF2B9C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0471A83623772CBA00CF2B9C /* UserCell.swift */,
+				0471A838237730F900CF2B9C /* EventCell.swift */,
+				0471A83A2377313D00CF2B9C /* PostCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		8E480A55DCA2311FD0474FB2 /* Frameworks */ = {
@@ -380,19 +432,31 @@
 				0474527F2373BC85002FDDE7 /* MenuItem.swift in Sources */,
 				041265F523722A27009C5E2B /* ViewController.swift in Sources */,
 				0474526B2373BB44002FDDE7 /* Bulletin.swift in Sources */,
+				040685432378E999000EF764 /* AllPostsTableVC.swift in Sources */,
 				041266102372554E009C5E2B /* colors.swift in Sources */,
 				041265F323722A27009C5E2B /* AppDelegate.swift in Sources */,
 				047452792373BC23002FDDE7 /* Event.swift in Sources */,
+				0406853C23786021000EF764 /* RootUsersTableVC.swift in Sources */,
 				047452652373B600002FDDE7 /* AppMessage.swift in Sources */,
 				7F08B03C23730BA90013EE62 /* CheckAuthVC.swift in Sources */,
 				047452772373BC0D002FDDE7 /* Enrollment.swift in Sources */,
+				0471A83423772C5B00CF2B9C /* RootMenuTableVC.swift in Sources */,
 				047452832373BCAD002FDDE7 /* Post.swift in Sources */,
 				7F08B03E23730BD40013EE62 /* SubmitInviteCodeVC.swift in Sources */,
 				0412660D23724D6F009C5E2B /* LoginVC.swift in Sources */,
+				0406853E23786072000EF764 /* RootDashboardVC.swift in Sources */,
+				0471A83B2377313D00CF2B9C /* PostCell.swift in Sources */,
+				0471A83023772BE900CF2B9C /* RootAgendaTableVC.swift in Sources */,
 				0474526F2373BB7E002FDDE7 /* Company.swift in Sources */,
+				040685412378E66D000EF764 /* RootPostsVC.swift in Sources */,
+				040685452378E9C6000EF764 /* EmbassyPostsTableVC.swift in Sources */,
 				047452852373BCD8002FDDE7 /* PostComment.swift in Sources */,
+				040685472378EA07000EF764 /* HighlightsPostsTableVC.swift in Sources */,
 				0474527B2373BC39002FDDE7 /* InvitationRequest.swift in Sources */,
 				047452752373BBED002FDDE7 /* EmbassySponsor.swift in Sources */,
+				0471A83723772CBA00CF2B9C /* UserCell.swift in Sources */,
+				0471A83223772C2F00CF2B9C /* RootPostsTableVC.swift in Sources */,
+				0471A839237730F900CF2B9C /* EventCell.swift in Sources */,
 				7F24CCBB2373102D00D8E74C /* MyFirebase.swift in Sources */,
 				047452692373B952002FDDE7 /* Embassy.swift in Sources */,
 				7F08B03A23730B710013EE62 /* RegisterVC.swift in Sources */,
