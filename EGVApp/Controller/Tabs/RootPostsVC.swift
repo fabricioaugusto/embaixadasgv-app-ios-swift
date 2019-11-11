@@ -23,7 +23,6 @@ class RootPostsVC: ButtonBarPagerTabStripViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true);
-        navigationController?.navigationBar.isHidden = true // for navigation bar hide
     }
     
     override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {

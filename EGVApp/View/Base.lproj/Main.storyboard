@@ -603,7 +603,7 @@
             </objects>
             <point key="canvasLocation" x="-123" y="2863"/>
         </scene>
-        <!--Root PostsVC-->
+        <!--Publicações-->
         <scene sceneID="600-yw-bTd">
             <objects>
                 <viewController id="8tH-Xb-hXk" customClass="RootPostsVC" customModule="EGVApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -641,7 +641,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ecM-6C-cGT"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Q0h-LX-khO"/>
+                    <navigationItem key="navigationItem" title="Publicações" id="Q0h-LX-khO"/>
                     <connections>
                         <outlet property="buttonBarView" destination="ozy-eO-31p" id="QRT-HQ-U3c"/>
                         <outlet property="containerView" destination="0tW-Sd-hSu" id="zh7-h0-xt3"/>
@@ -651,7 +651,7 @@
             </objects>
             <point key="canvasLocation" x="-123.18840579710145" y="2162.9464285714284"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Próximos eventos-->
         <scene sceneID="WwO-UK-rnZ">
             <objects>
                 <tableViewController id="qBR-Ke-qQy" sceneMemberID="viewController">
@@ -674,13 +674,13 @@
                             <outlet property="delegate" destination="qBR-Ke-qQy" id="VvS-Hf-a58"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Vdw-hQ-5Io"/>
+                    <navigationItem key="navigationItem" title="Próximos eventos" id="Vdw-hQ-5Io"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r4y-na-gPk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="848" y="2164"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Menu-->
         <scene sceneID="la6-lY-f9k">
             <objects>
                 <tableViewController id="3Y8-HS-8HT" sceneMemberID="viewController">
@@ -703,7 +703,7 @@
                             <outlet property="delegate" destination="3Y8-HS-8HT" id="kwB-vR-Gay"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="rDH-LK-2d1"/>
+                    <navigationItem key="navigationItem" title="Menu" id="rDH-LK-2d1"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DKf-Ha-b0q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
