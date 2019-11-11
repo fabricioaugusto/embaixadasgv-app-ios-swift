@@ -13,4 +13,19 @@ struct PostLike {
     let post_id: String
     let user_id: String
     let user: User
+    
+    init?(dictionary: [String: Any]) {
+        
+        guard let id = dictionary["id"] as? String else { return nil }
+        guard let post_id = dictionary["post_id"] as? String else { return nil }
+        guard let user_id = dictionary["user_id"] as? String else { return nil }
+        guard let user = dictionary["user"] as? User else { return nil }
+        
+        self.id = id
+        self.post_id = post_id
+        self.user_id = user_id
+        self.user = user
+    }
 }
+
+

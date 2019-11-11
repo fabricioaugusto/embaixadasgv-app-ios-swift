@@ -8,9 +8,21 @@
 
 import UIKit
 import XLPagerTabStrip
+import FirebaseFirestore
+
+
 
 class AllPostsTableVC: UITableViewController, IndicatorInfoProvider {
 
+    private var mDatabase: Firestore?
+    private var mLastDocument: DocumentSnapshot?
+    private var mLastDocumentRequested: DocumentSnapshot?
+    private var mPostList: [Post] = []
+    private var mListLikes: [PostLike] = []
+    private var isPostsOver: Bool = false
+    private var mAdapterPosition: Int = 0
+    private var mUser: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,27 +36,105 @@ class AllPostsTableVC: UITableViewController, IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "Geral")
     }
+    
+    private func getAllPosts() {
+
+     self.mDatabase?.collection(MyFirebaseCollections.POSTS)
+         .whereField("user_verified", isEqualTo: false)
+         .order(by: "date", descending: true)
+         .limit(to: 10)
+         .getDocuments(completion: { (querySnapshot, err) in
+             if let err = err {
+                 print("Error getting documents: \(err)")
+             } else {
+                 
+                 if let query = querySnapshot {
+                     
+                     if query.documents.count > 0 {
+                         self.mLastDocument = query.documents[query.count - 1]
+                         
+                         for document in querySnapshot!.documents {
+                             let post = Post(dictionary: document.data())
+                             if(post != nil) {
+                                 self.mPostList.append(post!)
+                             }
+                         }
+                     } else {
+                         self.isPostsOver = true
+                     }
+                     
+                     DispatchQueue.main.async {
+                         self.tableView.reloadData()
+                     }
+                 }
+                 
+             }
+         })
+     
+     
+    }
+
+    private func loadMore() {
+
+         
+    }
+
+    private func getPostLikes() {
+
+         isPostsOver = false
+         mListLikes.removeAll()
+     
+         self.mDatabase?.collection(MyFirebaseCollections.POSTS)
+             .whereField("user_id", isEqualTo: mUser?.id ?? "")
+             .getDocuments(completion: { (querySnapshot, err) in
+             if let err = err {
+                 print("Error getting documents: \(err)")
+             } else {
+                 
+                 if let query = querySnapshot {
+                     
+                     if query.documents.count > 0 {
+                         self.mLastDocument = query.documents[query.count - 1]
+                         
+                         for document in querySnapshot!.documents {
+                             let postLike = PostLike(dictionary: document.data())
+                             if(postLike != nil) {
+                                 self.mListLikes.append(postLike!)
+                             }
+                         }
+                         self.getAllPosts()
+                     }
+                 }
+                 
+             }
+         })
+    }
+    
     // MARK: - Table view data source
 
+    
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return mPostList.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "allPostsCell", for: indexPath) as! PostCell
+
+        let post = mPostList[indexPath.row]
+        cell.prepare(with: post)
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

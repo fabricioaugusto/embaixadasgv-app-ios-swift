@@ -29,5 +29,4 @@ target 'EGVApp' do
   pod 'Firebase/Messaging'
   pod 'Firebase/Analytics'
   pod 'CodableFirebase'
-  pod 'YPImagePicker'
 end

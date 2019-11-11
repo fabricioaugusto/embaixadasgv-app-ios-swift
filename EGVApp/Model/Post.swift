@@ -28,4 +28,28 @@ struct Post {
     let likes_ids: [String]?
     let embassy_id: String?
     let user: User
+    
+    init?(dictionary: [String: Any]) {
+        
+        guard let id = dictionary["id"] as? String else { return nil }
+        guard let type = dictionary["type"] as? String else { return nil }
+        
+        self.id = id
+        self.type = type
+        self.schedule = dictionary["schedule"] as? String
+        self.text = dictionary["text"] as? String
+        self.picture = dictionary["picture"] as? String
+        self.picture_file_name = dictionary["picture_file_name"] as? String
+        self.title = dictionary["title"] as? String
+        self.post_likes = dictionary["post_likes"] as? Int ?? 0
+        self.post_comments = dictionary["post_comments"] as? Int ?? 0
+        self.like_verified = dictionary["like_verified"] as? Bool ?? false
+        self.liked = dictionary["liked"] as? Bool ?? false
+        self.list_likes = dictionary["list_likes"] as? [PostLike]
+        self.user_id = dictionary["user_id"] as! String
+        self.user_verified = dictionary["user_verified"] as? Bool ?? false
+        self.likes_ids = dictionary["likes_ids"] as? [String]
+        self.embassy_id = dictionary["embassy_id"] as? String
+        self.user = dictionary["user"] as! User
+    }
 }

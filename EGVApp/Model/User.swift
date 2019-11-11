@@ -36,7 +36,7 @@ struct User {
     let last_device_version: String?
     let last_app_update: String?
     let fcm_token: String?
-    let register_number: Int?
+    let register_number: Int
     let topic_subscribed: Bool
     let leader: Bool
     let manager: Bool

@@ -16,7 +16,6 @@
 		041265F323722A27009C5E2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041265F223722A27009C5E2B /* AppDelegate.swift */; };
 		041265F523722A27009C5E2B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041265F423722A27009C5E2B /* ViewController.swift */; };
 		041265F823722A27009C5E2B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 041265F623722A27009C5E2B /* Main.storyboard */; };
-		041265FA23722A2A009C5E2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 041265F923722A2A009C5E2B /* Assets.xcassets */; };
 		041265FD23722A2A009C5E2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 041265FB23722A2A009C5E2B /* LaunchScreen.storyboard */; };
 		0412660D23724D6F009C5E2B /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412660C23724D6F009C5E2B /* LoginVC.swift */; };
 		041266102372554E009C5E2B /* colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412660F2372554E009C5E2B /* colors.swift */; };
@@ -53,6 +52,8 @@
 		7F08B03E23730BD40013EE62 /* SubmitInviteCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03D23730BD40013EE62 /* SubmitInviteCodeVC.swift */; };
 		7F08B04023730C2A0013EE62 /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03F23730C2A0013EE62 /* ResetPasswordVC.swift */; };
 		7F24CCBB2373102D00D8E74C /* MyFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F24CCBA2373102D00D8E74C /* MyFirebase.swift */; };
+		7F25D0CE2379C27E00EEA08C /* PostPictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F25D0CD2379C27E00EEA08C /* PostPictureCell.swift */; };
+		7F25D0D42379EFFD00EEA08C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F25D0D32379EFF200EEA08C /* Assets.xcassets */; };
 		FCB068BBBA7E67593342406C /* Pods_EGVApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC413B72F73A5B3E8CD6D27 /* Pods_EGVApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,7 +68,6 @@
 		041265F223722A27009C5E2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		041265F423722A27009C5E2B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		041265F723722A27009C5E2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		041265F923722A2A009C5E2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		041265FC23722A2A009C5E2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		041265FE23722A2A009C5E2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0412660C23724D6F009C5E2B /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -107,6 +107,8 @@
 		7F08B03D23730BD40013EE62 /* SubmitInviteCodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitInviteCodeVC.swift; sourceTree = "<group>"; };
 		7F08B03F23730C2A0013EE62 /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
 		7F24CCBA2373102D00D8E74C /* MyFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyFirebase.swift; path = "EGVApp/Controller/New Group/MyFirebase.swift"; sourceTree = SOURCE_ROOT; };
+		7F25D0CD2379C27E00EEA08C /* PostPictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPictureCell.swift; sourceTree = "<group>"; };
+		7F25D0D32379EFF200EEA08C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBC413B72F73A5B3E8CD6D27 /* Pods_EGVApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EGVApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -143,6 +145,7 @@
 		041265F123722A27009C5E2B /* EGVApp */ = {
 			isa = PBXGroup;
 			children = (
+				7F25D0D32379EFF200EEA08C /* Assets.xcassets */,
 				0412660823724C91009C5E2B /* API */,
 				0412660623724C71009C5E2B /* Model */,
 				0412660723724C82009C5E2B /* View */,
@@ -151,7 +154,6 @@
 				0412660923724C9A009C5E2B /* Util */,
 				041265F223722A27009C5E2B /* AppDelegate.swift */,
 				041265F423722A27009C5E2B /* ViewController.swift */,
-				041265F923722A2A009C5E2B /* Assets.xcassets */,
 				041265FE23722A2A009C5E2B /* Info.plist */,
 				0412661F23727340009C5E2B /* GoogleService-Info.plist */,
 			);
@@ -271,6 +273,7 @@
 				0471A83623772CBA00CF2B9C /* UserCell.swift */,
 				0471A838237730F900CF2B9C /* EventCell.swift */,
 				0471A83A2377313D00CF2B9C /* PostCell.swift */,
+				7F25D0CD2379C27E00EEA08C /* PostPictureCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -355,9 +358,9 @@
 			files = (
 				041265FD23722A2A009C5E2B /* LaunchScreen.storyboard in Resources */,
 				0412661C237271A7009C5E2B /* fa-solid-900.ttf in Resources */,
-				041265FA23722A2A009C5E2B /* Assets.xcassets in Resources */,
 				0412661E237271A7009C5E2B /* fa-regular-400.ttf in Resources */,
 				041265F823722A27009C5E2B /* Main.storyboard in Resources */,
+				7F25D0D42379EFFD00EEA08C /* Assets.xcassets in Resources */,
 				0412661D237271A7009C5E2B /* fa-brands-400.ttf in Resources */,
 				0412662023727341009C5E2B /* GoogleService-Info.plist in Resources */,
 			);
@@ -439,6 +442,7 @@
 				0406853C23786021000EF764 /* RootUsersTableVC.swift in Sources */,
 				047452652373B600002FDDE7 /* AppMessage.swift in Sources */,
 				7F08B03C23730BA90013EE62 /* CheckAuthVC.swift in Sources */,
+				7F25D0CE2379C27E00EEA08C /* PostPictureCell.swift in Sources */,
 				047452772373BC0D002FDDE7 /* Enrollment.swift in Sources */,
 				0471A83423772C5B00CF2B9C /* RootMenuTableVC.swift in Sources */,
 				047452832373BCAD002FDDE7 /* Post.swift in Sources */,
