@@ -9,11 +9,11 @@
 import Foundation
 import Firebase
 
-class Enrollment: Codable {
+struct Enrollment {
     let id: String
     let event_id: String
     let user_id: String
-    let event_date: Timestamp?
+    //let event_date: Timestamp?
     let event: Event
     let waiting_list: Bool
     let user: User

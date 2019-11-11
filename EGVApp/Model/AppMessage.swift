@@ -8,6 +8,6 @@
 
 import Foundation
 
-class AppMessage: Codable {
+struct AppMessage {
     
 }

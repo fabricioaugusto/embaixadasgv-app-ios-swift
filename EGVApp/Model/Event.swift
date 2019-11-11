@@ -9,12 +9,12 @@
 import Foundation
 import Firebase
 
-class Event: Codable {
+struct Event {
     let id: String
     let theme: String
     let tag: String
     let description: String
-    let date: Timestamp?
+    //let date: Timestamp?
     let schedule: String?
     let place: String?
     let cover_img: String?

@@ -9,7 +9,12 @@
 import UIKit
 import SkyFloatingLabelTextField
 import FontAwesome_swift
-import Firebase
+import FirebaseAuth
+
+
+protocol LoginDelegate: class {
+    func checkLogin(uid: String)
+}
 
 class LoginVC: UIViewController {
 
@@ -21,13 +26,18 @@ class LoginVC: UIViewController {
     private var mEmailField: SkyFloatingLabelTextField?
     private var mPassField: SkyFloatingLabelTextField?
     
+    weak var delegate: LoginDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.mAuth = MyFirebase.sharedInstance.auth()
-        
         addFields()
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func loginPress(_ sender: UIButton) {
+        loginUser()
     }
     
     
@@ -38,6 +48,9 @@ class LoginVC: UIViewController {
         
         self.mPassField = buildTextField(placeholder: "Senha", icon: String.fontAwesomeIcon(name: .lock))
         mSVContainerLogin.insertArrangedSubview(self.mPassField!, at: 1)
+        
+        mEmailField?.delegate = self
+        mPassField?.delegate = self
         
         mSVContainerLogin.alignment = .fill
         mSVContainerLogin.distribution = .fill
@@ -70,7 +83,10 @@ class LoginVC: UIViewController {
     
         self.mAuth?.signIn(withEmail: email, password: pass) { [weak self] user, error in
             guard self != nil else { return }
-                print("logado!")
+            if let credential = user {
+                self?.delegate?.checkLogin(uid: credential.user.uid)
+                self?.dismiss(animated: true, completion: nil)
+            }
                 // ...
         }
     }
@@ -84,4 +100,11 @@ class LoginVC: UIViewController {
     }
     */
 
+}
+
+extension LoginVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 }

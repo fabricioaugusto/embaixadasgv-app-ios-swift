@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-class Notification: Codable {
+struct Notification {
     let id: String
     let receiver_id: String
     let title: String
@@ -26,5 +26,5 @@ class Notification: Codable {
     let company_id: String?
     let event_id: String?
     let sender_id: String?
-    let created_at: Timestamp?
+    //let created_at: Timestamp?
 }

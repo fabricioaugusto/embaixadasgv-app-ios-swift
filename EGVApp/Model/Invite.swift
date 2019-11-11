@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Invite: Codable {
+struct Invite {
     let id: String
     let name_sender: String
     let email_sender: String

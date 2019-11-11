@@ -8,9 +8,9 @@
 
 import Foundation
 
-class PostLike: Codable {
-    var id: String
-    var post_id: String
-    var user_id: String
-    var user: User
+struct PostLike {
+    let id: String
+    let post_id: String
+    let user_id: String
+    let user: User
 }

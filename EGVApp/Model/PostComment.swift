@@ -9,11 +9,11 @@
 import Foundation
 import Firebase
 
-class PostComment: Codable {
-    var id: String
-    var post_id: String
-    var user_id: String
-    var text: String
-    var date: Timestamp?
-    var user: User
+struct PostComment {
+    let id: String
+    let post_id: String
+    let user_id: String
+    let text: String
+    //let date: Timestamp?
+    let user: User
 }

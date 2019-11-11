@@ -8,10 +8,10 @@
 
 import Foundation
 
-class EmbassySponsor: Codable {
+struct EmbassySponsor {
     let id: String
     let name: String
     let email: String
     let user_id: String
-    let user: User
+    let user: User?
 }
