@@ -10,9 +10,13 @@ import UIKit
 
 class RootMenuTableVC: UITableViewController {
 
+    private var mUser: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -24,7 +28,23 @@ class RootMenuTableVC: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        
+        if let user = mUser {
+            if(user.leader) {
+                return 4
+            }
+            
+            if(user.sponsor) {
+                return 5
+            }
+            
+            if(user.manager) {
+                return 6
+            }
+        }
+        
+        
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

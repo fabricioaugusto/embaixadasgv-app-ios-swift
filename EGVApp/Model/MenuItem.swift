@@ -6,10 +6,10 @@
 //  Copyright © 2019 Fabrício Augusto. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct MenuItem {
     let item_name: String
     let type: String
-    let item_icon: Int
+    let item_icon: UIImage?
 }

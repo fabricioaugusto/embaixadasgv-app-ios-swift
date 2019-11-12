@@ -7,11 +7,23 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
 
 class RootAgendaTableVC: UITableViewController {
 
+    private var mDatabase: Firestore?
+    private var mLastDocument: DocumentSnapshot?
+    private var mLastDocumentRequested: DocumentSnapshot?
+    private var mEventList: [Event] = []
+    private var isPostsOver: Bool = false
+    private var mAdapterPosition: Int = 0
+    private var mUser: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mDatabase = MyFirebase.sharedInstance.database()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -19,28 +31,65 @@ class RootAgendaTableVC: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    private func getEventList() {
+        
+        let today = Date()
+        let timestamp = Timestamp(date: today)
+        
+         print("egvapplog", "veio pra cá")
+         self.mDatabase?.collection(MyFirebaseCollections.POSTS)
+            .whereField("date", isGreaterThan: timestamp)
+            .order(by: "date", descending: false)
+            .limit(to: 10)
+            .getDocuments(completion: { (querySnapshot, err) in
+                 if let err = err {
+                     print("Error getting documents: \(err)")
+                 } else {
+                     if let query = querySnapshot {
+                         if query.documents.count > 0 {
+                             self.mLastDocument = query.documents[query.count - 1]
+                             for document in querySnapshot!.documents {
+                                 let event = Event(dictionary: document.data())
+                                 if(event != nil) {
+                                     self.mEventList.append(event!)
+                                 }
+                             }
+                         } else {
+                             self.isPostsOver = true
+                         }
+                         
+                         DispatchQueue.main.async {
+                             self.tableView.reloadData()
+                         }
+                     }
+                     
+                 }
+             })
+    }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return mEventList.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! EventCell
 
-        // Configure the cell...
+        let event = mEventList[indexPath.row]
+        cell.prepare(with: event)
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

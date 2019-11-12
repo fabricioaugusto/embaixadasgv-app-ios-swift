@@ -87,8 +87,6 @@ class HighlightsPostsTableVC: UITableViewController, IndicatorInfoProvider {
                     
                 }
             })
-        
-        
        }
 
        private func loadMore() {
