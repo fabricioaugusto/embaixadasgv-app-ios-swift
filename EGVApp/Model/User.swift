@@ -97,3 +97,38 @@ struct User {
     }
     
 }
+
+struct BasicUser {
+    let id: String
+    let name: String
+    let profile_img: String?
+    let embassy_id: String?
+    let occupation: String?
+    let username: String?
+    let leader: Bool
+    let manager: Bool
+    let sponsor: Bool
+    let committee_leader: Bool
+    let verified: Bool
+    
+    
+    init?(dictionary: [String: Any]) {
+        
+        guard let id = dictionary["id"] as? String else { return nil }
+        guard let name = dictionary["name"] as? String else { return nil }
+        
+        self.id = id
+        self.name = name
+        self.occupation = dictionary["occupation"] as? String
+        self.profile_img = dictionary["profile_img"] as? String
+        self.verified = dictionary["verified"] as? Bool ?? false
+        self.leader = dictionary["leader"] as? Bool ?? false
+        self.manager = dictionary["manager"] as? Bool ?? false
+        self.sponsor = dictionary["sponsor"] as? Bool ?? false
+        self.committee_leader = dictionary["committee_leader"] as? Bool ?? false
+        self.username = dictionary["username"] as? String
+        self.embassy_id = dictionary["embassy_id"] as? String
+    }
+    
+}
+

@@ -25,12 +25,26 @@ class HighlightsPostsTableVC: UITableViewController, IndicatorInfoProvider {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        mDatabase = MyFirebase.sharedInstance.database()
+        
+        self.getHighlightListPosts()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        // delegate and data source
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        // Along with auto layout, these are the keys for enabling variable cell height
+        self.tableView.estimatedRowHeight = 44.0
+        self.tableView.rowHeight = UITableView.automaticDimension
     }
 
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
@@ -40,18 +54,19 @@ class HighlightsPostsTableVC: UITableViewController, IndicatorInfoProvider {
     
     
     private func getHighlightListPosts() {
-
+        print("egvapplog", "veio pra cá")
         self.mDatabase?.collection(MyFirebaseCollections.POSTS)
             .whereField("user_verified", isEqualTo: true)
             .order(by: "date", descending: true)
             .limit(to: 10)
             .getDocuments(completion: { (querySnapshot, err) in
                 if let err = err {
+                    print("egvapplog", "deu erro")
                     print("Error getting documents: \(err)")
                 } else {
-                    
+                    print("egvapplog", "deu certo ")
                     if let query = querySnapshot {
-                        
+                        print("egvapplog", "achou a query")
                         if query.documents.count > 0 {
                             self.mLastDocument = query.documents[query.count - 1]
                             
@@ -126,12 +141,22 @@ class HighlightsPostsTableVC: UITableViewController, IndicatorInfoProvider {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "highlightPostsCell", for: indexPath) as! PostCell
-
+        
         let post = mPostList[indexPath.row]
-        cell.prepare(with: post)
-
-        return cell
+                
+        if(post.type == "post") {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "postPictureCell", for: indexPath) as! PostCell
+            cell.prepare(with: post)
+            return cell
+        } else if(post.type == "thought") {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "thoughtCell", for: indexPath) as! ThoughtCell
+            cell.prepare(with: post)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "articleCell", for: indexPath) as! ArticleCell
+            cell.prepare(with: post)
+            return cell
+        }
 
     }
     

@@ -27,7 +27,7 @@ struct Post {
     let user_verified: Bool
     let likes_ids: [String]?
     let embassy_id: String?
-    let user: User
+    let user: BasicUser
     
     init?(dictionary: [String: Any]) {
         
@@ -50,6 +50,6 @@ struct Post {
         self.user_verified = dictionary["user_verified"] as? Bool ?? false
         self.likes_ids = dictionary["likes_ids"] as? [String]
         self.embassy_id = dictionary["embassy_id"] as? String
-        self.user = dictionary["user"] as! User
+        self.user =  BasicUser(dictionary: dictionary["user"] as! [String : Any])!
     }
 }

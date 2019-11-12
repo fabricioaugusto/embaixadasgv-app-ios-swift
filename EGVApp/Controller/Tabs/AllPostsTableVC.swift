@@ -25,7 +25,8 @@ class AllPostsTableVC: UITableViewController, IndicatorInfoProvider {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        mDatabase = MyFirebase.sharedInstance.database()
+        getAllPosts()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -127,12 +128,21 @@ class AllPostsTableVC: UITableViewController, IndicatorInfoProvider {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "allPostsCell", for: indexPath) as! PostCell
-
         let post = mPostList[indexPath.row]
-        cell.prepare(with: post)
-
-        return cell
+        
+        if(post.type == "post") {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "postPictureCell", for: indexPath) as! PostCell
+            cell.prepare(with: post)
+            return cell
+        } else if(post.type == "thought") {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "thoughtCell", for: indexPath) as! ThoughtCell
+            cell.prepare(with: post)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "articleCell", for: indexPath) as! ArticleCell
+            cell.prepare(with: post)
+            return cell
+        }
     }
     
 

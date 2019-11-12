@@ -1,23 +1,22 @@
 //
-//  PostCell.swift
+//  ArticleCell.swift
 //  EGVApp
 //
-//  Created by Fabricio on 09/11/19.
+//  Created by Fabricio on 11/11/19.
 //  Copyright © 2019 Fabrício Augusto. All rights reserved.
 //
 
 import UIKit
-import Kingfisher
 
-class PostCell: UITableViewCell {
-
+class ArticleCell: UITableViewCell {
+    
     @IBOutlet weak var imgUserProfile: UIImageView!
     @IBOutlet weak var mLbUserName: UILabel!
     @IBOutlet weak var mLbPostDate: UILabel!
     @IBOutlet weak var mImgPost: UIImageView!
     @IBOutlet weak var mLbPostDescription: UILabel!
     @IBOutlet weak var baseView: UIView!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -31,10 +30,7 @@ class PostCell: UITableViewCell {
     
     func prepare(with post: Post) {
         let user: BasicUser = post.user
-
-        if post.type == "picture" {
-            
-        }
+        
         
         mLbUserName.text = post.user.name
         mLbPostDate.text = "10/11/2019"
@@ -100,23 +96,6 @@ class PostCell: UITableViewCell {
             return CGSize(width: width, height: height)
         } else {
             return nil
-        }
-    }
-
-}
-
-extension String {
-    
-    var htmlToAttributedString: NSMutableAttributedString? {
-        guard let data = data(using: .utf8) else { return nil }
-        do {
-            return try NSMutableAttributedString(data: data,
-                                                 options: [.documentType: NSMutableAttributedString.DocumentType.html,
-                                                           .characterEncoding: String.Encoding.utf8.rawValue],
-                                                 documentAttributes: nil)
-        } catch let error as NSError {
-            print(error.localizedDescription)
-            return  nil
         }
     }
     
