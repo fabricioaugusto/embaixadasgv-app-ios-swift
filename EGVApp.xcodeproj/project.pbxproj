@@ -59,6 +59,10 @@
 		7F25D0D42379EFFD00EEA08C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F25D0D32379EFF200EEA08C /* Assets.xcassets */; };
 		7F351047237AE8C0004FC2D3 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F351046237AE8C0004FC2D3 /* EventCell.swift */; };
 		7F351049237AF55B004FC2D3 /* menu_items.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F351048237AF55B004FC2D3 /* menu_items.swift */; };
+		7F947001237C330500742CF0 /* SingleUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F947000237C330500742CF0 /* SingleUserVC.swift */; };
+		7F947003237C336900742CF0 /* SingleEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F947002237C336900742CF0 /* SingleEventVC.swift */; };
+		7F947005237C33A700742CF0 /* SingleEmbassyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F947004237C33A700742CF0 /* SingleEmbassyVC.swift */; };
+		7F947007237C33EF00742CF0 /* SinglePostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F947006237C33EF00742CF0 /* SinglePostVC.swift */; };
 		FCB068BBBA7E67593342406C /* Pods_EGVApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC413B72F73A5B3E8CD6D27 /* Pods_EGVApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -119,6 +123,10 @@
 		7F25D0D32379EFF200EEA08C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F351046237AE8C0004FC2D3 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		7F351048237AF55B004FC2D3 /* menu_items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menu_items.swift; sourceTree = "<group>"; };
+		7F947000237C330500742CF0 /* SingleUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleUserVC.swift; sourceTree = "<group>"; };
+		7F947002237C336900742CF0 /* SingleEventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleEventVC.swift; sourceTree = "<group>"; };
+		7F947004237C33A700742CF0 /* SingleEmbassyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleEmbassyVC.swift; sourceTree = "<group>"; };
+		7F947006237C33EF00742CF0 /* SinglePostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePostVC.swift; sourceTree = "<group>"; };
 		DBC413B72F73A5B3E8CD6D27 /* Pods_EGVApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EGVApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -173,6 +181,7 @@
 		0412660523724C62009C5E2B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7F946FFF237C32BA00742CF0 /* Single */,
 				0471A82C23772B8100CF2B9C /* Tabs */,
 				0412660E23724D77009C5E2B /* Auth */,
 			);
@@ -291,6 +300,18 @@
 				0406C3C9237B9A9F0012BF50 /* UserProfileCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		7F946FFF237C32BA00742CF0 /* Single */ = {
+			isa = PBXGroup;
+			children = (
+				7F947000237C330500742CF0 /* SingleUserVC.swift */,
+				7F947002237C336900742CF0 /* SingleEventVC.swift */,
+				7F947004237C33A700742CF0 /* SingleEmbassyVC.swift */,
+				7F947006237C33EF00742CF0 /* SinglePostVC.swift */,
+			);
+			name = Single;
+			path = "New Group1";
 			sourceTree = "<group>";
 		};
 		8E480A55DCA2311FD0474FB2 /* Frameworks */ = {
@@ -447,6 +468,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F947003237C336900742CF0 /* SingleEventVC.swift in Sources */,
 				0474527F2373BC85002FDDE7 /* MenuItem.swift in Sources */,
 				041265F523722A27009C5E2B /* ViewController.swift in Sources */,
 				0474526B2373BB44002FDDE7 /* Bulletin.swift in Sources */,
@@ -464,7 +486,9 @@
 				047452832373BCAD002FDDE7 /* Post.swift in Sources */,
 				7F08B03E23730BD40013EE62 /* SubmitInviteCodeVC.swift in Sources */,
 				0406C3CA237B9A9F0012BF50 /* UserProfileCell.swift in Sources */,
+				7F947001237C330500742CF0 /* SingleUserVC.swift in Sources */,
 				0412660D23724D6F009C5E2B /* LoginVC.swift in Sources */,
+				7F947007237C33EF00742CF0 /* SinglePostVC.swift in Sources */,
 				0406853E23786072000EF764 /* RootDashboardVC.swift in Sources */,
 				0471A83B2377313D00CF2B9C /* PostCell.swift in Sources */,
 				0471A83023772BE900CF2B9C /* RootAgendaTableVC.swift in Sources */,
@@ -492,6 +516,7 @@
 				047452732373BBB4002FDDE7 /* EmbassyPhoto.swift in Sources */,
 				047452672373B704002FDDE7 /* User.swift in Sources */,
 				047452712373BB99002FDDE7 /* DateStr.swift in Sources */,
+				7F947005237C33A700742CF0 /* SingleEmbassyVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
