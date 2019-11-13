@@ -24,7 +24,7 @@ class RootAgendaTableVC: UITableViewController {
         super.viewDidLoad()
         
         mDatabase = MyFirebase.sharedInstance.database()
-
+        getEventList()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -38,7 +38,7 @@ class RootAgendaTableVC: UITableViewController {
         let timestamp = Timestamp(date: today)
         
          print("egvapplog", "veio pra cá")
-         self.mDatabase?.collection(MyFirebaseCollections.POSTS)
+         self.mDatabase?.collection(MyFirebaseCollections.EVENTS)
             .whereField("date", isGreaterThan: timestamp)
             .order(by: "date", descending: false)
             .limit(to: 10)
@@ -82,7 +82,7 @@ class RootAgendaTableVC: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! EventCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as! EventCell
 
         let event = mEventList[indexPath.row]
         cell.prepare(with: event)

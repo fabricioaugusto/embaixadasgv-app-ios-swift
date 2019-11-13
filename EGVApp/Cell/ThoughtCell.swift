@@ -32,7 +32,7 @@ class ThoughtCell: UITableViewCell {
         mLbUserName.text = post.user.name
         mLbPostDate.text = "10/11/2019"
         mLbPostDescription.attributedText = post.text?.htmlToAttributedString
-        
+        mLbPostDescription.font = .systemFont(ofSize: 24.0)
         
         imgUserProfile.kf.indicatorType = .activity
         if let profile_img = user.profile_img {

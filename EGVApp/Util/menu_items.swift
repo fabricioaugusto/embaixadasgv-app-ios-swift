@@ -42,13 +42,11 @@ class MenuItens {
     func getAccountSection() -> [MenuItem] {
 
             var list: [MenuItem] = []
-            list.append(MenuItem(item_name: profile, type: "profile", item_icon: nil))
-            list.append(MenuItem(item_name: "Configurações de Conta", type: "section", item_icon: nil))
-            list.append(MenuItem(item_name: editProfile, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: changeProfilePhoto, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: changePassword, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: editSocialNetwork, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: myEmbassy, type: "item", item_icon: UIImage(named: "")))
+            list.append(MenuItem(item_name: editProfile, type: "item", item_icon: UIImage(named: "icon_menu_user")))
+            list.append(MenuItem(item_name: changeProfilePhoto, type: "item", item_icon: UIImage(named: "icon_menu_change_photo")))
+            list.append(MenuItem(item_name: changePassword, type: "item", item_icon: UIImage(named: "icon_menu_change_pass")))
+            list.append(MenuItem(item_name: editSocialNetwork, type: "item", item_icon: UIImage(named: "icon_menu_change_social")))
+            list.append(MenuItem(item_name: myEmbassy, type: "item", item_icon: UIImage(named: "icon_menu_egv")))
 
             return list
     }
@@ -56,8 +54,7 @@ class MenuItens {
     func getPrivacySection() -> [MenuItem] {
 
             var list: [MenuItem] = []
-            list.append(MenuItem(item_name: "Privacidade", type: "section", item_icon: nil))
-            list.append(MenuItem(item_name: setPrivacy, type: "item", item_icon: UIImage(named: "")))
+            list.append(MenuItem(item_name: setPrivacy, type: "item", item_icon: UIImage(named: "icon_menu_security")))
 
             return list
     }
@@ -65,12 +62,11 @@ class MenuItens {
     func getLeaderSection() -> [MenuItem] {
 
             var list: [MenuItem] = []
-            list.append(MenuItem(item_name: "Líderes", type: "section", item_icon: nil))
-            list.append(MenuItem(item_name: newEvent, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: sentEmbassyPhotos, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: sendInvites, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: invitationRequests, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: editEmbassy, type: "item", item_icon: UIImage(named: "")))
+            list.append(MenuItem(item_name: newEvent, type: "item", item_icon: UIImage(named: "icon_menu_calendar")))
+            list.append(MenuItem(item_name: sentEmbassyPhotos, type: "item", item_icon: UIImage(named: "icon_menu_manager_photos")))
+            list.append(MenuItem(item_name: sendInvites, type: "item", item_icon: UIImage(named: "icon_menu_invite_member")))
+            list.append(MenuItem(item_name: invitationRequests, type: "item", item_icon: UIImage(named: "icon_menu_approve_user")))
+            list.append(MenuItem(item_name: editEmbassy, type: "item", item_icon: UIImage(named: "icon_menu_edit_embassy")))
 
             return list
         }
@@ -78,8 +74,7 @@ class MenuItens {
     func getSponsorSection() -> [MenuItem] {
 
             var list: [MenuItem] = []
-            list.append(MenuItem(item_name: "Padrinhos", type: "section", item_icon: nil))
-            list.append(MenuItem(item_name: affiliatedEmbassies, type: "item", item_icon: UIImage(named: "")))
+            list.append(MenuItem(item_name: affiliatedEmbassies, type: "item", item_icon: UIImage(named: "icon_menu_sponsor_embassies")))
 
             return list
     }
@@ -87,12 +82,11 @@ class MenuItens {
     func getManagerSection() -> [MenuItem] {
 
             var list: [MenuItem] = []
-            list.append(MenuItem(item_name: "Gestores", type: "section", item_icon: nil))
-            list.append(MenuItem(item_name: embassyForApproval, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: manageSponsors, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: createBulletin, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: sendNotifications, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: report, type: "item", item_icon: UIImage(named: "")))
+            list.append(MenuItem(item_name: embassyForApproval, type: "item", item_icon: UIImage(named: "icon_menu_approve_embassies")))
+            list.append(MenuItem(item_name: manageSponsors, type: "item", item_icon: UIImage(named: "icon_menu_manage_sponsors")))
+            list.append(MenuItem(item_name: createBulletin, type: "item", item_icon: UIImage(named: "icon_menu_manager_bulletin")))
+            list.append(MenuItem(item_name: sendNotifications, type: "item", item_icon: UIImage(named: "icon_menu_add_notification")))
+            list.append(MenuItem(item_name: report, type: "item", item_icon: UIImage(named: "icon_menu_report")))
 
             return list
     }
@@ -100,13 +94,12 @@ class MenuItens {
     func getMoreOptionsSection() -> [MenuItem] {
 
             var list: [MenuItem] = []
-            list.append(MenuItem(item_name: "Mais Opções", type: "section", item_icon: nil))
-            list.append(MenuItem(item_name: embassyList, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: aboutEmbassy, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: suggestFeatures, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: rateApp, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: sendUsMessage, type: "item", item_icon: UIImage(named: "")))
-            list.append(MenuItem(item_name: logout, type: "item", item_icon: UIImage(named: "")))
+            list.append(MenuItem(item_name: embassyList, type: "item", item_icon: UIImage(named: "icon_menu_embasy_list")))
+            list.append(MenuItem(item_name: aboutEmbassy, type: "item", item_icon: UIImage(named: "icon_menu_about_embassies")))
+            list.append(MenuItem(item_name: suggestFeatures, type: "item", item_icon: UIImage(named: "icon_menu_lamp")))
+            list.append(MenuItem(item_name: rateApp, type: "item", item_icon: UIImage(named: "icon_menu_star")))
+            list.append(MenuItem(item_name: sendUsMessage, type: "item", item_icon: UIImage(named: "icon_menu_message")))
+            list.append(MenuItem(item_name: logout, type: "item", item_icon: UIImage(named: "icon_menu_logout")))
 
             return list
     }

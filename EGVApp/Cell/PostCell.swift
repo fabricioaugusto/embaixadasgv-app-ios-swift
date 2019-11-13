@@ -39,7 +39,7 @@ class PostCell: UITableViewCell {
         mLbUserName.text = post.user.name
         mLbPostDate.text = "10/11/2019"
         mLbPostDescription.attributedText = post.text?.htmlToAttributedString
-        
+        mLbPostDescription.font = .systemFont(ofSize: 16.0)
         
         imgUserProfile.kf.indicatorType = .activity
         if let profile_img = user.profile_img {
@@ -110,6 +110,8 @@ extension String {
     var htmlToAttributedString: NSMutableAttributedString? {
         guard let data = data(using: .utf8) else { return nil }
         do {
+            let myAttribute = [ NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 18.0)! ]
+            
             return try NSMutableAttributedString(data: data,
                                                  options: [.documentType: NSMutableAttributedString.DocumentType.html,
                                                            .characterEncoding: String.Encoding.utf8.rawValue],

@@ -64,8 +64,8 @@ struct Event {
         self.address = dictionary["address"] as? String
         self.lat = dictionary["address"] as? Double
         self.long = dictionary["long"] as? Double
-        self.moderator_1 = BasicUser(dictionary: dictionary["moderator_1"] as! [String : Any])!
-        self.moderator_2 = BasicUser(dictionary: dictionary["moderator_2"] as! [String : Any])!
+        self.moderator_1 = (dictionary["moderator_1"] == nil) ? BasicUser(dictionary: dictionary["moderator_1"] as! [String : Any]) : nil
+        self.moderator_2 = (dictionary["moderator_2"] == nil) ? BasicUser(dictionary: dictionary["moderator_2"] as! [String : Any]) : nil
         self.embassy_id = dictionary["embassy_id"] as? String
         self.embassy = BasicEmbassy(dictionary: dictionary["embassy"] as! [String : Any])!
     }
