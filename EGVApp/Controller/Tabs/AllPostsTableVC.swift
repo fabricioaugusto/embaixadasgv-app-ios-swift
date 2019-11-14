@@ -34,6 +34,17 @@ class AllPostsTableVC: UITableViewController, IndicatorInfoProvider {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        
+        // delegate and data source
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        // Along with auto layout, these are the keys for enabling variable cell height
+        self.tableView.estimatedRowHeight = 44.0
+        self.tableView.rowHeight = UITableView.automaticDimension
+    }
+    
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "Geral")
     }

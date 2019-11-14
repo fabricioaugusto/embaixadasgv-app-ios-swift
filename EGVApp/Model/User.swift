@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct User {
     let id: String
@@ -37,6 +38,7 @@ struct User {
     let last_app_update: String?
     let fcm_token: String?
     let register_number: Int
+    let register_date: Timestamp?
     let topic_subscribed: Bool
     let leader: Bool
     let manager: Bool
@@ -83,6 +85,7 @@ struct User {
         self.last_app_update = dictionary["last_app_update"] as? String
         self.fcm_token = dictionary["fcm_token"] as? String
         self.register_number = dictionary["register_number"] as? Int ?? 0
+        self.register_date = dictionary["register_date"] as? Timestamp
         self.topic_subscribed = dictionary["topic_subscribed"] as? Bool ?? false
         self.leader = dictionary["leader"] as? Bool ?? false
         self.manager = dictionary["manager"] as? Bool ?? false

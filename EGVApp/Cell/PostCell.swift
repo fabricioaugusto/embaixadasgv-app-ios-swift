@@ -22,6 +22,24 @@ class PostCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    // constraint
+    var aspectConstraint: NSLayoutConstraint? {
+        didSet {
+            if oldValue != nil {
+                mImgPost.removeConstraint(oldValue!)
+            }
+            if aspectConstraint != nil {
+                mImgPost.addConstraint(aspectConstraint!)
+            }
+        }
+        
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        aspectConstraint = nil
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -64,22 +82,33 @@ class PostCell: UITableViewCell {
             if url != nil {
                 let postimg_size = PostCell.sizeOfImageAt(url: url!)
                 let imageRatio = CGFloat(Float(postimg_size?.width ?? 0) / Float(postimg_size?.height ?? 0))
-                let height = screenWith / imageRatio
                 
-                let heightConstraint = NSLayoutConstraint(item: mImgPost!, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: height)
+                let constraint = NSLayoutConstraint(
+                    item: self.mImgPost,
+                    attribute: .width,
+                    relatedBy: .equal,
+                    toItem: self.mImgPost,
+                    attribute: .height,
+                    multiplier: imageRatio,
+                    constant: 0.0
+                )
                 
-                baseView.addConstraint(heightConstraint)
+                constraint.priority = UILayoutPriority(999)
+                aspectConstraint = constraint
+                
+                // kf
+                OperationQueue.main.addOperation {
+                    self.mImgPost.kf.setImage(
+                        with: url,
+                        placeholder: nil,
+                        options: [.transition(.fade(0.3))],
+                        progressBlock: nil,
+                        completionHandler: { _ in
+                    })
+                }
+            
             }
             
-            mImgPost.kf.indicatorType = .activity
-            mImgPost.kf.setImage(
-                with: url,
-                placeholder: UIImage(named: "grey_circle"),
-                options: [
-                    .scaleFactor(UIScreen.main.scale),
-                    .transition(.fade(1)),
-                    .cacheOriginalImage
-                ])
         }
         
     }
