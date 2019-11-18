@@ -156,7 +156,9 @@ PODS:
     - NVActivityIndicatorView/Presenter (= 4.8.0)
   - NVActivityIndicatorView/Presenter (4.8.0)
   - Protobuf (3.10.0)
+  - PryntTrimmerView (4.0.0)
   - SkyFloatingLabelTextField (3.7.0)
+  - SteviaLayout (4.6.1)
   - SwiftGifOrigin (1.7.0)
   - SwiftHash (2.0.2)
   - SwiftKeychainWrapper (3.4.0)
@@ -168,6 +170,9 @@ PODS:
   - XLActionController/Twitter (5.0.2):
     - XLActionController/Core
   - XLPagerTabStrip (9.0.0)
+  - YPImagePicker (4.1.2):
+    - PryntTrimmerView (~> 4.0.0)
+    - SteviaLayout (~> 4.6.0)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
@@ -195,6 +200,7 @@ DEPENDENCIES:
   - XLActionController
   - XLActionController/Twitter
   - XLPagerTabStrip
+  - YPImagePicker
 
 SPEC REPOS:
   trunk:
@@ -231,7 +237,9 @@ SPEC REPOS:
     - nanopb
     - NVActivityIndicatorView
     - Protobuf
+    - PryntTrimmerView
     - SkyFloatingLabelTextField
+    - SteviaLayout
     - SwiftGifOrigin
     - SwiftHash
     - SwiftKeychainWrapper
@@ -239,6 +247,7 @@ SPEC REPOS:
     - TagListView
     - XLActionController
     - XLPagerTabStrip
+    - YPImagePicker
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: eef157d75e151f255c5333d26656c7fbfe905a51
@@ -274,7 +283,9 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
+  PryntTrimmerView: 67e67573ffd4c073f1308effa66aefd0cfa667a0
   SkyFloatingLabelTextField: 4b46db0ab1ccde0919cded29c656e6b4805eda04
+  SteviaLayout: 0c83442390c8a369c21f975ffbd812d11532645b
   SwiftGifOrigin: fbd6cf37afcfcf97a5c3db996ddc0492e5c5c145
   SwiftHash: 6d312abe61c8359bdef8d0093642f3a70b1c17ba
   SwiftKeychainWrapper: 6fc49fbf7d4a6b0772917acb0e53a1639f6078d6
@@ -282,7 +293,8 @@ SPEC CHECKSUMS:
   TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
   XLActionController: f1f2226d2c6629db197d4a41f2da907085a4cb9d
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
+  YPImagePicker: bdaa46782668e260fdd9709f19043a9f469fd2ad
 
-PODFILE CHECKSUM: 03367a3c539409c279a3215d7f2a1abb0cedf5e0
+PODFILE CHECKSUM: bbf408817d0f17146d9eaf2b3b5b0fad3f62568a
 
 COCOAPODS: 1.8.4

@@ -50,10 +50,9 @@ class RegisterVC: UIViewController {
             }
             
             self.mAuth.createUser(withEmail: email!, password: pass!) { authResult, error in
-                let user = authResult?.user
                 
-                if(user != nil) {
-                    self.saveUser(id: user.uid!, name: name!, email: email!)
+                if let user = authResult?.user {
+                    self.saveUser(id: user.uid, name: name!, email: email!)
                 }
             }
         }
@@ -115,7 +114,7 @@ class RegisterVC: UIViewController {
         let formatted_name = currentUser.name.folding(options: .diacriticInsensitive, locale: .current)
     
     
-        let name_array = formatted_name.split(separator: " ")
+        let name_array = formatted_name.components(separatedBy: " ")
         let name_size = name_array.count
     
         let fist_name = name_array[0]
@@ -125,28 +124,33 @@ class RegisterVC: UIViewController {
             last_name = name_array[name_size-1]
         }
     
-        var username = "${fist_name}_${last_name}"
+        var username = "\(fist_name)_\(last_name)"
     
         if(name_size == 1) {
             username = fist_name
         }
     
-        collection.whereEqualTo("username", username)
-        .get()
-        .addOnSuccessListener {
-            querySnapshot ->
-            if(querySnapshot.isEmpty) {
-                collection.document(currentUser.id).update("username", username)
-                .addOnSuccessListener {
-                    startCheckAuthActivity()
+        collection.whereField("username", isEqualTo: username)
+            .getDocuments(completion: { (querySnapshot, error) in
+                if(querySnapshot?.count == 0) {
+                    collection.document(currentUser.id).updateData(["username": username]) { (error) in
+                        if let err = error {
+                            print("Error updating document: \(err)")
+                        } else {
+                            self.startCheckAuthVC()
+                        }
+                    }
+                } else {
+                    collection.document(currentUser.id).updateData(["username": "\(username)_\(Int.random(in: 100..<999))"]) { (error) in
+                        if let err = error {
+                            print("Error updating document: \(err)")
+                        } else {
+                            self.startCheckAuthVC()
+                        }
+                    }
                 }
-            } else {
-                collection.document(currentUser.id).update("username", "${username}_${(100..999).random()}")
-                .addOnSuccessListener {
-                    startCheckAuthActivity()
-                }
-            }
-        }
+            })
+
     }
     
     private func setEmbassy(currentUser: User) {
@@ -234,6 +238,12 @@ class RegisterVC: UIViewController {
         textField.selectedLineHeight = 2.0
         
         return textField
+    }
+    
+    private func startCheckAuthVC() {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "CheckAuthVC") as! CheckAuthVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+        return
     }
     
     /*
