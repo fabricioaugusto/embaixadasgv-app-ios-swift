@@ -47,7 +47,10 @@ class LoginVC: UIViewController {
         mSVContainerLogin.insertArrangedSubview(self.mEmailField!, at: 0)
         
         self.mPassField = buildTextField(placeholder: "Senha", icon: String.fontAwesomeIcon(name: .lock))
+        self.mPassField?.textContentType = .password
+        self.mPassField?.isSecureTextEntry = true
         mSVContainerLogin.insertArrangedSubview(self.mPassField!, at: 1)
+        
         
         mEmailField?.delegate = self
         mPassField?.delegate = self

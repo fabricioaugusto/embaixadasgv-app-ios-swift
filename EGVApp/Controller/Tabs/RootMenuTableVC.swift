@@ -13,7 +13,7 @@ import FirebaseFirestore
 class RootMenuTableVC: UITableViewController {
 
     private var mUser: User?
-    private var mAuth: Auth?
+    private var mAuth: Auth!
     private var mDatabase: Firestore?
     private var mMenuList: [MenuItem] = []
     private var mSectionList: [String] = []
@@ -95,6 +95,22 @@ class RootMenuTableVC: UITableViewController {
         }
     }
     
+    private func setItemsActions(item_name: String) {
+        if(item_name == MenuItens.logout) {
+            
+            do {
+                try self.mAuth.signOut()
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "CheckAuthVC") as! CheckAuthVC
+                UIApplication.shared.keyWindow?.rootViewController = vc
+                return
+            } catch {
+                print("Não foi possível fazer o logoff")
+            }
+        }
+    }
+    
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -108,6 +124,12 @@ class RootMenuTableVC: UITableViewController {
         return mMenuDict[section]!.count
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let item_name = mMenuDict[indexPath.section]?[indexPath.row].item_name {
+            self.setItemsActions(item_name: item_name)
+        }
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -128,6 +150,9 @@ class RootMenuTableVC: UITableViewController {
         return mSectionList[section]
     }
 
+    
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
