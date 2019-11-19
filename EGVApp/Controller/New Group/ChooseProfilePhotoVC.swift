@@ -20,6 +20,7 @@ class ChooseProfilePhotoVC: UIViewController {
     var mUser: User!
     var tempImagePath: URL?
     var mImageData: Data?
+    var mImageMetaData: StorageMetadata?
     var imgExtension: String = ""
     var mStorage: Storage!
     var mDatabase: Firestore!
@@ -30,6 +31,9 @@ class ChooseProfilePhotoVC: UIViewController {
         mStorage = MyFirebase.sharedInstance.storage()
         mDatabase = MyFirebase.sharedInstance.database()
         
+        mImgUserProfile.layer.cornerRadius = 90
+        mImgUserProfile.layer.masksToBounds = true
+        
         // Do any additional setup after loading the view.
     }
     
@@ -37,11 +41,15 @@ class ChooseProfilePhotoVC: UIViewController {
         startGalleryPicker()
     }
     
+    @IBAction func onClickSavePhotoBt(_ sender: Any) {
+        uploadToStorage()
+    }
     
     
     private func startGalleryPicker() {
         var config = YPImagePickerConfiguration()
         config.screens = [.library]
+        config.library.onlySquare = true
         config.showsPhotoFilters = false
         let picker = YPImagePicker(configuration: config)
         picker.didFinishPicking { [unowned picker] items, _ in
@@ -57,15 +65,18 @@ class ChooseProfilePhotoVC: UIViewController {
                 let fileManager = FileManager.default
                 let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
                 let imagePath = documentsPath?.appendingPathComponent("temp."+self.imgExtension)
+                self.mImageMetaData = StorageMetadata()
                 if self.imgExtension == "png"{
-                    let imageData = photo.image.pngData()
-                    try! imageData?.write(to: imagePath!)
+                    self.mImageData = photo.image.pngData()
+                    self.mImageMetaData?.contentType = "image/png"
+                    try! self.mImageData?.write(to: imagePath!)
                 } else {
-                    let imageData: Data? = photo.image.jpegData(compressionQuality: 0.70)
-                    try! imageData?.write(to: imagePath!)
+                    self.mImageMetaData?.contentType = "image/jpeg"
+                    self.mImageData = photo.image.jpegData(compressionQuality: 0.70)
+                    try! self.mImageData?.write(to: imagePath!)
                 }
                 self.tempImagePath = imagePath!
-                self.ivPostImg.image = photo.image
+                self.mImgUserProfile.image = photo.image
             }
             
             
@@ -74,19 +85,20 @@ class ChooseProfilePhotoVC: UIViewController {
 
     }
     
-    private func uploadToStoge() {
+    private func uploadToStorage() {
         // Data in memory
         if let data = mImageData {
             // Create a reference to the file you want to upload
-            let riversRef = mStorage.reference().child("images/rivers.jpg")
+            let riversRef = mStorage.reference().child("ios_images/rivers.jpg")
 
             // Upload the file to the path "images/rivers.jpg"
-            let uploadTask = riversRef.putData(data, metadata: nil)
+            riversRef.putData(data, metadata: self.mImageMetaData)
             { (metadata, error) in
               guard let metadata = metadata else {
                 // Uh-oh, an error occurred!
                 return
               }
+                
               // Metadata contains file metadata such as size, content-type.
               let size = metadata.size
               // You can also access to download URL after upload.
@@ -95,8 +107,9 @@ class ChooseProfilePhotoVC: UIViewController {
                   // Uh-oh, an error occurred!
                   return
                 }
-    
-                self.mDatabase
+                
+                print("egvapplog", downloadURL.absoluteString)
+                /*self.mDatabase
                     .collection(MyFirebaseCollections.USERS)
                     .document(self.mUser.id)
                     .updateData(["profile_img" : downloadURL.absoluteString]) { (err) in
@@ -105,7 +118,7 @@ class ChooseProfilePhotoVC: UIViewController {
                         } else {
                             //Doc Updated
                         }
-                }
+                }*/
               }
             }
         }

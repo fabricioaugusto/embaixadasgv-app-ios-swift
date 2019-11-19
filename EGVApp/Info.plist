@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Use camera to upload profile photos</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Use photo library to upload photos and videos to share with others users</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Use media to upload photos and videos to share with others users</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>fa-solid-900.ttf</string>

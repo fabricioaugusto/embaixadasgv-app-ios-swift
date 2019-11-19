@@ -17,6 +17,7 @@ class CompleteRegisterVC: UIViewController {
 
     
     @IBOutlet weak var svFormFields: UIStackView!
+    @IBOutlet weak var mGenderSegmented: UISegmentedControl!
     
     var mInvite: Invite!
     private var mAuth: Auth!
@@ -32,29 +33,14 @@ class CompleteRegisterVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        resultsViewController = GMSAutocompleteResultsViewController()
-        resultsViewController?.delegate = self
-
-        searchController = UISearchController(searchResultsController: resultsViewController)
-        searchController?.searchResultsUpdater = resultsViewController
-
-        // Add the search bar to the right of the nav bar,
-        // use a popover to display the results.
-        // Set an explicit size as we don't want to use the entire nav bar.
-        searchController?.searchBar.frame = (CGRect(x: 0, y: 0, width: 250.0, height: 44.0))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: (searchController?.searchBar)!)
-
-        // When UISearchController presents the results view, present it in
-        // this view controller, not one further up the chain.
-        definesPresentationContext = true
-
-        // Keep the navigation bar visible.
-        searchController?.hidesNavigationBarDuringPresentation = false
-        searchController?.modalPresentationStyle = .popover
         
+        addFields()
+    mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .normal)
+        
+    mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .selected)
         // Do any additional setup after loading the view.
     }
+    
     
     private func addFields() {
         
@@ -75,10 +61,11 @@ class CompleteRegisterVC: UIViewController {
         mOccupationField?.delegate = self
         mBiographyField?.delegate = self
         
+        mSearchCityField?.restorationIdentifier = "searchCityField"
         svFormFields.alignment = .fill
         svFormFields.distribution = .fill
         svFormFields.axis = .vertical
-        svFormFields.spacing = 16
+        svFormFields.spacing = 24
     }
     
     private func buildTextField(placeholder: String, icon: String) -> SkyFloatingLabelTextField {
@@ -87,8 +74,8 @@ class CompleteRegisterVC: UIViewController {
         textField.placeholder = placeholder
         textField.title = placeholder
         textField.tintColor = AppColors.colorAccent// the color of the blinking cursor
-        textField.textColor = AppColors.colorWhite
-        textField.lineColor = AppColors.colorWhite
+        textField.textColor = AppColors.colorText
+        textField.lineColor = AppColors.colorGrey
         textField.selectedTitleColor = AppColors.colorAccent
         textField.selectedLineColor = AppColors.colorAccent
         textField.lineHeight = 1.0 // bottom line height in points
@@ -100,30 +87,35 @@ class CompleteRegisterVC: UIViewController {
     }
 }
 
-extension CompleteRegisterVC: GMSAutocompleteResultsViewControllerDelegate {
-  func resultsController(_ resultsController: GMSAutocompleteResultsViewController,
-                         didAutocompleteWith place: GMSPlace) {
-    searchController?.isActive = false
-    // Do something with the selected place.
-    print("Place name: \(place.name)")
-    print("Place address: \(place.formattedAddress)")
-    print("Place attributions: \(place.attributions)")
-  }
-
-  func resultsController(_ resultsController: GMSAutocompleteResultsViewController,
-                         didFailAutocompleteWithError error: Error){
-    // TODO: handle the error.
-    print("Error: ", error.localizedDescription)
-  }
-
-  // Turn the network activity indicator on and off again.
-  func didRequestAutocompletePredictions(forResultsController resultsController: GMSAutocompleteResultsViewController) {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = true
-  }
-
-  func didUpdateAutocompletePredictions(forResultsController resultsController: GMSAutocompleteResultsViewController) {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = false
-  }
+extension CompleteRegisterVC: GMSAutocompleteViewControllerDelegate {
+    
+    // Handle the user's selection.
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        print("Place name: \(place.name)")
+        print("Place ID: \(place.placeID)")
+        print("Place attributions: \(place.attributions)")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        // TODO: handle the error.
+        print("Error: ", error.localizedDescription)
+    }
+    
+    // User canceled the operation.
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // Turn the network activity indicator on and off again.
+    func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
 }
 
 
@@ -131,5 +123,43 @@ extension CompleteRegisterVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.restorationIdentifier == "searchCityField" {
+            let autocompleteController = GMSAutocompleteViewController()
+            autocompleteController.delegate = self
+            
+            // Specify the place data types to return.
+            let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
+                UInt(GMSPlaceField.placeID.rawValue))!
+            autocompleteController.placeFields = fields
+            
+            // Specify a filter.
+            let filter = GMSAutocompleteFilter()
+            filter.type = .address
+            autocompleteController.autocompleteFilter = filter
+            
+            // Display the autocomplete view controller.
+            present(autocompleteController, animated: true, completion: nil)
+
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if textField == mBirthDateField {
+            if textField.text?.count == 2 || textField.text?.count == 5 {
+                //Handle backspace being pressed
+                if !(string == "") {
+                    // append the text
+                    textField.text = textField.text! + "/"
+                }
+            }
+            // check the condition not exceed 9 chars
+            return !(textField.text!.count > 9 && (string.count ) > range.length)
+        } else {
+            return true
+        }
     }
 }
