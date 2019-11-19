@@ -99,6 +99,10 @@ struct User {
         self.embassy = BasicEmbassy(dictionary: dictionary["embassy"] as! [String : Any])!
     }
     
+    func toMap() {
+        
+    }
+    
 }
 
 struct BasicUser {

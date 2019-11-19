@@ -54,6 +54,7 @@
 		7F08B03C23730BA90013EE62 /* CheckAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03B23730BA90013EE62 /* CheckAuthVC.swift */; };
 		7F08B03E23730BD40013EE62 /* SubmitInviteCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03D23730BD40013EE62 /* SubmitInviteCodeVC.swift */; };
 		7F08B04023730C2A0013EE62 /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03F23730C2A0013EE62 /* ResetPasswordVC.swift */; };
+		7F2411A223841D4800D7C901 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2411A123841D4800D7C901 /* EditProfileVC.swift */; };
 		7F24CCBB2373102D00D8E74C /* MyFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F24CCBA2373102D00D8E74C /* MyFirebase.swift */; };
 		7F25D0CE2379C27E00EEA08C /* PostPictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F25D0CD2379C27E00EEA08C /* PostPictureCell.swift */; };
 		7F25D0D42379EFFD00EEA08C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F25D0D32379EFF200EEA08C /* Assets.xcassets */; };
@@ -120,6 +121,7 @@
 		7F08B03B23730BA90013EE62 /* CheckAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAuthVC.swift; sourceTree = "<group>"; };
 		7F08B03D23730BD40013EE62 /* SubmitInviteCodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitInviteCodeVC.swift; sourceTree = "<group>"; };
 		7F08B03F23730C2A0013EE62 /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
+		7F2411A123841D4800D7C901 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		7F24CCBA2373102D00D8E74C /* MyFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyFirebase.swift; path = "EGVApp/Controller/New Group/MyFirebase.swift"; sourceTree = SOURCE_ROOT; };
 		7F25D0CD2379C27E00EEA08C /* PostPictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPictureCell.swift; sourceTree = "<group>"; };
 		7F25D0D32379EFF200EEA08C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		0412660523724C62009C5E2B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7F2411A023841C2A00D7C901 /* Menu */,
 				7F946FFF237C32BA00742CF0 /* Single */,
 				0471A82C23772B8100CF2B9C /* Tabs */,
 				0412660E23724D77009C5E2B /* Auth */,
@@ -306,6 +309,14 @@
 				0406C3C9237B9A9F0012BF50 /* UserProfileCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		7F2411A023841C2A00D7C901 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				7F2411A123841D4800D7C901 /* EditProfileVC.swift */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 		7F946FFF237C32BA00742CF0 /* Single */ = {
@@ -512,6 +523,7 @@
 				7F24CCBB2373102D00D8E74C /* MyFirebase.swift in Sources */,
 				047452692373B952002FDDE7 /* Embassy.swift in Sources */,
 				04394195237A519000E0B848 /* ArticleCell.swift in Sources */,
+				7F2411A223841D4800D7C901 /* EditProfileVC.swift in Sources */,
 				7F08B03A23730B710013EE62 /* RegisterVC.swift in Sources */,
 				047452872373BCF7002FDDE7 /* PostLike.swift in Sources */,
 				7F351047237AE8C0004FC2D3 /* EventCell.swift in Sources */,
