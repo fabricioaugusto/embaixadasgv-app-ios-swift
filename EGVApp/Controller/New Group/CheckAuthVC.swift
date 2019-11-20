@@ -14,9 +14,9 @@ import FirebaseMessaging
 class CheckAuthVC: UIViewController, LoginDelegate {
     
     private var mMessaging: Messaging?
-    private var mAuth: Auth?
+    private var mAuth: Auth!
     private var mDatabase: Firestore?
-    private var mUser: User?
+    private var mUser: User!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,16 +28,22 @@ class CheckAuthVC: UIViewController, LoginDelegate {
         // Do any additional setup after loading the view.
     }
     
-    
     override func viewDidAppear(_ animated: Bool) {
-        let loggedUser = mAuth?.currentUser
+        let loggedUser = mAuth.currentUser
         
         if let authUser = loggedUser {
             let uid = authUser.uid
+            print("egvapplog", authUser.uid)
             getCurrentUser(uid: uid)
         } else {
             startLoginViewController()
         }
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! CompleteRegisterVC
+        vc.mUser = mUser
     }
     
     private func startLoginViewController() {
@@ -88,23 +94,33 @@ class CheckAuthVC: UIViewController, LoginDelegate {
                     
                     print("User: \(user)")
                 } else {
-                    print("Document does not exist")
+                    do {
+                        try self.mAuth.signOut()
+                        self.startLoginViewController()
+                    } catch {
+                        
+                    }
+                    
                 }
         })
     }
     
     private func checkUser() {
     
-    if(mUser?.description == nil) {
+    if(mUser.description == nil) {
         //startCompleteRegisterActivity()
         return
-    } else if(mUser?.profile_img == nil) {
-        //startChooseProfileImg()
+    } else if(mUser.profile_img == nil) {
+        performSegue(withIdentifier: "completeRegisterSegue", sender: nil)
         return
     } else {
         performSegue(withIdentifier: "mainTabBarSegue", sender: nil)
         return
         }
+    }
+    
+    private func startCompleteRegisterVC() {
+        
     }
     
 

@@ -11,6 +11,7 @@ import SkyFloatingLabelTextField
 import FontAwesome_swift
 import FirebaseAuth
 import FirebaseFirestore
+import JGProgressHUD
 
 class RegisterVC: UIViewController {
 
@@ -20,10 +21,11 @@ class RegisterVC: UIViewController {
     var mInvite: Invite!
     private var mAuth: Auth!
     private var mDatabase: Firestore!
-    private var mUserField: SkyFloatingLabelTextField?
-    private var mEmailField: SkyFloatingLabelTextField?
-    private var mPasswordField: SkyFloatingLabelTextField?
-    private var mConfirmPasswordField: SkyFloatingLabelTextField?
+    private var mUserField: SkyFloatingLabelTextField!
+    private var mEmailField: SkyFloatingLabelTextField!
+    private var mPasswordField: SkyFloatingLabelTextField!
+    private var mConfirmPasswordField: SkyFloatingLabelTextField!
+    private var mHud: JGProgressHUD!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,27 +34,39 @@ class RegisterVC: UIViewController {
         mAuth = MyFirebase.sharedInstance.auth()
         mDatabase = MyFirebase.sharedInstance.database()
         // Do any additional setup after loading the view.
+        
+        mHud = JGProgressHUD(style: .extraLight)
+        mHud.textLabel.textColor = AppColors.colorPrimary
+        mHud.indicatorView?.tintColor = AppColors.colorLink
+        mHud.textLabel.text = "Registrando..."
     }
+    
+    @IBAction func onClickRegisterBt(_ sender: UIButton) {
+        registerUser()
+    }
+    
     
     private func registerUser() {
     
-        let name = mUserField?.text
-        let email = mEmailField?.text
-        let pass = mPasswordField?.text
-        let passConfirm = mConfirmPasswordField?.text
+        let name = mUserField.text ?? ""
+        let email = mEmailField.text ?? ""
+        let pass = mPasswordField.text ?? ""
+        let passConfirm = mConfirmPasswordField.text ?? ""
     
     
     
         if(validateRegister(name: name, email: email, pass: pass, passConfirm: passConfirm)) {
             if(email != mInvite.email_receiver) {
-                //makeToast("Você deve cadastrar o mesmo e-mail em que o convite foi enviado")
+                makeAlert(message: "Você deve cadastrar o mesmo e-mail em que o convite foi enviado")
                 return
             }
             
-            self.mAuth.createUser(withEmail: email!, password: pass!) { authResult, error in
+            self.mHud.show(in: self.view)
+            
+            self.mAuth.createUser(withEmail: email, password: pass) { authResult, error in
                 
                 if let user = authResult?.user {
-                    self.saveUser(id: user.uid, name: name!, email: email!)
+                    self.saveUser(id: user.uid, name: name, email: email)
                 }
             }
         }
@@ -61,6 +75,7 @@ class RegisterVC: UIViewController {
     private func saveUser(id: String, name: String, email: String) {
     
         let collection = mDatabase.collection(MyFirebaseCollections.USERS)
+        print("egvapplog", "saveUser")
         
     
         var user: [String:Any] = [:]
@@ -76,7 +91,7 @@ class RegisterVC: UIViewController {
         }
     
         if let embassy = mInvite.embassy_receiver {
-            user["embassy"] = embassy
+            user["embassy"] = embassy.toBasicMap()
             user["embassy_id"] = embassy.id
         }
     
@@ -84,25 +99,30 @@ class RegisterVC: UIViewController {
             .document(id)
             .setData(user) { (error) in
                 
-        }
-    
-        if(self.mAuth.currentUser != nil) {
-    
-            mDatabase.collection(MyFirebaseCollections.APP_INVITATIONS)
-                .document(mInvite.id)
-                .delete()
-        
-            var currentUser: [String:Any] = [:]
-            currentUser["name"] = name
-            currentUser["id"] = id
-            currentUser["email"] = email
-        
-            
-            if(mInvite.isLeader) {
-                setEmbassy(currentUser: User(dictionary: currentUser)!)
-            } else {
-                setUsername(currentUser: User(dictionary: currentUser)!)
-            }
+                if let error = error {
+                    print("egvapplog", "setDataError")
+                    print(error.localizedDescription.description)
+                } else {
+                    print("egvapplog", "deu certo")
+                    if(self.mAuth.currentUser != nil) {
+                
+                        self.mDatabase.collection(MyFirebaseCollections.APP_INVITATIONS)
+                            .document(self.mInvite.id)
+                            .delete()
+                    
+                        var currentUser: [String:Any] = [:]
+                        currentUser["name"] = name
+                        currentUser["id"] = id
+                        currentUser["email"] = email
+                    
+                        
+                        if(self.mInvite.isLeader) {
+                            self.setEmbassy(currentUser: User(dictionary: currentUser)!)
+                        } else {
+                            self.setUsername(currentUser: User(dictionary: currentUser)!)
+                        }
+                    }
+                }
         }
     
     }
@@ -137,6 +157,7 @@ class RegisterVC: UIViewController {
                         if let err = error {
                             print("Error updating document: \(err)")
                         } else {
+                            self.mHud.dismiss()
                             self.startCheckAuthVC()
                         }
                     }
@@ -145,6 +166,7 @@ class RegisterVC: UIViewController {
                         if let err = error {
                             print("Error updating document: \(err)")
                         } else {
+                            self.mHud.dismiss()
                             self.startCheckAuthVC()
                         }
                     }
@@ -158,35 +180,41 @@ class RegisterVC: UIViewController {
         if let embassy = mInvite.embassy_receiver {
             self.mDatabase.collection(MyFirebaseCollections.EMBASSY)
                 .document(embassy.id)
-                .updateData(["leader":currentUser, "leader_id":currentUser.id])
+                .updateData(["leader":currentUser, "leader_id":currentUser.id], completion: { (error) in
+                    if let error = error {
+                        
+                    } else {
+                        self.setUsername(currentUser: currentUser)
+                    }
+                })
         }
         
     }
     
-    private func validateRegister (name: String?, email: String?, pass: String?, passConfirm: String?) -> Bool {
+    private func validateRegister (name: String, email: String, pass: String, passConfirm: String) -> Bool {
     
-        if (name!.isEmpty || email!.isEmpty || pass!.isEmpty || passConfirm!.isEmpty) {
-            //makeToast("Preencha todos os campos!")
+        if (name.isEmpty || email.isEmpty || pass.isEmpty || passConfirm.isEmpty) {
+            makeAlert(message: "Preencha todos os campos!")
             return false
         }
     
-        if(name!.contains("@")) {
-            //makeToast("Por favor cadastre um nome válido!")
+        if(name.contains("@")) {
+            makeAlert(message: "Por favor cadastre um nome válido!")
             return false
         }
     
-        if(!email!.contains("@")) {
-            //makeToast("Por favor cadastre um e-mail válido!")
+        if(!email.contains("@")) {
+            makeAlert(message: "Por favor cadastre um e-mail válido!")
             return false
         }
     
-        if (pass!.count < 6) {
-            //makeToast("A senha deve possuir mais de 6 caracteres!")
+        if (pass.count < 6) {
+            makeAlert(message: "A senha deve possuir mais de 6 caracteres!")
             return false
         }
     
         if (pass != passConfirm) {
-            //makeToast("As senhas não conferem")
+            makeAlert(message: "As senhas não conferem")
             return false
         }
     
@@ -244,6 +272,12 @@ class RegisterVC: UIViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "CheckAuthVC") as! CheckAuthVC
         UIApplication.shared.keyWindow?.rootViewController = vc
         return
+    }
+    
+    private func makeAlert(message: String) {
+        let alert = UIAlertController(title: "Atenção", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     /*

@@ -11,45 +11,45 @@ import Firebase
 
 struct User {
     let id: String
-    let name: String
-    let email: String
-    let status: String?
-    let gender: String?
-    let description: String?
-    let birthdate: String?
-    let occupation: String?
-    let city: String?
-    let state: String?
-    let state_short: String?
-    let profile_img: String?
-    let profile_img_file_name: String?
+    var name: String
+    var email: String
+    var status: String?
+    var gender: String?
+    var description: String?
+    var birthdate: String?
+    var occupation: String?
+    var city: String?
+    var state: String?
+    var state_short: String?
+    var profile_img: String?
+    var profile_img_file_name: String?
     let verified: Bool
-    let facebook: String?
-    let twitter: String?
-    let instagram: String?
-    let linkedin: String?
-    let whatsapp: String?
-    let youtube: String?
-    let behance: String?
-    let github: String?
-    let website: String?
-    let last_device_os: String?
-    let last_device_version: String?
-    let last_app_update: String?
-    let fcm_token: String?
-    let register_number: Int
-    let register_date: Timestamp?
-    let topic_subscribed: Bool
-    let leader: Bool
-    let manager: Bool
-    let sponsor: Bool
-    let committee_leader: Bool
-    let committee_manager: Bool
-    let committee_member: Bool
-    let committee: Committee?
-    let username: String?
-    let embassy_id: String?
-    let embassy: BasicEmbassy
+    var facebook: String?
+    var twitter: String?
+    var instagram: String?
+    var linkedin: String?
+    var whatsapp: String?
+    var youtube: String?
+    var behance: String?
+    var github: String?
+    var website: String?
+    var last_device_os: String?
+    var last_device_version: String?
+    var last_app_update: String?
+    var fcm_token: String?
+    var register_number: Int
+    var register_date: Timestamp?
+    var topic_subscribed: Bool
+    var leader: Bool
+    var manager: Bool
+    var sponsor: Bool
+    var committee_leader: Bool
+    var committee_manager: Bool
+    var committee_member: Bool
+    var committee: Committee?
+    var username: String?
+    var embassy_id: String?
+    var embassy: BasicEmbassy
     
     init?(dictionary: [String: Any]) {
         
@@ -99,9 +99,46 @@ struct User {
         self.embassy = BasicEmbassy(dictionary: dictionary["embassy"] as! [String : Any])!
     }
     
-    func toMap() {
-        
-    }
+    func toMap() -> [String:Any?]{
+            return ["id": self.id,
+                    "name": name,
+                    "email": email,
+                    "status": self.status,
+                    "gender": gender,
+                    "description": description,
+                    "occupation": occupation,
+                    "city": city,
+                    "state": state,
+                    "state_short": state_short,
+                    "profile_img": profile_img,
+                    "verified": verified,
+                    "facebook": facebook,
+                    "twitter": twitter,
+                    "instagram": instagram,
+                    "linkedin": linkedin,
+                    "whatsapp": whatsapp,
+                    "youtube": youtube,
+                    "behance": behance,
+                    "github": github,
+                    "website": website,
+                    "last_device_os": last_device_os,
+                    "last_device_version": last_device_version,
+                    "last_app_update": last_app_update,
+                    "fcm_token": fcm_token,
+                    "register_number": register_number,
+                    "register_date": register_date,
+                    "topic_subscribed": self.topic_subscribed,
+                    "leader": self.leader,
+                    "manager": self.manager,
+                    "sponsor": self.sponsor,
+                    "committee_leader": self.committee_leader,
+                    "committee_manager": self.committee_manager,
+                    "committee_member": self.committee_member,
+                    "committee": self.committee,
+                    "username": self.username,
+                    "embassy_id": self.embassy_id,
+                    "embassy": self.embassy]
+        }
     
 }
 

@@ -61,4 +61,8 @@ struct BasicEmbassy {
         self.id = dictionary["id"] as? String ?? ""
         self.name = dictionary["name"] as? String ?? ""
     }
+    
+    func toBasicMap() -> [String: Any] {
+        return ["id": id, "name": name]
+    }
 }

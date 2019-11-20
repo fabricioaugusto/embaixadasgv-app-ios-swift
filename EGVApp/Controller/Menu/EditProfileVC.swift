@@ -120,7 +120,7 @@ class EditProfileVC: UIViewController {
         let occupation = mOccupationField.text
         let biography = mBiographyField.text
         
-        if(name.isEmpty || email.isEmpty ||
+        /*if(name.isEmpty || email.isEmpty ||
             birthdate.isEmpty || occupation.isEmpty || biography.isEmpty
             || city.isNullOrEmpty() || gender.isNullOrEmpty() ) {
 
@@ -161,7 +161,7 @@ class EditProfileVC: UIViewController {
                     Converters.drawableToBitmap(resources.getDrawable(com.balloondigital.egvapp.R.drawable.ic_check_grey_light))
                 )
 
-            }
+            }*/
     }
 
 }

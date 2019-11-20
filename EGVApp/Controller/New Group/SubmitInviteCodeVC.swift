@@ -11,6 +11,7 @@ import SkyFloatingLabelTextField
 import FontAwesome_swift
 import FirebaseAuth
 import FirebaseFirestore
+import JGProgressHUD
 
 class SubmitInviteCodeVC: UIViewController {
     
@@ -21,6 +22,7 @@ class SubmitInviteCodeVC: UIViewController {
     private var mInvite: Invite!
     private var mDatabase: Firestore!
     private var mCodeField: SkyFloatingLabelTextField?
+    private var mHud: JGProgressHUD!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +31,12 @@ class SubmitInviteCodeVC: UIViewController {
         self.mDatabase = MyFirebase.sharedInstance.database()
         addFields()
         // Do any additional setup after loading the view.
+        
+        mHud = JGProgressHUD(style: .extraLight)
+        mHud.textLabel.textColor = AppColors.colorPrimary
+        mHud.indicatorView?.tintColor = AppColors.colorLink
+        mHud.textLabel.text = "Enviando"
+        
     }
     
 
@@ -73,6 +81,7 @@ class SubmitInviteCodeVC: UIViewController {
             return
         }
         
+        self.mHud.show(in: self.view)
         
         self.mDatabase.collection(MyFirebaseCollections.APP_INVITATIONS)
             .document(code)
@@ -84,7 +93,7 @@ class SubmitInviteCodeVC: UIViewController {
                     })
                 }) {
                     self.mInvite = invite
-                    print("egvapplog", self.mInvite)
+                    self.mHud.dismiss()
                     self.performSegue(withIdentifier: "registerSegue", sender: nil)
                 } else {
                     print("Document does not exist")

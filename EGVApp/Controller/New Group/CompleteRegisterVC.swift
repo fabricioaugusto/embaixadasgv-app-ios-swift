@@ -19,6 +19,7 @@ class CompleteRegisterVC: UIViewController {
     @IBOutlet weak var svFormFields: UIStackView!
     @IBOutlet weak var mGenderSegmented: UISegmentedControl!
     
+    var mUser: User!
     var mInvite: Invite!
     private var mAuth: Auth!
     private var mDatabase: Firestore!
@@ -35,9 +36,8 @@ class CompleteRegisterVC: UIViewController {
         super.viewDidLoad()
         
         addFields()
-    mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .normal)
-        
-    mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .selected)
+        mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .normal)
+        mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .selected)
         // Do any additional setup after loading the view.
     }
     
@@ -68,6 +68,7 @@ class CompleteRegisterVC: UIViewController {
         svFormFields.spacing = 24
     }
     
+    
     private func buildTextField(placeholder: String, icon: String) -> SkyFloatingLabelTextField {
         
         let textField = SkyFloatingLabelTextFieldWithIcon(frame: CGRect(x: 10, y: 10, width: 120, height: 64))
@@ -91,9 +92,13 @@ extension CompleteRegisterVC: GMSAutocompleteViewControllerDelegate {
     
     // Handle the user's selection.
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        
+        mSearchCityField?.text = place.name
+        mUser.city = place.name
+        
         print("Place name: \(place.name)")
         print("Place ID: \(place.placeID)")
-        print("Place attributions: \(place.attributions)")
+        print("Place attributions: \(place.addressComponents)")
         dismiss(animated: true, completion: nil)
     }
     
@@ -132,12 +137,12 @@ extension CompleteRegisterVC: UITextFieldDelegate {
             
             // Specify the place data types to return.
             let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
-                UInt(GMSPlaceField.placeID.rawValue))!
+                UInt(GMSPlaceField.placeID.rawValue) | UInt(GMSPlaceField.addressComponents.rawValue))!
             autocompleteController.placeFields = fields
             
             // Specify a filter.
             let filter = GMSAutocompleteFilter()
-            filter.type = .address
+            filter.type = .city
             autocompleteController.autocompleteFilter = filter
             
             // Display the autocomplete view controller.
