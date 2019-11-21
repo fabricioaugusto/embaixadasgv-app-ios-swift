@@ -27,6 +27,9 @@
 		0412662023727341009C5E2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0412661F23727340009C5E2B /* GoogleService-Info.plist */; };
 		04394193237A516800E0B848 /* ThoughtCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04394192237A516700E0B848 /* ThoughtCell.swift */; };
 		04394195237A519000E0B848 /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04394194237A519000E0B848 /* ArticleCell.swift */; };
+		044AEDA52385BD2900D53928 /* app_layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044AEDA42385BD2900D53928 /* app_layout.swift */; };
+		044AEDA72386252A00D53928 /* PostPictureCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044AEDA62386252A00D53928 /* PostPictureCollectionCell.swift */; };
+		044AEDA92386256500D53928 /* AllPostsCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044AEDA82386256500D53928 /* AllPostsCollectionVC.swift */; };
 		0471A83023772BE900CF2B9C /* RootAgendaTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A82F23772BE900CF2B9C /* RootAgendaTableVC.swift */; };
 		0471A83223772C2F00CF2B9C /* RootPostsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A83123772C2F00CF2B9C /* RootPostsTableVC.swift */; };
 		0471A83423772C5B00CF2B9C /* RootMenuTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A83323772C5B00CF2B9C /* RootMenuTableVC.swift */; };
@@ -92,6 +95,9 @@
 		0412661F23727340009C5E2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04394192237A516700E0B848 /* ThoughtCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThoughtCell.swift; sourceTree = "<group>"; };
 		04394194237A519000E0B848 /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
+		044AEDA42385BD2900D53928 /* app_layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = app_layout.swift; sourceTree = "<group>"; };
+		044AEDA62386252A00D53928 /* PostPictureCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPictureCollectionCell.swift; sourceTree = "<group>"; };
+		044AEDA82386256500D53928 /* AllPostsCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPostsCollectionVC.swift; sourceTree = "<group>"; };
 		0471A82F23772BE900CF2B9C /* RootAgendaTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAgendaTableVC.swift; sourceTree = "<group>"; };
 		0471A83123772C2F00CF2B9C /* RootPostsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPostsTableVC.swift; sourceTree = "<group>"; };
 		0471A83323772C5B00CF2B9C /* RootMenuTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootMenuTableVC.swift; sourceTree = "<group>"; };
@@ -243,6 +249,7 @@
 			children = (
 				0412660F2372554E009C5E2B /* colors.swift */,
 				7F351048237AF55B004FC2D3 /* menu_items.swift */,
+				044AEDA42385BD2900D53928 /* app_layout.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -292,6 +299,7 @@
 				040685422378E999000EF764 /* AllPostsTableVC.swift */,
 				040685442378E9C6000EF764 /* EmbassyPostsTableVC.swift */,
 				040685462378EA06000EF764 /* HighlightsPostsTableVC.swift */,
+				044AEDA82386256500D53928 /* AllPostsCollectionVC.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -307,6 +315,7 @@
 				7F351046237AE8C0004FC2D3 /* EventCell.swift */,
 				0406C3C7237B743D0012BF50 /* MenuCell.swift */,
 				0406C3C9237B9A9F0012BF50 /* UserProfileCell.swift */,
+				044AEDA62386252A00D53928 /* PostPictureCollectionCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -489,6 +498,7 @@
 				0474527F2373BC85002FDDE7 /* MenuItem.swift in Sources */,
 				041265F523722A27009C5E2B /* ViewController.swift in Sources */,
 				0474526B2373BB44002FDDE7 /* Bulletin.swift in Sources */,
+				044AEDA72386252A00D53928 /* PostPictureCollectionCell.swift in Sources */,
 				040685432378E999000EF764 /* AllPostsTableVC.swift in Sources */,
 				041266102372554E009C5E2B /* colors.swift in Sources */,
 				041265F323722A27009C5E2B /* AppDelegate.swift in Sources */,
@@ -509,6 +519,7 @@
 				7F947007237C33EF00742CF0 /* SinglePostVC.swift in Sources */,
 				0406853E23786072000EF764 /* RootDashboardVC.swift in Sources */,
 				0471A83B2377313D00CF2B9C /* PostCell.swift in Sources */,
+				044AEDA52385BD2900D53928 /* app_layout.swift in Sources */,
 				0471A83023772BE900CF2B9C /* RootAgendaTableVC.swift in Sources */,
 				0474526F2373BB7E002FDDE7 /* Company.swift in Sources */,
 				040685412378E66D000EF764 /* RootPostsVC.swift in Sources */,
@@ -522,6 +533,7 @@
 				0471A83223772C2F00CF2B9C /* RootPostsTableVC.swift in Sources */,
 				7F24CCBB2373102D00D8E74C /* MyFirebase.swift in Sources */,
 				047452692373B952002FDDE7 /* Embassy.swift in Sources */,
+				044AEDA92386256500D53928 /* AllPostsCollectionVC.swift in Sources */,
 				04394195237A519000E0B848 /* ArticleCell.swift in Sources */,
 				7F2411A223841D4800D7C901 /* EditProfileVC.swift in Sources */,
 				7F08B03A23730B710013EE62 /* RegisterVC.swift in Sources */,

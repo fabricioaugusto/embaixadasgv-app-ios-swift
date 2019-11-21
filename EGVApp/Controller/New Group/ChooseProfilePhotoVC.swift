@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseStorage
 import YPImagePicker
 import SwiftHash
+import JGProgressHUD
 
 class ChooseProfilePhotoVC: UIViewController {
 
@@ -24,6 +25,8 @@ class ChooseProfilePhotoVC: UIViewController {
     var imgExtension: String = ""
     var mStorage: Storage!
     var mDatabase: Firestore!
+    var mPhotoSelected: Bool = false
+    private var mHud: JGProgressHUD!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +36,11 @@ class ChooseProfilePhotoVC: UIViewController {
         
         mImgUserProfile.layer.cornerRadius = 90
         mImgUserProfile.layer.masksToBounds = true
+        
+        mHud = JGProgressHUD(style: .extraLight)
+        mHud.textLabel.textColor = AppColors.colorPrimary
+        mHud.indicatorView?.tintColor = AppColors.colorLink
+        mHud.textLabel.text = "Registrando..."
         
         // Do any additional setup after loading the view.
     }
@@ -76,6 +84,7 @@ class ChooseProfilePhotoVC: UIViewController {
                     try! self.mImageData?.write(to: imagePath!)
                 }
                 self.tempImagePath = imagePath!
+                self.mPhotoSelected = true
                 self.mImgUserProfile.image = photo.image
             }
             
@@ -86,6 +95,14 @@ class ChooseProfilePhotoVC: UIViewController {
     }
     
     private func uploadToStorage() {
+        
+        if(!mPhotoSelected) {
+            makeAlert(message: "Você precisa selecionar uma foto de perfil")
+            return
+        }
+        
+        self.mHud.show(in: self.view)
+        
         // Data in memory
         if let data = mImageData {
             // Create a reference to the file you want to upload
@@ -109,19 +126,33 @@ class ChooseProfilePhotoVC: UIViewController {
                 }
                 
                 print("egvapplog", downloadURL.absoluteString)
-                /*self.mDatabase
+                self.mDatabase
                     .collection(MyFirebaseCollections.USERS)
                     .document(self.mUser.id)
                     .updateData(["profile_img" : downloadURL.absoluteString]) { (err) in
                         if let err = err {
                             
                         } else {
+                            self.mHud.dismiss()
+                            self.startCheckAuthVC()
                             //Doc Updated
                         }
-                }*/
+                }
               }
             }
         }
+    }
+    
+    private func startCheckAuthVC() {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "CheckAuthVC") as! CheckAuthVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+        return
+    }
+    
+    private func makeAlert(message: String) {
+        let alert = UIAlertController(title: "Atenção", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
     /*

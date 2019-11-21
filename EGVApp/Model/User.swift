@@ -137,8 +137,9 @@ struct User {
                     "committee": self.committee,
                     "username": self.username,
                     "embassy_id": self.embassy_id,
-                    "embassy": self.embassy]
-        }
+                    "embassy": self.embassy.toBasicMap()
+        ]
+    }
     
 }
 

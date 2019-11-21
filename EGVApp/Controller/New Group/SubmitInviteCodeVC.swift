@@ -93,6 +93,7 @@ class SubmitInviteCodeVC: UIViewController {
                     })
                 }) {
                     self.mInvite = invite
+                    self.mInvite.id = documentSnapshot!.documentID
                     self.mHud.dismiss()
                     self.performSegue(withIdentifier: "registerSegue", sender: nil)
                 } else {

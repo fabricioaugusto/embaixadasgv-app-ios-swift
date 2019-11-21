@@ -58,8 +58,7 @@ class ArticleCell: UITableViewCell {
             let url = URL(string: post_picture)
             
             if url != nil {
-                let postimg_size = PostCell.sizeOfImageAt(url: url!)
-                let imageRatio = CGFloat(Float(postimg_size?.width ?? 0) / Float(postimg_size?.height ?? 0))
+                let imageRatio = CGFloat(Float(post.picture_width) / Float(post.picture_height))
                 let height = screenWith / imageRatio
                 
                 let heightConstraint = NSLayoutConstraint(item: mImgPost!, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: height)
@@ -78,25 +77,6 @@ class ArticleCell: UITableViewCell {
                 ])
         }
         
-    }
-    
-    static func sizeOfImageAt(url: URL) -> CGSize? {
-        // with CGImageSource we avoid loading the whole image into memory
-        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil) else {
-            return nil
-        }
-        
-        let propertiesOptions = [kCGImageSourceShouldCache: false] as CFDictionary
-        guard let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, propertiesOptions) as? [CFString: Any] else {
-            return nil
-        }
-        
-        if let width = properties[kCGImagePropertyPixelWidth] as? CGFloat,
-            let height = properties[kCGImagePropertyPixelHeight] as? CGFloat {
-            return CGSize(width: width, height: height)
-        } else {
-            return nil
-        }
     }
     
 }

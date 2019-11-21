@@ -9,15 +9,15 @@
 import Foundation
 
 struct Invite {
-    let id: String
-    let name_sender: String
-    let email_sender: String
-    let name_receiver: String
-    let email_receiver: String
-    let embassy_receiver: BasicEmbassy?
-    let isLeader: Bool
-    let isManager: Bool
-    let invite_code: Int
+    var id: String
+    var name_sender: String
+    var email_sender: String
+    var name_receiver: String
+    var email_receiver: String
+    var embassy_receiver: BasicEmbassy?
+    var isLeader: Bool
+    var isManager: Bool
+    var invite_code: Int
     
     init?(dictionary: [String: Any]) {
         

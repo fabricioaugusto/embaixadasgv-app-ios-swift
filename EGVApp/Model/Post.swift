@@ -19,6 +19,8 @@ struct Post {
     let picture_file_name: String?
     let title: String?
     let post_likes: Int
+    let picture_width: Int
+    let picture_height: Int
     let post_comments: Int
     let like_verified: Bool
     let liked: Bool
@@ -42,6 +44,8 @@ struct Post {
         self.picture_file_name = dictionary["picture_file_name"] as? String
         self.title = dictionary["title"] as? String
         self.post_likes = dictionary["post_likes"] as? Int ?? 0
+        self.picture_width = dictionary["picture_width"] as? Int ?? 0
+        self.picture_height = dictionary["picture_height"] as? Int ?? 0
         self.post_comments = dictionary["post_comments"] as? Int ?? 0
         self.like_verified = dictionary["like_verified"] as? Bool ?? false
         self.liked = dictionary["liked"] as? Bool ?? false

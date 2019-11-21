@@ -135,6 +135,10 @@ class AllPostsTableVC: UITableViewController, IndicatorInfoProvider {
         // #warning Incomplete implementation, return the number of rows
         return mPostList.count
     }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

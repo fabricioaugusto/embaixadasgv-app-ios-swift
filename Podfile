@@ -30,4 +30,5 @@ target 'EGVApp' do
   pod 'Firebase/Analytics'
   pod 'CodableFirebase'
   pod 'YPImagePicker'
+  pod 'KMPlaceholderTextView', '~> 1.4.0'
 end

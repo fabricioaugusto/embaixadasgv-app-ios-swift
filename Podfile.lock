@@ -146,6 +146,7 @@ PODS:
   - Kingfisher (5.9.0):
     - Kingfisher/Core (= 5.9.0)
   - Kingfisher/Core (5.9.0)
+  - KMPlaceholderTextView (1.4.0)
   - leveldb-library (1.22)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
@@ -190,6 +191,7 @@ DEPENDENCIES:
   - GooglePlaces
   - JGProgressHUD
   - Kingfisher
+  - KMPlaceholderTextView (~> 1.4.0)
   - NVActivityIndicatorView
   - SkyFloatingLabelTextField
   - SwiftGifOrigin
@@ -233,6 +235,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - JGProgressHUD
     - Kingfisher
+    - KMPlaceholderTextView
     - leveldb-library
     - nanopb
     - NVActivityIndicatorView
@@ -279,6 +282,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
+  KMPlaceholderTextView: 2206c3df39979e9396e2d96fa9f427a8951121b0
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
@@ -295,6 +299,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   YPImagePicker: bdaa46782668e260fdd9709f19043a9f469fd2ad
 
-PODFILE CHECKSUM: bbf408817d0f17146d9eaf2b3b5b0fad3f62568a
+PODFILE CHECKSUM: 5dc7221babf03e1b325faf3d1c8db91dd417118c
 
 COCOAPODS: 1.8.4

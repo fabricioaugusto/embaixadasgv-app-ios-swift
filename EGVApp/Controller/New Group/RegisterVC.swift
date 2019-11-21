@@ -110,16 +110,10 @@ class RegisterVC: UIViewController {
                             .document(self.mInvite.id)
                             .delete()
                     
-                        var currentUser: [String:Any] = [:]
-                        currentUser["name"] = name
-                        currentUser["id"] = id
-                        currentUser["email"] = email
-                    
-                        
                         if(self.mInvite.isLeader) {
-                            self.setEmbassy(currentUser: User(dictionary: currentUser)!)
+                            self.setEmbassy(currentUser: User(dictionary: user)!)
                         } else {
-                            self.setUsername(currentUser: User(dictionary: currentUser)!)
+                            self.setUsername(currentUser: User(dictionary: user)!)
                         }
                     }
                 }
@@ -128,7 +122,7 @@ class RegisterVC: UIViewController {
     }
     
     private func setUsername(currentUser: User) {
-        
+        print("egvapplog", currentUser)
         let collection = mDatabase.collection(MyFirebaseCollections.USERS)
     
         let formatted_name = currentUser.name.folding(options: .diacriticInsensitive, locale: .current)
@@ -144,10 +138,10 @@ class RegisterVC: UIViewController {
             last_name = name_array[name_size-1]
         }
     
-        var username = "\(fist_name)_\(last_name)"
+        var username = "\(fist_name)_\(last_name)".lowercased()
     
         if(name_size == 1) {
-            username = fist_name
+            username = fist_name.lowercased()
         }
     
         collection.whereField("username", isEqualTo: username)

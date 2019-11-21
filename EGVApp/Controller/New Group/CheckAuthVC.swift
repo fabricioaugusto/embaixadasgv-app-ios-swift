@@ -42,8 +42,16 @@ class CheckAuthVC: UIViewController, LoginDelegate {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let vc = segue.destination as! CompleteRegisterVC
-        vc.mUser = mUser
+        if(segue.identifier == "completeRegisterSegue") {
+            let vc = segue.destination as! CompleteRegisterVC
+            vc.mUser = mUser
+        }
+        
+        if(segue.identifier == "chooseProfilePhotoSegue") {
+            let vc = segue.destination as! ChooseProfilePhotoVC
+            vc.mUser = mUser
+        }
+        
     }
     
     private func startLoginViewController() {
@@ -108,10 +116,10 @@ class CheckAuthVC: UIViewController, LoginDelegate {
     private func checkUser() {
     
     if(mUser.description == nil) {
-        //startCompleteRegisterActivity()
+        performSegue(withIdentifier: "completeRegisterSegue", sender: nil)
         return
     } else if(mUser.profile_img == nil) {
-        performSegue(withIdentifier: "completeRegisterSegue", sender: nil)
+        performSegue(withIdentifier: "chooseProfilePhotoSegue", sender: nil)
         return
     } else {
         performSegue(withIdentifier: "mainTabBarSegue", sender: nil)
