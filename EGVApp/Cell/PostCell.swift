@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import FaveButton
 
 class PostCell: UITableViewCell {
 
@@ -17,6 +18,13 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var mImgPost: UIImageView!
     @IBOutlet weak var mLbPostDescription: UILabel!
     @IBOutlet weak var baseView: UIView!
+    @IBOutlet weak var svLikeContainer: UIStackView!
+    @IBOutlet weak var mLbLikesCount: UILabel!
+    @IBOutlet weak var mLbCommentsCount: UILabel!
+    @IBOutlet weak var mBtLike: FaveButton!
+    
+    weak var rootVC: RootPostsTableVC!
+    var post: Post!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -47,17 +55,66 @@ class PostCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func prepare(with post: Post) {
+    
+    @IBAction func onClickLikeBt(_ sender: FaveButton) {
+        let postLiked = sender.isSelected
+        sender.isEnabled = false
+        if(postLiked) {
+            let numLikes = post.post_likes+1
+            post.post_likes = numLikes
+            mLbLikesCount.text = "\(numLikes)"
+            rootVC.setLikePost(post: self.post) { (bool) in
+                sender.isEnabled = true
+            }
+            //rootVC.setLikePost(post: self.post)
+        } else {
+            let numLikes = post.post_likes-1
+            post.post_likes = numLikes
+            mLbLikesCount.text = "\(numLikes)"
+            rootVC.setUnlikePost(post: self.post) { (bool) in
+                sender.isEnabled = true
+            }
+            //rootVC.setUnlikePost(post: self.post)
+        }
+    }
+    
+    func prepare(with post: Post, postLikes: [PostLike]) {
         let user: BasicUser = post.user
-
+        
         if post.type == "picture" {
             
         }
         
         mLbUserName.text = post.user.name
-        mLbPostDate.text = "10/11/2019"
-        mLbPostDescription.attributedText = post.text?.htmlToAttributedString
-        mLbPostDescription.font = .systemFont(ofSize: 16.0)
+        
+        if let stamp = post.date {
+            let date = stamp.dateValue()
+            let formattedDate = FormatDate().dateToString(date: date)
+            mLbPostDate.text = "\(String(describing: formattedDate["date"]!)) às \(String(describing: formattedDate["time"]!))"
+        }
+        
+        mLbPostDescription.text = post.text!
+        
+        if(post.post_likes > 0) {
+            mLbLikesCount.text = "\(post.post_likes)"
+        } else {
+            mLbLikesCount.text = ""
+        }
+        
+        if(post.post_comments > 0) {
+            mLbCommentsCount.text = "\(post.post_comments)"
+        } else {
+            mLbCommentsCount.text = ""
+        }
+        
+        if postLikes.contains(where: { postLike in postLike.post_id == post.id }) {
+            mBtLike.setSelected(selected: true, animated: false)
+        } else {
+            mBtLike.setSelected(selected: false, animated: false)
+        }
+        
+        imgUserProfile.layer.cornerRadius = 20
+        imgUserProfile.layer.masksToBounds = true
         
         imgUserProfile.kf.indicatorType = .activity
         if let profile_img = user.profile_img {
@@ -143,3 +200,5 @@ extension String {
     }
     
 }
+
+

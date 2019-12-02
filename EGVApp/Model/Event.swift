@@ -9,8 +9,8 @@
 import Foundation
 import Firebase
 
-struct Event {
-    let id: String
+class Event {
+    var id: String
     let theme: String
     let tag: String
     let description: String
@@ -32,7 +32,7 @@ struct Event {
     let lat: Double?
     let long: Double?
     let moderator_1: BasicUser?
-    let moderator_2: BasicUser?
+    //let moderator_2: BasicUser?
     let embassy_id: String?
     let embassy: BasicEmbassy?
     
@@ -62,11 +62,53 @@ struct Event {
         self.country = dictionary["country"] as? String
         self.postal_code = dictionary["postal_code"] as? String
         self.address = dictionary["address"] as? String
-        self.lat = dictionary["address"] as? Double
+        self.lat = dictionary["lat"] as? Double
         self.long = dictionary["long"] as? Double
-        self.moderator_1 = (dictionary["moderator_1"] == nil) ? BasicUser(dictionary: dictionary["moderator_1"] as! [String : Any]) : nil
-        self.moderator_2 = (dictionary["moderator_2"] == nil) ? BasicUser(dictionary: dictionary["moderator_2"] as! [String : Any]) : nil
+        self.moderator_1 = (dictionary["moderator_1"] != nil) ? BasicUser(dictionary: dictionary["moderator_1"] as! [String : Any]) : nil
+        //self.moderator_2 = (dictionary["moderator_2"] != nil) ? BasicUser(dictionary: dictionary["moderator_2"] as! [String : Any]) : nil
         self.embassy_id = dictionary["embassy_id"] as? String
         self.embassy = BasicEmbassy(dictionary: dictionary["embassy"] as! [String : Any])!
+    }
+    
+    func toBasicMap() -> [String:Any?]{
+        return ["id" : self.id,
+                "theme" : self.theme,
+                "cover_img" : self.cover_img,
+                "city" : self.city,
+                "state_short" : self.state_short,
+                "embassy" : self.embassy?.toBasicMap()
+        ]
+    }
+}
+
+class BasicEvent {
+    var id: String
+    let theme: String
+    let cover_img: String?
+    let city: String?
+    let state_short: String?
+    let embassy: BasicEmbassy?
+    
+    init?(dictionary: [String: Any]) {
+        
+        guard let id = dictionary["id"] as? String else { return nil }
+        guard let theme = dictionary["theme"] as? String else { return nil }
+        
+        self.id = id
+        self.theme = theme
+        self.cover_img = dictionary["cover_img"] as? String
+        self.city = dictionary["city"] as? String
+        self.state_short = dictionary["state_short"] as? String
+        self.embassy = BasicEmbassy(dictionary: dictionary["embassy"] as! [String : Any])!
+    }
+    
+    func toBasicMap() -> [String:Any?]{
+        return ["id" : self.id,
+                "theme" : self.theme,
+                "cover_img" : self.cover_img,
+                "city" : self.city,
+                "state_short" : self.state_short,
+                "embassy" : self.embassy?.toBasicMap()
+        ]
     }
 }

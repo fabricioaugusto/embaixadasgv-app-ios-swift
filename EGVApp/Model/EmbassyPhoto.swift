@@ -17,4 +17,13 @@ struct EmbassyPhoto {
     let picture_file_name: String?
     let thumbnail: String?
     let embassy_id: String?
+    
+    init?(dictionary: [String: Any]) {
+        self.id = dictionary["id"] as! String
+        self.text = dictionary["text"] as? String
+        self.picture = dictionary["picture"] as! String
+        self.picture_file_name = dictionary["picture_file_name"] as? String
+        self.thumbnail = dictionary["thumbnail"] as? String
+        self.embassy_id = dictionary["embassy_id"] as? String
+    }
 }

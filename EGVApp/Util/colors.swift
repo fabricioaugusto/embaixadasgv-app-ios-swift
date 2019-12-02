@@ -19,6 +19,7 @@ class AppColors {
     static let colorWhite = UIColor(named: "colorWhite")!
     static let colorLightGrey = UIColor(named: "colorLightGrey")!
     static let colorGrey = UIColor(named: "colorGrey")!
+    static let colorGreen = UIColor(named: "colorGreen")!
     static let colorMember = UIColor(named: "colorMember")!
     static let colorLeader = UIColor(named: "colorLeader")!
     static let colorSponsor = UIColor(named: "colorSponsor")!

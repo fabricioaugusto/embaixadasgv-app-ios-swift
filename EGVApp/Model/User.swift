@@ -49,7 +49,7 @@ struct User {
     var committee: Committee?
     var username: String?
     var embassy_id: String?
-    var embassy: BasicEmbassy
+    var embassy: BasicEmbassy?
     
     init?(dictionary: [String: Any]) {
         
@@ -96,7 +96,7 @@ struct User {
         self.committee = dictionary["committee"] as? Committee
         self.username = dictionary["username"] as? String
         self.embassy_id = dictionary["embassy_id"] as? String
-        self.embassy = BasicEmbassy(dictionary: dictionary["embassy"] as! [String : Any])!
+        self.embassy = (dictionary["embassy"] != nil) ? BasicEmbassy(dictionary: dictionary["embassy"] as! [String : Any]) : nil
     }
     
     func toMap() -> [String:Any?]{
@@ -137,10 +137,24 @@ struct User {
                     "committee": self.committee,
                     "username": self.username,
                     "embassy_id": self.embassy_id,
-                    "embassy": self.embassy.toBasicMap()
+                    "embassy": self.embassy?.toBasicMap()
         ]
     }
     
+    func toBasicMap() -> [String:Any?]{
+        return ["id": self.id,
+                "name": name,
+                "occupation": occupation,
+                "profile_img": profile_img,
+                "verified": verified,
+                "leader": self.leader,
+                "manager": self.manager,
+                "sponsor": self.sponsor,
+                "committee_leader": self.committee_leader,
+                "username": self.username,
+                "embassy_id": self.embassy_id,
+        ]
+    }
 }
 
 struct BasicUser {

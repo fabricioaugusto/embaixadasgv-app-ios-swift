@@ -59,6 +59,8 @@ class EventCell: UITableViewCell {
                     .transition(.fade(1)),
                     .cacheOriginalImage
                 ])
+        } else {
+            mImgEventCover.image = UIImage(named: "event_default_cover")
         }
     }
     

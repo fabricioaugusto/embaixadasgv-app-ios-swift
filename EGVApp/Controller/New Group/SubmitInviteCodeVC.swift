@@ -39,6 +39,16 @@ class SubmitInviteCodeVC: UIViewController {
         
     }
     
+    @IBAction func onClickRequestCode(_ sender: UIButton) {
+        let url = URL(string: "https://embaixadasgv.app/quero-participar")!
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    
+    @IBAction func onClickBtBack(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 
     private func addFields() {
         
@@ -94,14 +104,15 @@ class SubmitInviteCodeVC: UIViewController {
                 }) {
                     self.mInvite = invite
                     self.mInvite.id = documentSnapshot!.documentID
+                   
                     self.mHud.dismiss()
                     self.performSegue(withIdentifier: "registerSegue", sender: nil)
+                    
                 } else {
                     print("Document does not exist")
                 }
             })
     }
-    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

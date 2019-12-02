@@ -18,6 +18,7 @@ target 'EGVApp' do
   pod 'JGProgressHUD'
   pod 'NVActivityIndicatorView'
   pod 'SkyFloatingLabelTextField'
+  pod 'NextGrowingTextView'
   pod 'SwiftGifOrigin'
   pod 'ActionSheetPicker-3.0'
   pod 'ENMBadgedBarButtonItem'
@@ -30,5 +31,9 @@ target 'EGVApp' do
   pod 'Firebase/Analytics'
   pod 'CodableFirebase'
   pod 'YPImagePicker'
+  pod 'FaveButton'
   pod 'KMPlaceholderTextView', '~> 1.4.0'
+  pod 'INSPhotoGallery'
+  pod 'InstantSearchClient', '~> 7.0'
+  pod 'SwiftRichString'
 end

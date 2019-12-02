@@ -10,10 +10,10 @@ import UIKit
 import SkyFloatingLabelTextField
 import FontAwesome_swift
 import FirebaseAuth
-
+import JGProgressHUD
 
 protocol LoginDelegate: class {
-    func checkLogin(uid: String)
+    func checkLogin(uid: String, vc: LoginVC)
 }
 
 class LoginVC: UIViewController {
@@ -25,6 +25,7 @@ class LoginVC: UIViewController {
     private var mAuth: Auth?
     private var mEmailField: SkyFloatingLabelTextField?
     private var mPassField: SkyFloatingLabelTextField?
+    private var mHud: JGProgressHUD!
     
     weak var delegate: LoginDelegate?
     
@@ -34,6 +35,11 @@ class LoginVC: UIViewController {
         self.mAuth = MyFirebase.sharedInstance.auth()
         addFields()
         // Do any additional setup after loading the view.
+        mHud = JGProgressHUD(style: .extraLight)
+        mHud.textLabel.textColor = AppColors.colorPrimary
+        mHud.indicatorView?.tintColor = AppColors.colorLink
+        mHud.textLabel.text = "Entrando..."
+    
     }
     
     @IBAction func loginPress(_ sender: UIButton) {
@@ -54,6 +60,9 @@ class LoginVC: UIViewController {
         
         mEmailField?.delegate = self
         mPassField?.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         mSVContainerLogin.alignment = .fill
         mSVContainerLogin.distribution = .fill
@@ -83,14 +92,45 @@ class LoginVC: UIViewController {
     
         let email: String = self.mEmailField!.text ?? ""
         let pass: String =  self.mPassField!.text ?? ""
-    
+        
+        if(email.isEmpty || pass.isEmpty) {
+            self.makeAlert(message: "Você precisa preenchar todos os campos para efetuar o login")
+            return
+        }
+        
+        self.mHud.show(in: self.view)
+        
         self.mAuth?.signIn(withEmail: email, password: pass) { [weak self] user, error in
             guard self != nil else { return }
             if let credential = user {
-                self?.delegate?.checkLogin(uid: credential.user.uid)
+                self?.mHud.dismiss()
+                self?.delegate?.checkLogin(uid: credential.user.uid, vc: self!)
                 self?.dismiss(animated: true, completion: nil)
+            } else {
+                self?.mHud.dismiss()
+                self?.makeAlert(message: "Dados de login incorretos, tente novamente!")
             }
                 // ...
+        }
+    }
+    
+    private func makeAlert(message: String) {
+        let alert = UIAlertController(title: "Ops", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height-100
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
         }
     }
     /*

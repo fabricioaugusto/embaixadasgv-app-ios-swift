@@ -17,6 +17,7 @@ class CheckAuthVC: UIViewController, LoginDelegate {
     private var mAuth: Auth!
     private var mDatabase: Firestore?
     private var mUser: User!
+    private var mLoginDone: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +34,9 @@ class CheckAuthVC: UIViewController, LoginDelegate {
         
         if let authUser = loggedUser {
             let uid = authUser.uid
-            print("egvapplog", authUser.uid)
-            getCurrentUser(uid: uid)
+            if(!mLoginDone) {
+               getCurrentUser(uid: uid)
+            }
         } else {
             startLoginViewController()
         }
@@ -45,12 +47,40 @@ class CheckAuthVC: UIViewController, LoginDelegate {
         if(segue.identifier == "completeRegisterSegue") {
             let vc = segue.destination as! CompleteRegisterVC
             vc.mUser = mUser
+            return
         }
         
         if(segue.identifier == "chooseProfilePhotoSegue") {
             let vc = segue.destination as! ChooseProfilePhotoVC
             vc.mUser = mUser
+            return
         }
+        
+        if(segue.identifier == "mainTabBarSegue") {
+            let barViewControllers = segue.destination as! UITabBarController
+            
+            let dashboardTab = barViewControllers.viewControllers![0] as! UINavigationController
+            let dashboardVC = dashboardTab.topViewController as! RootDashboardVC
+            dashboardVC.mUser = mUser
+            
+            let usersTab = barViewControllers.viewControllers![1] as! UINavigationController
+            let usersVC = usersTab.topViewController as! RootUsersTableVC
+            usersVC.mUser = mUser
+            
+            let contentTab = barViewControllers.viewControllers![2] as! UINavigationController
+            let contentVC = contentTab.topViewController as! RootPostsTableVC
+            contentVC.mUser = mUser
+            
+            let agendaTab = barViewControllers.viewControllers![3] as! UINavigationController
+            let agendaVC = agendaTab.topViewController as! RootAgendaTableVC
+            agendaVC.mUser = mUser
+            
+            let menuTab = barViewControllers.viewControllers![4] as! UINavigationController
+            let menuVC = menuTab.topViewController as! RootMenuTableVC
+            menuVC.mUser = mUser
+        }
+        
+        
         
     }
     
@@ -60,7 +90,8 @@ class CheckAuthVC: UIViewController, LoginDelegate {
         self.present(loginVC, animated: true, completion: nil)
     }
     
-    func checkLogin(uid: String) {
+    func checkLogin(uid: String, vc: LoginVC) {
+        self.mLoginDone = true
         getCurrentUser(uid: uid)
     }
     
@@ -99,8 +130,6 @@ class CheckAuthVC: UIViewController, LoginDelegate {
                     
                     self.mUser = user
                     self.checkUser()
-                    
-                    print("User: \(user)")
                 } else {
                     do {
                         try self.mAuth.signOut()
@@ -115,15 +144,15 @@ class CheckAuthVC: UIViewController, LoginDelegate {
     
     private func checkUser() {
     
-    if(mUser.description == nil) {
-        performSegue(withIdentifier: "completeRegisterSegue", sender: nil)
-        return
-    } else if(mUser.profile_img == nil) {
-        performSegue(withIdentifier: "chooseProfilePhotoSegue", sender: nil)
-        return
-    } else {
-        performSegue(withIdentifier: "mainTabBarSegue", sender: nil)
-        return
+        if(mUser.description == nil) {
+            performSegue(withIdentifier: "completeRegisterSegue", sender: nil)
+            return
+        } else if(mUser.profile_img == nil) {
+            performSegue(withIdentifier: "chooseProfilePhotoSegue", sender: nil)
+            return
+        } else {
+            performSegue(withIdentifier: "mainTabBarSegue", sender: nil)
+            return
         }
     }
     

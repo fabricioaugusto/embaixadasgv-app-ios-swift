@@ -12,17 +12,18 @@ import FirebaseFirestore
 
 class RootAgendaTableVC: UITableViewController {
 
+    var mUser: User!
+    var mSelectedEvent: Event!
     private var mDatabase: Firestore?
     private var mLastDocument: DocumentSnapshot?
     private var mLastDocumentRequested: DocumentSnapshot?
     private var mEventList: [Event] = []
     private var isPostsOver: Bool = false
     private var mAdapterPosition: Int = 0
-    private var mUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         mDatabase = MyFirebase.sharedInstance.database()
         getEventList()
         // Uncomment the following line to preserve selection between presentations
@@ -67,8 +68,22 @@ class RootAgendaTableVC: UITableViewController {
                  }
              })
     }
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "singleEventSegue") {
+            let vc = segue.destination as! SingleEventVC
+            vc.mEvent = self.mSelectedEvent
+            vc.mUser = self.mUser
+        }
+    }
 
     // MARK: - Table view data source
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.mSelectedEvent = mEventList[indexPath.row]
+        performSegue(withIdentifier: "singleEventSegue", sender: nil)
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections

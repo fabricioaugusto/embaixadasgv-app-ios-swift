@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import FaveButton
+import Kingfisher
+import SwiftRichString
 
 class ThoughtCell: UITableViewCell {
     
@@ -14,7 +17,13 @@ class ThoughtCell: UITableViewCell {
     @IBOutlet weak var mLbUserName: UILabel!
     @IBOutlet weak var mLbPostDate: UILabel!
     @IBOutlet weak var mLbPostDescription: UILabel!
-
+    @IBOutlet weak var mLbLikesCount: UILabel!
+    @IBOutlet weak var mLbCommentsCount: UILabel!
+    @IBOutlet weak var mBtLike: FaveButton!
+    
+    weak var rootVC: RootPostsTableVC!
+    var post: Post!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,13 +35,65 @@ class ThoughtCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func prepare(with post: Post) {
+    @IBAction func onClickLikeBt(_ sender: FaveButton) {
+        let postLiked = sender.isSelected
+        sender.isEnabled = false
+        if(postLiked) {
+            let numLikes = post.post_likes+1
+            post.post_likes = numLikes
+            mLbLikesCount.text = "\(numLikes)"
+            rootVC.setLikePost(post: self.post) { (bool) in
+                sender.isEnabled = true
+            }
+            //rootVC.setLikePost(post: self.post)
+        } else {
+            let numLikes = post.post_likes-1
+            post.post_likes = numLikes
+            mLbLikesCount.text = "\(numLikes)"
+            rootVC.setUnlikePost(post: self.post) { (bool) in
+                sender.isEnabled = true
+            }
+            //rootVC.setUnlikePost(post: self.post)
+        }
+    }
+    
+    
+    func prepare(with post: Post, postLikes: [PostLike]) {
         let user: BasicUser = post.user
         
         mLbUserName.text = post.user.name
-        mLbPostDate.text = "10/11/2019"
-        mLbPostDescription.attributedText = post.text?.htmlToAttributedString
-        mLbPostDescription.font = .systemFont(ofSize: 24.0)
+        if let stamp = post.date {
+            let date = stamp.dateValue()
+            let formattedDate = FormatDate().dateToString(date: date)
+            mLbPostDate.text = "\(String(describing: formattedDate["date"]!)) às \(String(describing: formattedDate["time"]!))"
+        }
+        
+        let bodyHTML = "<span style='font-family: \"-apple-system\", \"HelveticaNeue\" ; font-size:24;  color:#4D4D4F'; padding: 0; margin: 0;>\(post.text!)</span>"
+        let data = Data(bodyHTML.utf8)
+        if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+            mLbPostDescription.attributedText = attributedString
+        }
+        
+        if(post.post_likes > 0) {
+            mLbLikesCount.text = "\(post.post_likes)"
+        } else {
+            mLbLikesCount.text = ""
+        }
+        
+        if(post.post_comments > 0) {
+            mLbCommentsCount.text = "\(post.post_comments)"
+        } else {
+            mLbCommentsCount.text = ""
+        }
+        
+        if postLikes.contains(where: { postLike in postLike.post_id == post.id }) {
+            mBtLike.setSelected(selected: true, animated: false)
+        } else {
+            mBtLike.setSelected(selected: false, animated: false)
+        }
+        
+        imgUserProfile.layer.cornerRadius = 20
+        imgUserProfile.layer.masksToBounds = true
         
         imgUserProfile.kf.indicatorType = .activity
         if let profile_img = user.profile_img {
@@ -47,25 +108,6 @@ class ThoughtCell: UITableViewCell {
                 ])
         }
 
-    }
-    
-    static func sizeOfImageAt(url: URL) -> CGSize? {
-        // with CGImageSource we avoid loading the whole image into memory
-        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil) else {
-            return nil
-        }
-        
-        let propertiesOptions = [kCGImageSourceShouldCache: false] as CFDictionary
-        guard let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, propertiesOptions) as? [CFString: Any] else {
-            return nil
-        }
-        
-        if let width = properties[kCGImagePropertyPixelWidth] as? CGFloat,
-            let height = properties[kCGImagePropertyPixelHeight] as? CGFloat {
-            return CGSize(width: width, height: height)
-        } else {
-            return nil
-        }
     }
     
 }

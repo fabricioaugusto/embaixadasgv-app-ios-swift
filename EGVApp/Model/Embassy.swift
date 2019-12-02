@@ -26,7 +26,7 @@ struct Embassy {
     let approved_by_name: String?
     let leader_id: String
     let leader_username: String
-    let leader: User?
+    let leader: BasicUser?
     let embassySponsor_id: String?
     let embassySponsor: EmbassySponsor?
     
@@ -48,7 +48,7 @@ struct Embassy {
         self.approved_by_name = dictionary["approved_by_name"] as? String
         self.leader_id = dictionary["leader_id"] as? String ?? ""
         self.leader_username = dictionary["leader_username"] as? String ?? ""
-        self.leader = dictionary["leader"] as? User
+        self.leader = (dictionary["leader"] != nil) ? BasicUser(dictionary: dictionary["leader"] as! [String : Any]) : nil
         self.embassySponsor_id = dictionary["embassySponsor_id"] as? String
         self.embassySponsor = dictionary["embassySponsor"] as? EmbassySponsor
     }

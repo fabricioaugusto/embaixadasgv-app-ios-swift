@@ -9,11 +9,22 @@
 import Foundation
 import Firebase
 
-struct PostComment {
+class PostComment {
     let id: String
     let post_id: String
     let user_id: String
     let text: String
     //let date: Timestamp?
-    let user: User
+    let user: BasicUser
+    
+    init?(dictionary: [String: Any]) {
+        
+        guard let id = dictionary["id"] as? String else { return nil }
+        
+        self.id = id
+        self.post_id = dictionary["post_id"] as! String
+        self.user_id = dictionary["user_id"] as! String
+        self.text = dictionary["text"] as! String
+        self.user =  BasicUser(dictionary: dictionary["user"] as! [String : Any])!
+    }
 }

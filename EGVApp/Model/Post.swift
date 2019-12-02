@@ -9,16 +9,16 @@
 import Foundation
 import Firebase
 
-struct Post {
+class Post {
     let id: String
     let type: String
-    //let date: Timestamp?
+    let date: Timestamp?
     let schedule: String?
     let text: String?
     let picture: String?
     let picture_file_name: String?
     let title: String?
-    let post_likes: Int
+    var post_likes: Int
     let picture_width: Int
     let picture_height: Int
     let post_comments: Int
@@ -40,6 +40,7 @@ struct Post {
         self.type = type
         self.schedule = dictionary["schedule"] as? String
         self.text = dictionary["text"] as? String
+        self.date = dictionary["date"] as? Timestamp
         self.picture = dictionary["picture"] as? String
         self.picture_file_name = dictionary["picture_file_name"] as? String
         self.title = dictionary["title"] as? String

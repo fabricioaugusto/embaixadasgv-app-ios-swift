@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 class RootMenuTableVC: UITableViewController {
 
-    private var mUser: User?
+    var mUser: User!
     private var mAuth: Auth!
     private var mDatabase: Firestore?
     private var mMenuList: [MenuItem] = []
@@ -23,7 +23,7 @@ class RootMenuTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        print("evgapplog root", mUser.id)
         mAuth = MyFirebase.sharedInstance.auth()
         mDatabase = MyFirebase.sharedInstance.database()
         
@@ -96,6 +96,52 @@ class RootMenuTableVC: UITableViewController {
     }
     
     private func setItemsActions(item_name: String) {
+        
+        if(item_name == MenuItens.editProfile) {
+            performSegue(withIdentifier: "editProfileSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.changeProfilePhoto) {
+            performSegue(withIdentifier: "changeProfilePhotoSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.changePassword) {
+            performSegue(withIdentifier: "changePasswordSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.editSocialNetwork) {
+            performSegue(withIdentifier: "editSocialNetworkSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.myEmbassy) {
+            performSegue(withIdentifier: "myEmbassySegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.setPrivacy) {
+            performSegue(withIdentifier: "setPrivacySegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.embassyList) {
+            performSegue(withIdentifier: "embassyListSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.aboutEmbassy) {
+            performSegue(withIdentifier: "aboutEmbassySegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.suggestFeatures) {
+            performSegue(withIdentifier: "suggestFeaturesSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.sendUsMessage) {
+            performSegue(withIdentifier: "sendUsMessageSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.rateApp) {
+            self.makeAlert(message: "Este recurso estará disponível nas próximas atualizações!")
+        }
+        
+        
         if(item_name == MenuItens.logout) {
             
             do {
@@ -109,7 +155,64 @@ class RootMenuTableVC: UITableViewController {
         }
     }
     
-    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "userSingleSegue" {
+            let vc = segue.destination as! SingleUserVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "editProfileSegue" {
+            let vc = segue.destination as! EditProfileVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "changeProfilePhotoSegue" {
+            let vc = segue.destination as! ChangeProfilePhotoVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "changePasswordSegue" {
+            let vc = segue.destination as! ChangePasswordVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "editSocialNetworkSegue" {
+            let vc = segue.destination as! EditSocialNetworkingVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "myEmbassySegue" {
+            let vc = segue.destination as! SingleEmbassyVC
+            vc.mUser = self.mUser
+            vc.mEmbassyID = self.mUser.embassy_id!
+        }
+        
+        if segue.identifier == "setPrivacySegue" {
+            let vc = segue.destination as! SetPrivacyVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "embassyListSegue" {
+            let vc = segue.destination as! ListEmbassyTableVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "aboutEmbassySegue" {
+            let vc = segue.destination as! AboutEmbassiesVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "suggestFeaturesSegue" {
+            let vc = segue.destination as! SuggestFeaturesVC
+            vc.mUser = self.mUser
+        }
+        if segue.identifier == "sendUsMessageSegue" {
+            let vc = segue.destination as! SendMessageVC
+            vc.mUser = self.mUser
+        }
+    }
     
     // MARK: - Table view data source
 
@@ -125,6 +228,11 @@ class RootMenuTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if(indexPath.section == 0 && indexPath.row == 0) {
+            performSegue(withIdentifier: "userSingleSegue", sender: nil)
+            return
+        }
         
         if let item_name = mMenuDict[indexPath.section]?[indexPath.row].item_name {
             self.setItemsActions(item_name: item_name)
@@ -151,8 +259,11 @@ class RootMenuTableVC: UITableViewController {
     }
 
     
-    
-    
+    private func makeAlert(message: String) {
+        let alert = UIAlertController(title: "Em breve!", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -191,11 +302,7 @@ class RootMenuTableVC: UITableViewController {
     /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
+    
     */
 
 }

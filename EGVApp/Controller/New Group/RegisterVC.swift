@@ -26,6 +26,8 @@ class RegisterVC: UIViewController {
     private var mPasswordField: SkyFloatingLabelTextField!
     private var mConfirmPasswordField: SkyFloatingLabelTextField!
     private var mHud: JGProgressHUD!
+    @IBOutlet weak var mBtPolicyPrivacy: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +41,24 @@ class RegisterVC: UIViewController {
         mHud.textLabel.textColor = AppColors.colorPrimary
         mHud.indicatorView?.tintColor = AppColors.colorLink
         mHud.textLabel.text = "Registrando..."
+        
+        let bodyHTML = "<span style='font-family: \"-apple-system\", \"HelveticaNeue\" ; font-size:16;  color:#fafafa'; text-align: center;>Ao se cadastrar você está de acordo com as <b style='color:#6699CC'>Políticas de Privacidade</b></span>"
+        let htmlData = NSString(string: bodyHTML).data(using: String.Encoding.unicode.rawValue)
+        let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
+            NSAttributedString.DocumentType.html]
+        let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
+                                                              options: options,
+                                                              documentAttributes: nil)
+        mBtPolicyPrivacy.setAttributedTitle(attributedString, for: .normal)
+    }
+    
+    @IBAction func onClickPolicyPrivacy(_ sender: UIButton) {
+        let url = URL(string: "https://embaixadasgv.app/politicas-de-privacidade")!
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    @IBAction func onClickBtBack(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onClickRegisterBt(_ sender: UIButton) {

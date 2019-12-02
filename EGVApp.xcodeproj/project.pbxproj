@@ -9,10 +9,6 @@
 /* Begin PBXBuildFile section */
 		0406853C23786021000EF764 /* RootUsersTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0406853B23786021000EF764 /* RootUsersTableVC.swift */; };
 		0406853E23786072000EF764 /* RootDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0406853D23786072000EF764 /* RootDashboardVC.swift */; };
-		040685412378E66D000EF764 /* RootPostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040685402378E66D000EF764 /* RootPostsVC.swift */; };
-		040685432378E999000EF764 /* AllPostsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040685422378E999000EF764 /* AllPostsTableVC.swift */; };
-		040685452378E9C6000EF764 /* EmbassyPostsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040685442378E9C6000EF764 /* EmbassyPostsTableVC.swift */; };
-		040685472378EA07000EF764 /* HighlightsPostsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040685462378EA06000EF764 /* HighlightsPostsTableVC.swift */; };
 		0406C3C8237B743D0012BF50 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0406C3C7237B743D0012BF50 /* MenuCell.swift */; };
 		0406C3CA237B9A9F0012BF50 /* UserProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0406C3C9237B9A9F0012BF50 /* UserProfileCell.swift */; };
 		041265F323722A27009C5E2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041265F223722A27009C5E2B /* AppDelegate.swift */; };
@@ -29,9 +25,9 @@
 		04394195237A519000E0B848 /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04394194237A519000E0B848 /* ArticleCell.swift */; };
 		044AEDA52385BD2900D53928 /* app_layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044AEDA42385BD2900D53928 /* app_layout.swift */; };
 		044AEDA72386252A00D53928 /* PostPictureCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044AEDA62386252A00D53928 /* PostPictureCollectionCell.swift */; };
-		044AEDA92386256500D53928 /* AllPostsCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044AEDA82386256500D53928 /* AllPostsCollectionVC.swift */; };
+		04520EA22392D8CC00A8B9DC /* FormatDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04520EA12392D8CC00A8B9DC /* FormatDate.swift */; };
+		046F286E23918DFF00798FBD /* SocialButtonCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046F286D23918DFF00798FBD /* SocialButtonCollectionCell.swift */; };
 		0471A83023772BE900CF2B9C /* RootAgendaTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A82F23772BE900CF2B9C /* RootAgendaTableVC.swift */; };
-		0471A83223772C2F00CF2B9C /* RootPostsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A83123772C2F00CF2B9C /* RootPostsTableVC.swift */; };
 		0471A83423772C5B00CF2B9C /* RootMenuTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A83323772C5B00CF2B9C /* RootMenuTableVC.swift */; };
 		0471A83723772CBA00CF2B9C /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A83623772CBA00CF2B9C /* UserCell.swift */; };
 		0471A83B2377313D00CF2B9C /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471A83A2377313D00CF2B9C /* PostCell.swift */; };
@@ -53,6 +49,27 @@
 		047452832373BCAD002FDDE7 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047452822373BCAD002FDDE7 /* Post.swift */; };
 		047452852373BCD8002FDDE7 /* PostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047452842373BCD8002FDDE7 /* PostComment.swift */; };
 		047452872373BCF7002FDDE7 /* PostLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047452862373BCF7002FDDE7 /* PostLike.swift */; };
+		04B46E61238D47A4005C0961 /* ChangeProfilePhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E60238D47A4005C0961 /* ChangeProfilePhotoVC.swift */; };
+		04B46E63238D47C7005C0961 /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E62238D47C7005C0961 /* ChangePasswordVC.swift */; };
+		04B46E65238D47E5005C0961 /* EditSocialNetworkingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E64238D47E5005C0961 /* EditSocialNetworkingVC.swift */; };
+		04B46E67238D481F005C0961 /* SetPrivacyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E66238D481F005C0961 /* SetPrivacyVC.swift */; };
+		04B46E69238D484F005C0961 /* AboutEmbassiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E68238D484F005C0961 /* AboutEmbassiesVC.swift */; };
+		04B46E6B238D487C005C0961 /* SuggestFeaturesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E6A238D487C005C0961 /* SuggestFeaturesVC.swift */; };
+		04B46E6D238D489D005C0961 /* SendMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E6C238D489D005C0961 /* SendMessageVC.swift */; };
+		04B46E6F238D48D2005C0961 /* ListEmbassyTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E6E238D48D2005C0961 /* ListEmbassyTableVC.swift */; };
+		04D644DE238EA5B400EB0954 /* EmbassyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D644DD238EA5B400EB0954 /* EmbassyCell.swift */; };
+		04D644E2238EC83700EB0954 /* EmbassyEventsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D644E1238EC83700EB0954 /* EmbassyEventsTableVC.swift */; };
+		04D644E4238EC85200EB0954 /* EmbassyMembersTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D644E3238EC85200EB0954 /* EmbassyMembersTableVC.swift */; };
+		04D644E6238EC86F00EB0954 /* EmbassyPhotosTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D644E5238EC86F00EB0954 /* EmbassyPhotosTableVC.swift */; };
+		04D644E8238EC88600EB0954 /* NotificationsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D644E7238EC88600EB0954 /* NotificationsTableVC.swift */; };
+		04D644EA238EF4C100EB0954 /* EmbassyPhotosCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D644E9238EF4C100EB0954 /* EmbassyPhotosCollectionVC.swift */; };
+		04D644EC238EFC5100EB0954 /* EmbassyPhotoCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D644EB238EFC5100EB0954 /* EmbassyPhotoCollectionCell.swift */; };
+		04D644EE238F361600EB0954 /* EmbassyPhotosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D644ED238F361600EB0954 /* EmbassyPhotosVC.swift */; };
+		04F4A96D23896E1600049C11 /* SinglePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F4A96C23896E1600049C11 /* SinglePostCell.swift */; };
+		04F4A96F23896F3200049C11 /* SingleArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F4A96E23896F3200049C11 /* SingleArticleCell.swift */; };
+		04F4A97123896F5500049C11 /* SingleThoughtCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F4A97023896F5500049C11 /* SingleThoughtCell.swift */; };
+		04F4A97323899C0E00049C11 /* PostCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F4A97223899C0E00049C11 /* PostCommentCell.swift */; };
+		04FC48D52386B377008814D6 /* RootPostsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC48D42386B377008814D6 /* RootPostsTableVC.swift */; };
 		7F08B03A23730B710013EE62 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03923730B710013EE62 /* RegisterVC.swift */; };
 		7F08B03C23730BA90013EE62 /* CheckAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03B23730BA90013EE62 /* CheckAuthVC.swift */; };
 		7F08B03E23730BD40013EE62 /* SubmitInviteCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F08B03D23730BD40013EE62 /* SubmitInviteCodeVC.swift */; };
@@ -75,10 +92,6 @@
 /* Begin PBXFileReference section */
 		0406853B23786021000EF764 /* RootUsersTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootUsersTableVC.swift; sourceTree = "<group>"; };
 		0406853D23786072000EF764 /* RootDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootDashboardVC.swift; sourceTree = "<group>"; };
-		040685402378E66D000EF764 /* RootPostsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPostsVC.swift; sourceTree = "<group>"; };
-		040685422378E999000EF764 /* AllPostsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPostsTableVC.swift; sourceTree = "<group>"; };
-		040685442378E9C6000EF764 /* EmbassyPostsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyPostsTableVC.swift; sourceTree = "<group>"; };
-		040685462378EA06000EF764 /* HighlightsPostsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightsPostsTableVC.swift; sourceTree = "<group>"; };
 		0406C3C7237B743D0012BF50 /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		0406C3C9237B9A9F0012BF50 /* UserProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileCell.swift; sourceTree = "<group>"; };
 		041265EF23722A27009C5E2B /* EGVApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EGVApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,9 +110,9 @@
 		04394194237A519000E0B848 /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
 		044AEDA42385BD2900D53928 /* app_layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = app_layout.swift; sourceTree = "<group>"; };
 		044AEDA62386252A00D53928 /* PostPictureCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPictureCollectionCell.swift; sourceTree = "<group>"; };
-		044AEDA82386256500D53928 /* AllPostsCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPostsCollectionVC.swift; sourceTree = "<group>"; };
+		04520EA12392D8CC00A8B9DC /* FormatDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatDate.swift; sourceTree = "<group>"; };
+		046F286D23918DFF00798FBD /* SocialButtonCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialButtonCollectionCell.swift; sourceTree = "<group>"; };
 		0471A82F23772BE900CF2B9C /* RootAgendaTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAgendaTableVC.swift; sourceTree = "<group>"; };
-		0471A83123772C2F00CF2B9C /* RootPostsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPostsTableVC.swift; sourceTree = "<group>"; };
 		0471A83323772C5B00CF2B9C /* RootMenuTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootMenuTableVC.swift; sourceTree = "<group>"; };
 		0471A83623772CBA00CF2B9C /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		0471A83A2377313D00CF2B9C /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
@@ -121,6 +134,27 @@
 		047452822373BCAD002FDDE7 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		047452842373BCD8002FDDE7 /* PostComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostComment.swift; sourceTree = "<group>"; };
 		047452862373BCF7002FDDE7 /* PostLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLike.swift; sourceTree = "<group>"; };
+		04B46E60238D47A4005C0961 /* ChangeProfilePhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeProfilePhotoVC.swift; sourceTree = "<group>"; };
+		04B46E62238D47C7005C0961 /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
+		04B46E64238D47E5005C0961 /* EditSocialNetworkingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSocialNetworkingVC.swift; sourceTree = "<group>"; };
+		04B46E66238D481F005C0961 /* SetPrivacyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPrivacyVC.swift; sourceTree = "<group>"; };
+		04B46E68238D484F005C0961 /* AboutEmbassiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutEmbassiesVC.swift; sourceTree = "<group>"; };
+		04B46E6A238D487C005C0961 /* SuggestFeaturesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestFeaturesVC.swift; sourceTree = "<group>"; };
+		04B46E6C238D489D005C0961 /* SendMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageVC.swift; sourceTree = "<group>"; };
+		04B46E6E238D48D2005C0961 /* ListEmbassyTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListEmbassyTableVC.swift; sourceTree = "<group>"; };
+		04D644DD238EA5B400EB0954 /* EmbassyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyCell.swift; sourceTree = "<group>"; };
+		04D644E1238EC83700EB0954 /* EmbassyEventsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyEventsTableVC.swift; sourceTree = "<group>"; };
+		04D644E3238EC85200EB0954 /* EmbassyMembersTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyMembersTableVC.swift; sourceTree = "<group>"; };
+		04D644E5238EC86F00EB0954 /* EmbassyPhotosTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyPhotosTableVC.swift; sourceTree = "<group>"; };
+		04D644E7238EC88600EB0954 /* NotificationsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableVC.swift; sourceTree = "<group>"; };
+		04D644E9238EF4C100EB0954 /* EmbassyPhotosCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyPhotosCollectionVC.swift; sourceTree = "<group>"; };
+		04D644EB238EFC5100EB0954 /* EmbassyPhotoCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyPhotoCollectionCell.swift; sourceTree = "<group>"; };
+		04D644ED238F361600EB0954 /* EmbassyPhotosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyPhotosVC.swift; sourceTree = "<group>"; };
+		04F4A96C23896E1600049C11 /* SinglePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePostCell.swift; sourceTree = "<group>"; };
+		04F4A96E23896F3200049C11 /* SingleArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleArticleCell.swift; sourceTree = "<group>"; };
+		04F4A97023896F5500049C11 /* SingleThoughtCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleThoughtCell.swift; sourceTree = "<group>"; };
+		04F4A97223899C0E00049C11 /* PostCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentCell.swift; sourceTree = "<group>"; };
+		04FC48D42386B377008814D6 /* RootPostsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPostsTableVC.swift; sourceTree = "<group>"; };
 		38D16E11099B0B09AD830A39 /* Pods-EGVApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EGVApp.debug.xcconfig"; path = "Target Support Files/Pods-EGVApp/Pods-EGVApp.debug.xcconfig"; sourceTree = "<group>"; };
 		72A69298F46A22B7E769D283 /* Pods-EGVApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EGVApp.release.xcconfig"; path = "Target Support Files/Pods-EGVApp/Pods-EGVApp.release.xcconfig"; sourceTree = "<group>"; };
 		7F08B03923730B710013EE62 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
@@ -193,6 +227,7 @@
 		0412660523724C62009C5E2B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04D644E0238EC80200EB0954 /* Dashboard */,
 				7F2411A023841C2A00D7C901 /* Menu */,
 				7F946FFF237C32BA00742CF0 /* Single */,
 				0471A82C23772B8100CF2B9C /* Tabs */,
@@ -250,6 +285,7 @@
 				0412660F2372554E009C5E2B /* colors.swift */,
 				7F351048237AF55B004FC2D3 /* menu_items.swift */,
 				044AEDA42385BD2900D53928 /* app_layout.swift */,
+				04520EA12392D8CC00A8B9DC /* FormatDate.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -292,14 +328,9 @@
 			children = (
 				0406853B23786021000EF764 /* RootUsersTableVC.swift */,
 				0471A82F23772BE900CF2B9C /* RootAgendaTableVC.swift */,
-				0471A83123772C2F00CF2B9C /* RootPostsTableVC.swift */,
 				0471A83323772C5B00CF2B9C /* RootMenuTableVC.swift */,
 				0406853D23786072000EF764 /* RootDashboardVC.swift */,
-				040685402378E66D000EF764 /* RootPostsVC.swift */,
-				040685422378E999000EF764 /* AllPostsTableVC.swift */,
-				040685442378E9C6000EF764 /* EmbassyPostsTableVC.swift */,
-				040685462378EA06000EF764 /* HighlightsPostsTableVC.swift */,
-				044AEDA82386256500D53928 /* AllPostsCollectionVC.swift */,
+				04FC48D42386B377008814D6 /* RootPostsTableVC.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -316,14 +347,42 @@
 				0406C3C7237B743D0012BF50 /* MenuCell.swift */,
 				0406C3C9237B9A9F0012BF50 /* UserProfileCell.swift */,
 				044AEDA62386252A00D53928 /* PostPictureCollectionCell.swift */,
+				04F4A96C23896E1600049C11 /* SinglePostCell.swift */,
+				04F4A96E23896F3200049C11 /* SingleArticleCell.swift */,
+				04F4A97023896F5500049C11 /* SingleThoughtCell.swift */,
+				04F4A97223899C0E00049C11 /* PostCommentCell.swift */,
+				04D644DD238EA5B400EB0954 /* EmbassyCell.swift */,
+				04D644EB238EFC5100EB0954 /* EmbassyPhotoCollectionCell.swift */,
+				046F286D23918DFF00798FBD /* SocialButtonCollectionCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		04D644E0238EC80200EB0954 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				04D644E1238EC83700EB0954 /* EmbassyEventsTableVC.swift */,
+				04D644E3238EC85200EB0954 /* EmbassyMembersTableVC.swift */,
+				04D644E5238EC86F00EB0954 /* EmbassyPhotosTableVC.swift */,
+				04D644E7238EC88600EB0954 /* NotificationsTableVC.swift */,
+				04D644E9238EF4C100EB0954 /* EmbassyPhotosCollectionVC.swift */,
+				04D644ED238F361600EB0954 /* EmbassyPhotosVC.swift */,
+			);
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		7F2411A023841C2A00D7C901 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
 				7F2411A123841D4800D7C901 /* EditProfileVC.swift */,
+				04B46E60238D47A4005C0961 /* ChangeProfilePhotoVC.swift */,
+				04B46E62238D47C7005C0961 /* ChangePasswordVC.swift */,
+				04B46E64238D47E5005C0961 /* EditSocialNetworkingVC.swift */,
+				04B46E66238D481F005C0961 /* SetPrivacyVC.swift */,
+				04B46E68238D484F005C0961 /* AboutEmbassiesVC.swift */,
+				04B46E6A238D487C005C0961 /* SuggestFeaturesVC.swift */,
+				04B46E6C238D489D005C0961 /* SendMessageVC.swift */,
+				04B46E6E238D48D2005C0961 /* ListEmbassyTableVC.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -495,45 +554,57 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F947003237C336900742CF0 /* SingleEventVC.swift in Sources */,
+				04F4A97323899C0E00049C11 /* PostCommentCell.swift in Sources */,
 				0474527F2373BC85002FDDE7 /* MenuItem.swift in Sources */,
 				041265F523722A27009C5E2B /* ViewController.swift in Sources */,
+				04B46E6D238D489D005C0961 /* SendMessageVC.swift in Sources */,
 				0474526B2373BB44002FDDE7 /* Bulletin.swift in Sources */,
 				044AEDA72386252A00D53928 /* PostPictureCollectionCell.swift in Sources */,
-				040685432378E999000EF764 /* AllPostsTableVC.swift in Sources */,
 				041266102372554E009C5E2B /* colors.swift in Sources */,
 				041265F323722A27009C5E2B /* AppDelegate.swift in Sources */,
+				04B46E6B238D487C005C0961 /* SuggestFeaturesVC.swift in Sources */,
 				047452792373BC23002FDDE7 /* Event.swift in Sources */,
+				04D644E6238EC86F00EB0954 /* EmbassyPhotosTableVC.swift in Sources */,
 				0406853C23786021000EF764 /* RootUsersTableVC.swift in Sources */,
+				04B46E61238D47A4005C0961 /* ChangeProfilePhotoVC.swift in Sources */,
 				047452652373B600002FDDE7 /* AppMessage.swift in Sources */,
 				7F08B03C23730BA90013EE62 /* CheckAuthVC.swift in Sources */,
 				7F351049237AF55B004FC2D3 /* menu_items.swift in Sources */,
 				7F25D0CE2379C27E00EEA08C /* PostPictureCell.swift in Sources */,
+				04D644EE238F361600EB0954 /* EmbassyPhotosVC.swift in Sources */,
 				047452772373BC0D002FDDE7 /* Enrollment.swift in Sources */,
+				04F4A96F23896F3200049C11 /* SingleArticleCell.swift in Sources */,
+				04B46E63238D47C7005C0961 /* ChangePasswordVC.swift in Sources */,
 				0471A83423772C5B00CF2B9C /* RootMenuTableVC.swift in Sources */,
 				047452832373BCAD002FDDE7 /* Post.swift in Sources */,
 				7F4379102382D9FA00CF6CC7 /* CompleteRegisterVC.swift in Sources */,
 				7F08B03E23730BD40013EE62 /* SubmitInviteCodeVC.swift in Sources */,
+				04B46E65238D47E5005C0961 /* EditSocialNetworkingVC.swift in Sources */,
 				0406C3CA237B9A9F0012BF50 /* UserProfileCell.swift in Sources */,
 				7F947001237C330500742CF0 /* SingleUserVC.swift in Sources */,
+				04D644E8238EC88600EB0954 /* NotificationsTableVC.swift in Sources */,
 				0412660D23724D6F009C5E2B /* LoginVC.swift in Sources */,
 				7F947007237C33EF00742CF0 /* SinglePostVC.swift in Sources */,
 				0406853E23786072000EF764 /* RootDashboardVC.swift in Sources */,
 				0471A83B2377313D00CF2B9C /* PostCell.swift in Sources */,
+				04520EA22392D8CC00A8B9DC /* FormatDate.swift in Sources */,
 				044AEDA52385BD2900D53928 /* app_layout.swift in Sources */,
 				0471A83023772BE900CF2B9C /* RootAgendaTableVC.swift in Sources */,
 				0474526F2373BB7E002FDDE7 /* Company.swift in Sources */,
-				040685412378E66D000EF764 /* RootPostsVC.swift in Sources */,
-				040685452378E9C6000EF764 /* EmbassyPostsTableVC.swift in Sources */,
+				04B46E69238D484F005C0961 /* AboutEmbassiesVC.swift in Sources */,
+				04B46E6F238D48D2005C0961 /* ListEmbassyTableVC.swift in Sources */,
 				047452852373BCD8002FDDE7 /* PostComment.swift in Sources */,
-				040685472378EA07000EF764 /* HighlightsPostsTableVC.swift in Sources */,
+				04B46E67238D481F005C0961 /* SetPrivacyVC.swift in Sources */,
 				0474527B2373BC39002FDDE7 /* InvitationRequest.swift in Sources */,
+				04D644E4238EC85200EB0954 /* EmbassyMembersTableVC.swift in Sources */,
 				047452752373BBED002FDDE7 /* EmbassySponsor.swift in Sources */,
+				04F4A97123896F5500049C11 /* SingleThoughtCell.swift in Sources */,
+				046F286E23918DFF00798FBD /* SocialButtonCollectionCell.swift in Sources */,
+				04D644EA238EF4C100EB0954 /* EmbassyPhotosCollectionVC.swift in Sources */,
 				04394193237A516800E0B848 /* ThoughtCell.swift in Sources */,
 				0471A83723772CBA00CF2B9C /* UserCell.swift in Sources */,
-				0471A83223772C2F00CF2B9C /* RootPostsTableVC.swift in Sources */,
 				7F24CCBB2373102D00D8E74C /* MyFirebase.swift in Sources */,
 				047452692373B952002FDDE7 /* Embassy.swift in Sources */,
-				044AEDA92386256500D53928 /* AllPostsCollectionVC.swift in Sources */,
 				04394195237A519000E0B848 /* ArticleCell.swift in Sources */,
 				7F2411A223841D4800D7C901 /* EditProfileVC.swift in Sources */,
 				7F08B03A23730B710013EE62 /* RegisterVC.swift in Sources */,
@@ -542,13 +613,18 @@
 				0474527D2373BC62002FDDE7 /* Invite.swift in Sources */,
 				0474526D2373BB63002FDDE7 /* Committee.swift in Sources */,
 				7F437912238311BD00CF6CC7 /* ChooseProfilePhotoVC.swift in Sources */,
+				04D644EC238EFC5100EB0954 /* EmbassyPhotoCollectionCell.swift in Sources */,
 				0406C3C8237B743D0012BF50 /* MenuCell.swift in Sources */,
 				7F08B04023730C2A0013EE62 /* ResetPasswordVC.swift in Sources */,
+				04D644DE238EA5B400EB0954 /* EmbassyCell.swift in Sources */,
+				04FC48D52386B377008814D6 /* RootPostsTableVC.swift in Sources */,
 				047452812373BC96002FDDE7 /* Notification.swift in Sources */,
 				047452732373BBB4002FDDE7 /* EmbassyPhoto.swift in Sources */,
 				047452672373B704002FDDE7 /* User.swift in Sources */,
 				047452712373BB99002FDDE7 /* DateStr.swift in Sources */,
 				7F947005237C33A700742CF0 /* SingleEmbassyVC.swift in Sources */,
+				04F4A96D23896E1600049C11 /* SinglePostCell.swift in Sources */,
+				04D644E2238EC83700EB0954 /* EmbassyEventsTableVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
