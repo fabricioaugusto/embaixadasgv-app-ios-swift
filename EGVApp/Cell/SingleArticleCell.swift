@@ -14,13 +14,13 @@ class SingleArticleCell: UITableViewCell {
     @IBOutlet weak var mLbUserName: UILabel!
     @IBOutlet weak var mLbPostDate: UILabel!
     @IBOutlet weak var mImgPost: UIImageView!
-    @IBOutlet weak var mLbPostDescription: UILabel!
+    @IBOutlet weak var mLbPostDescription: UITextView!
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var mLbLikesCount: UIButton!
     @IBOutlet weak var mLbCommentsCount: UILabel!
     @IBOutlet weak var mLbPostTitle: UILabel!
     
-    weak var rootVC: RootPostsTableVC!
+    weak var rootVC: SinglePostVC!
     var post: Post!
     
     override func awakeFromNib() {
@@ -32,6 +32,14 @@ class SingleArticleCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func onClickBtStartSingleUser(_ sender: Any) {
+        self.rootVC.startSingleUserVC()
+    }
+    
+    @IBAction func onClickBtListLikes(_ sender: UIButton) {
+        self.rootVC.startListLikesVC()
     }
     
     var aspectConstraint: NSLayoutConstraint? {
@@ -60,9 +68,8 @@ class SingleArticleCell: UITableViewCell {
             mLbPostDate.text = "\(String(describing: formattedDate["date"]!)) às \(String(describing: formattedDate["time"]!))"
         }
         
-        let bodyHTML = "<div style='font-family: \"-apple-system\", \"HelveticaNeue\" ; font-size:16;  color:#4D4D4F'>\(post.text!)</div>"
-        let data = Data(bodyHTML.utf8)
-        if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+        let bodyHTML = "<span style='font-family: \"-apple-system\", \"HelveticaNeue\" ; font-size:16;  color:#4D4D4F'>\(post.text!)</span>"
+        if let htmldata = bodyHTML.data(using: String.Encoding.isoLatin1), let attributedString = try? NSAttributedString(data: htmldata, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
             mLbPostDescription.attributedText = attributedString
         }
         

@@ -129,7 +129,7 @@ class ChooseProfilePhotoVC: UIViewController {
                 self.mDatabase
                     .collection(MyFirebaseCollections.USERS)
                     .document(self.mUser.id)
-                    .updateData(["profile_img" : downloadURL.absoluteString]) { (err) in
+                    .updateData(["profile_img" : downloadURL.absoluteString, "status": "active"]) { (err) in
                         if let err = err {
                             
                         } else {

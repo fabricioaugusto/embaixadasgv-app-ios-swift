@@ -36,4 +36,7 @@ target 'EGVApp' do
   pod 'INSPhotoGallery'
   pod 'InstantSearchClient', '~> 7.0'
   pod 'SwiftRichString'
+  pod 'STPopup'
+  pod 'RichEditorView'
+  pod 'Sheeeeeeeeet'
 end

@@ -162,8 +162,11 @@ PODS:
   - NVActivityIndicatorView/Presenter (4.8.0)
   - Protobuf (3.10.0)
   - PryntTrimmerView (4.0.0)
+  - RichEditorView (5.0.0)
+  - Sheeeeeeeeet (3.0.8)
   - SkyFloatingLabelTextField (3.7.0)
   - SteviaLayout (4.6.1)
+  - STPopup (1.8.7)
   - SwiftGifOrigin (1.7.0)
   - SwiftHash (2.0.2)
   - SwiftKeychainWrapper (3.4.0)
@@ -202,7 +205,10 @@ DEPENDENCIES:
   - KMPlaceholderTextView (~> 1.4.0)
   - NextGrowingTextView
   - NVActivityIndicatorView
+  - RichEditorView
+  - Sheeeeeeeeet
   - SkyFloatingLabelTextField
+  - STPopup
   - SwiftGifOrigin
   - SwiftHash
   - SwiftKeychainWrapper
@@ -255,8 +261,11 @@ SPEC REPOS:
     - NVActivityIndicatorView
     - Protobuf
     - PryntTrimmerView
+    - RichEditorView
+    - Sheeeeeeeeet
     - SkyFloatingLabelTextField
     - SteviaLayout
+    - STPopup
     - SwiftGifOrigin
     - SwiftHash
     - SwiftKeychainWrapper
@@ -307,8 +316,11 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
   PryntTrimmerView: 67e67573ffd4c073f1308effa66aefd0cfa667a0
+  RichEditorView: 1bbb07b87ca2d479ac29a6877014b38b8df233ef
+  Sheeeeeeeeet: 3cefda34530b68567124ce0a1b54a732656b394b
   SkyFloatingLabelTextField: 4b46db0ab1ccde0919cded29c656e6b4805eda04
   SteviaLayout: 0c83442390c8a369c21f975ffbd812d11532645b
+  STPopup: a9045557bc48a0df51fbb7bf0544447c5fe84d34
   SwiftGifOrigin: fbd6cf37afcfcf97a5c3db996ddc0492e5c5c145
   SwiftHash: 6d312abe61c8359bdef8d0093642f3a70b1c17ba
   SwiftKeychainWrapper: 6fc49fbf7d4a6b0772917acb0e53a1639f6078d6
@@ -319,6 +331,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   YPImagePicker: bdaa46782668e260fdd9709f19043a9f469fd2ad
 
-PODFILE CHECKSUM: ef303216acccf9b323508450349b174e618047ae
+PODFILE CHECKSUM: 96e20466718d3ccdfd0d5248ef7abc3fa4ca0922
 
 COCOAPODS: 1.8.4

@@ -21,7 +21,7 @@ class Post {
     var post_likes: Int
     let picture_width: Int
     let picture_height: Int
-    let post_comments: Int
+    var post_comments: Int
     let like_verified: Bool
     let liked: Bool
     let list_likes: [PostLike]?

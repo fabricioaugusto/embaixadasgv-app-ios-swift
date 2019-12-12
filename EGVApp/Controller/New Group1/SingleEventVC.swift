@@ -31,6 +31,9 @@ class SingleEventVC: UIViewController {
     @IBOutlet weak var mUserEnrolled1: UIImageView!
     @IBOutlet weak var mUserEnrolled2: UIImageView!
     @IBOutlet weak var mUSerEnrolled3: UIImageView!
+    @IBOutlet weak var mSvEventEnrollments: UIStackView!
+    @IBOutlet weak var mBtReadMore: UIButton!
+    
     @IBOutlet var mViewBoxContainters: [UIView]!
     
     
@@ -43,6 +46,10 @@ class SingleEventVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SingleEventVC.onTapStartEnrollmentList))
+        mSvEventEnrollments.isUserInteractionEnabled = true
+        mSvEventEnrollments.addGestureRecognizer(tap)
         
         mDatabase = MyFirebase.sharedInstance.database()
         
@@ -68,9 +75,11 @@ class SingleEventVC: UIViewController {
     @IBAction func onClickReadMore(_ sender: UIButton) {
         if(sender.isSelected) {
             sender.isSelected = false
-            mLbEventDescription.numberOfLines = 3
+            sender.setTitle("Ver mais", for: .normal)
+            mLbEventDescription.numberOfLines = 5
         } else {
             sender.isSelected = true
+            sender.setTitle("Ver menos", for: .selected)
             mLbEventDescription.numberOfLines = 0
         }
     }
@@ -159,6 +168,13 @@ class SingleEventVC: UIViewController {
         
         mLbEventTheme.text = mEvent.theme
         mLbEventEmbassy.text = "\(String(describing: mEvent.embassy?.name ?? "")) - \(String(describing: mEvent.city ?? "")), \(String(describing: mEvent.state_short ?? ""))"
+        
+        if mEvent.description.count > 265 {
+           mLbEventDescription.numberOfLines = 5
+        } else {
+            mBtReadMore.isHidden = true
+        }
+        
         mLbEventDescription.text = mEvent.description
         mLbEventPlace.text = mEvent.place
         mLbEventAddress.text = mEvent.address
@@ -302,7 +318,7 @@ class SingleEventVC: UIViewController {
                 self.mBtEventEnroll.tintColor = AppColors.colorRed
                 self.mBtEventEnroll.backgroundColor = AppColors.colorRed
                 
-               self.mUserEnrollmentList = mUserEnrollmentList.filter( { return $0.event_id != mEvent.id } )
+                self.mUserEnrollmentList = mUserEnrollmentList.filter( { return $0.user_id != mUser.id } )
     
                 self.bindEnrollment()
     
@@ -317,6 +333,10 @@ class SingleEventVC: UIViewController {
             }
     
         }
+    }
+    
+    @objc func onTapStartEnrollmentList(sender:UITapGestureRecognizer) {
+        performSegue(withIdentifier: "enrollUsersSegue", sender: nil)
     }
 
     func formatDate(date: Date) -> [String:String] {
@@ -359,14 +379,18 @@ class SingleEventVC: UIViewController {
         return dictDate
     }
     
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "enrollUsersSegue" {
+            let vc = segue.destination as! ListUsersTableVC
+            vc.mType = "enrollUsers"
+            vc.mEventID = mEvent.id
+            vc.mUser = mUser
+        }
     }
-    */
+    
 
 }

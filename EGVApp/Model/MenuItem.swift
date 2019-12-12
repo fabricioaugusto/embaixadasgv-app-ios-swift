@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct MenuItem {
+struct AppMenuItem {
     let item_name: String
     let type: String
     let item_icon: UIImage?

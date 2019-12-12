@@ -66,4 +66,5 @@ class MyFirebaseCollections {
     static let APP_MESSAGES = "app_messages"
     static let APP_SERVER = "server_data"
     static let INVITATION_REQUEST = "invitation_request"
+    static let APP_CONTENT = "app_content"
 }

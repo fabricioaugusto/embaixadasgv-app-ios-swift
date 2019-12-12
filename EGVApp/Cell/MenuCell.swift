@@ -24,7 +24,7 @@ class MenuCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func prepare(with menu: MenuItem) {
+    func prepare(with menu: AppMenuItem) {
         mLbMenuText.text = menu.item_name
         mImgMenuIcon.image = menu.item_icon
     }

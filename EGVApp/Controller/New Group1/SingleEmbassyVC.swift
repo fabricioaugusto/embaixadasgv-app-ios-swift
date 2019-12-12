@@ -31,6 +31,7 @@ class SingleEmbassyVC: UIViewController {
     @IBOutlet var mGroupViews: [UIView]!
     @IBOutlet var mGroupButtons: [UIButton]!
     
+    var mEmbassy: Embassy!
     var mUser: User!
     var mEmbassyID: String!
     var mDatabase: Firestore!
@@ -55,6 +56,54 @@ class SingleEmbassyVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func onClickBtEmbassyPhone(_ sender: UIButton) {
+        if var whatsapp = self.mEmbassy.phone {
+            whatsapp = whatsapp.replacingOccurrences(of: " ", with: "")
+            whatsapp = whatsapp.replacingOccurrences(of: "+", with: "")
+            whatsapp = whatsapp.replacingOccurrences(of: "(", with: "")
+            whatsapp = whatsapp.replacingOccurrences(of: ")", with: "")
+            whatsapp = whatsapp.replacingOccurrences(of: "-", with: "")
+            print("evgapplog_sn", whatsapp)
+            let url = URL(string: "https://wa.me/\(whatsapp)")!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    @IBAction func onClickBtEmbassyEmail(_ sender: UIButton) {
+        if let email = self.mEmbassy.email {
+            let url = URL(string: "mailto:\(email)")!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    @IBAction func onClickBtEmbassyAgenda(_ sender: UIButton) {
+        performSegue(withIdentifier: "embassyEventsSegue", sender: nil)
+    }
+    
+    @IBAction func onClickBtEmbassyMembers(_ sender: UIButton) {
+        performSegue(withIdentifier: "embassyMembersSegue", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "embassyMembersSegue" {
+            let vc = segue.destination as! EmbassyMembersTableVC
+            vc.mUser = mUser
+            vc.mEmbassyID = mEmbassy.id
+        }
+        
+        if segue.identifier == "embassyEventsSegue" {
+            let vc = segue.destination as! EmbassyEventsTableVC
+            vc.mUser = mUser
+            vc.mEmbassyID = mEmbassy.id
+        }
+        
+        if segue.identifier == "embassyPhotosSegue" {
+            let vc = segue.destination as! EmbassyPhotosCollectionVC
+            vc.mEmbassyID = mEmbassy.id
+            vc.mUser = mUser
+        }
+    }
+    
     private func getEmbassyDetails() {
         mDatabase.collection(MyFirebaseCollections.EMBASSY)
         .document(mEmbassyID)
@@ -65,6 +114,7 @@ class SingleEmbassyVC: UIViewController {
                     if let embassy = documentSnapshot.flatMap({$0.data().flatMap({ (data) in
                         return Embassy(dictionary: data)
                     })}) {
+                        self.mEmbassy = embassy
                         self.bindData(embassy: embassy)
                         self.getEmbassyPhotos()
                     }
@@ -149,7 +199,7 @@ class SingleEmbassyVC: UIViewController {
         
         if(mEmbassyPhotoList.count > 2) {
             let url3 = URL(string: mEmbassyPhotoList[2].picture)
-            self.mEmbassyPhoto2.kf.setImage(
+            self.mEmbassyPhoto3.kf.setImage(
                 with: url3,
                 placeholder: UIImage(named: "grey_circle"),
                 options: [

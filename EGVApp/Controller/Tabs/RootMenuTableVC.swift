@@ -15,10 +15,10 @@ class RootMenuTableVC: UITableViewController {
     var mUser: User!
     private var mAuth: Auth!
     private var mDatabase: Firestore?
-    private var mMenuList: [MenuItem] = []
+    private var mMenuList: [AppMenuItem] = []
     private var mSectionList: [String] = []
     private var mNumSections: Int = 0
-    private var mMenuDict: [Int: [MenuItem]] = [:]
+    private var mMenuDict: [Int: [AppMenuItem]] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +60,7 @@ class RootMenuTableVC: UITableViewController {
     private func setMenu() {
         
         mSectionList.append("")
-        mMenuDict[mNumSections] = [MenuItem(item_name: "Perfil", type: "profile", item_icon: nil)]
+        mMenuDict[mNumSections] = [AppMenuItem(item_name: "Perfil", type: "profile", item_icon: nil)]
         self.mNumSections += 1
         
         self.mMenuDict[mNumSections] = MenuItens().getAccountSection()
@@ -121,6 +121,26 @@ class RootMenuTableVC: UITableViewController {
             performSegue(withIdentifier: "setPrivacySegue", sender: nil)
         }
         
+        if(item_name == MenuItens.newEvent) {
+            performSegue(withIdentifier: "manageEventsSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.sentEmbassyPhotos) {
+            performSegue(withIdentifier: "managePhotosSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.sendInvites) {
+            performSegue(withIdentifier: "sendInvitationsSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.invitationRequests) {
+            performSegue(withIdentifier: "invitationRequestsSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.editEmbassy) {
+            performSegue(withIdentifier: "editEmbassySegue", sender: nil)
+        }
+        
         if(item_name == MenuItens.embassyList) {
             performSegue(withIdentifier: "embassyListSegue", sender: nil)
         }
@@ -160,7 +180,7 @@ class RootMenuTableVC: UITableViewController {
         
         if segue.identifier == "userSingleSegue" {
             let vc = segue.destination as! SingleUserVC
-            vc.mUser = self.mUser
+            vc.mUserID = self.mUser.id
         }
         
         if segue.identifier == "editProfileSegue" {
@@ -192,6 +212,31 @@ class RootMenuTableVC: UITableViewController {
         if segue.identifier == "setPrivacySegue" {
             let vc = segue.destination as! SetPrivacyVC
             vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "manageEventsSegue" {
+            let vc = segue.destination as! ManageEventsTableVC
+            //vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "managePhotosSegue" {
+            let vc = segue.destination as! ManagePhotosCollectionVC
+            //vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "sendInvitationsSegue" {
+            let vc = segue.destination as! SendInvitationsVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "invitationRequestsSegue" {
+            let vc = segue.destination as! InvitationRequestsTableVC
+            //vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "editEmbassySegue" {
+            let vc = segue.destination as! EditEmbassyVC
+            //vc.mUser = self.mUser
         }
         
         if segue.identifier == "embassyListSegue" {

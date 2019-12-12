@@ -20,7 +20,7 @@ class SinglePostCell: UITableViewCell {
     @IBOutlet weak var mLbLikesCount: UIButton!
     @IBOutlet weak var mLbCommentsCount: UILabel!
     
-    weak var rootVC: RootPostsTableVC!
+    weak var rootVC: SinglePostVC!
     var post: Post!
     
     override func awakeFromNib() {
@@ -32,6 +32,14 @@ class SinglePostCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func onClickBtStartSingleUser(_ sender: Any) {
+        self.rootVC.startSingleUserVC()
+    }
+    
+    @IBAction func onClickBtListLikes(_ sender: UIButton) {
+        self.rootVC.startListLikesVC()
     }
     
     var aspectConstraint: NSLayoutConstraint? {

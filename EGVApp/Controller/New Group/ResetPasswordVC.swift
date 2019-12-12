@@ -21,7 +21,7 @@ class ResetPasswordVC: UIViewController {
     private var mAuth: Auth!
     private var mInvite: Invite!
     private var mDatabase: Firestore!
-    private var mCodeField: SkyFloatingLabelTextField?
+    private var mEmailField: SkyFloatingLabelTextField!
     private var mHud: JGProgressHUD!
     
     override func viewDidLoad() {
@@ -47,11 +47,11 @@ class ResetPasswordVC: UIViewController {
         // Do any additional setup after loading the view.
         private func addFields() {
             
-            self.mCodeField = buildTextField(placeholder: "E-mail", icon: String.fontAwesomeIcon(name: .envelope))
-            svFormFields.insertArrangedSubview(self.mCodeField!, at: 0)
+            self.mEmailField = buildTextField(placeholder: "E-mail", icon: String.fontAwesomeIcon(name: .envelope))
+            svFormFields.insertArrangedSubview(self.mEmailField!, at: 0)
             
             
-            mCodeField?.delegate = self
+            mEmailField?.delegate = self
             
             svFormFields.alignment = .fill
             svFormFields.distribution = .fill
@@ -78,35 +78,34 @@ class ResetPasswordVC: UIViewController {
         }
         
         
-        @IBAction func sendCode(_ sender: UIButton) {
-            let code: String = self.mCodeField?.text ?? ""
+        @IBAction func sendResetEmail(_ sender: UIButton) {
             
-            if(code.isEmpty) {
-                print("Você deve preencher todos os campos")
-                return
-            }
+            let email = self.mEmailField.text ?? ""
             
             self.mHud.show(in: self.view)
             
-            self.mDatabase.collection(MyFirebaseCollections.APP_INVITATIONS)
-                .document(code)
-                .getDocument(completion: { (documentSnapshot, error) in
-                    
-                    if let invite = documentSnapshot.flatMap({
-                        $0.data().flatMap({ (data) in
-                            return Invite(dictionary: data)
-                        })
-                    }) {
-                        self.mInvite = invite
-                        self.mInvite.id = documentSnapshot!.documentID
+            if(!email.isEmpty) {
+                
+                mAuth.sendPasswordReset(withEmail: email) { (error) in
+                    if let error = error {
+                        self.mEmailField.text = ""
                         self.mHud.dismiss()
-                        self.performSegue(withIdentifier: "registerSegue", sender: nil)
+                        self.makeAlert(title: "E-mail Inválido", message: "Este e-mail não foi encontrado em nossos cadastros")
                     } else {
-                        print("Document does not exist")
+                        self.mEmailField.text = ""
+                        self.mHud.dismiss()
+                        self.makeAlert(title: "E-mail enviado!", message: "Em instantes você receberá um e-mail com as instruções para a criação de uma nova senha")
                     }
-                })
+                }
+            }
         }
-        
+    
+    
+    private func makeAlert(title: String, message: String) {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         
         
         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -194,7 +194,7 @@ class RegisterVC: UIViewController {
         if let embassy = mInvite.embassy_receiver {
             self.mDatabase.collection(MyFirebaseCollections.EMBASSY)
                 .document(embassy.id)
-                .updateData(["leader":currentUser, "leader_id":currentUser.id], completion: { (error) in
+                .updateData(["leader":currentUser.toBasicMap(), "leader_id":currentUser.id], completion: { (error) in
                     if let error = error {
                         
                     } else {

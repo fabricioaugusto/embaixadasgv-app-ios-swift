@@ -10,12 +10,16 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 import FaveButton
+import STPopup
+import Sheeeeeeeeet
 
-class RootPostsTableVC: UITableViewController {
+class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDelegate {
 
     var mUser: User!
     private var mAuth: Auth!
     private var mSelectedPost: Post!
+    private var mSelectedPostUserID: String!
+    private var mSelectedIndexPath: IndexPath!
     private var mDatabase: Firestore!
     private var mLastDocument: DocumentSnapshot?
     private var mLastDocumentRequested: DocumentSnapshot?
@@ -28,12 +32,32 @@ class RootPostsTableVC: UITableViewController {
     private var mAdapterPosition: Int = 0
     private var mUserID: String!
     private var mLikeIsProcessing: Bool = false
+    private var mCreatePostType: String!
+    @IBOutlet weak var mSegmentControl: UISegmentedControl!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("evgapplog root", mUser.id)
         mAuth = MyFirebase.sharedInstance.auth()
         mDatabase = MyFirebase.sharedInstance.database()
+        
+        if #available(iOS 13, *) {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                for i in 0...(self.mSegmentControl.numberOfSegments-1)  {
+                    let backgroundSegmentView = self.mSegmentControl.subviews[i]
+                    //it is not enogh changing the background color. It has some kind of shadow layer
+                    backgroundSegmentView.isHidden = true
+                }
+            }
+            
+            mSegmentControl.layer.borderColor = AppColors.colorPrimary.cgColor
+            mSegmentControl.layer.borderWidth = 1.0
+            mSegmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorPrimary], for: .normal)
+            mSegmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .selected)
+        }
+        
         
         if let authUser = mAuth.currentUser {
             mUserID = authUser.uid
@@ -49,6 +73,8 @@ class RootPostsTableVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        self.tabBarController?.tabBar.isHidden = false
+        
         // delegate and data source
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -59,7 +85,46 @@ class RootPostsTableVC: UITableViewController {
     }
     
     @IBAction func onClickCreatePost(_ sender: UIBarButtonItem) {
-        self.makeAlert(message: "Este recurso estará disponível nas próximas atualizações!")
+        //self.makeAlert(message: "Este recurso estará disponível nas próximas atualizações!")
+        /*let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "createPostMenuVC") as! CreatePostMenuVC
+        viewController.mRootPostsTableVC = self
+        let popupController = STPopupController(rootViewController: viewController)
+        popupController.present(in: self)*/
+        
+        
+        let item1 = MenuItem(title: "Foto", subtitle: nil, value: "photo", image: UIImage(named: "icon_picture"), isEnabled: true, tapBehavior: .dismiss)
+        let item2 = MenuItem(title: "Pensamento", subtitle: nil, value: "thought", image: UIImage(named: "icon_bubble"), isEnabled: true, tapBehavior: .dismiss)
+        let item3 = MenuItem(title: "Nota", subtitle: nil, value: "note", image: UIImage(named: "icon_create_note"), isEnabled: true, tapBehavior: .dismiss)
+        let items = [item1, item2, item3]
+        let menu = Menu(title: "O que você gostaria de compartilhar?", items: items)
+        
+        let sheet = menu.toActionSheet(presenter: ActionSheet.defaultPresenter) { sheet, item in
+            if let value = item.value as? String {
+                if value == "photo" {
+                    self.mCreatePostType = "photo"
+                    self.startCreatePostVC()
+                }
+                if value == "thought" {
+                    self.mCreatePostType = "thought"
+                    self.startCreatePostVC()
+                }
+                if value == "note" {
+                    self.mCreatePostType = "note"
+                    self.startCreatePostVC()
+                }
+            }
+        }
+        
+        sheet.present(in: self, from: self.view)
+        
+        
+        /*let sheet = ActionSheet(items: items) { sheet, item in
+            if let value = item.value as? Int { print("You selected an int: \(value)") }
+            if let value = item.value as? String { print("You selected a string: \(value)") }
+            if let value = item.value as? Car { print("You selected a car") }
+            if item.isOkButton { print("You tapped the OK button") }
+        }*/
     }
     
     
@@ -147,7 +212,7 @@ class RootPostsTableVC: UITableViewController {
     private func getEmbassyPosts() {
         
         self.mDatabase?.collection(MyFirebaseCollections.POSTS)
-            .whereField("embassy_id", isEqualTo: mUser.embassy_id ?? "")
+            .whereField("embassy_id", isEqualTo: mUser.embassy_id)
             .order(by: "date", descending: true)
             .limit(to: 10)
             .getDocuments(completion: { (querySnapshot, err) in
@@ -331,12 +396,85 @@ class RootPostsTableVC: UITableViewController {
         }
     }
     
+    func postWasPublished(vc: CreatePostVC) {
+        mHighlightPostList.removeAll()
+        mAllPostList.removeAll()
+        mEmbassyPostList.removeAll()
+        mSegmentControl.selectedSegmentIndex = 1
+        self.getEmbassyPosts()
+    }
+    
+    func postWasCommented(post: Post, vc: SinglePostVC) {
+        
+        if let allPostsOffset = mAllPostList.firstIndex(where: {$0.id == post.id}) {
+            mAllPostList[allPostsOffset] = post
+        }
+        
+        if let embassyPostsOffset = mEmbassyPostList.firstIndex(where: {$0.id == post.id}) {
+            mEmbassyPostList[embassyPostsOffset] = post
+        }
+        
+        if let highlightOffset = mHighlightPostList.firstIndex(where: {$0.id == post.id}) {
+            mHighlightPostList[highlightOffset] = post
+        }
+        
+        mPostList[mSelectedIndexPath.row] = post
+        self.tableView.reloadRows(at: [mSelectedIndexPath], with: .none)
+    }
+    
+    func deletePost(post: Post, index: Int) {
+        mDatabase.collection(MyFirebaseCollections.POSTS)
+            .document(post.id)
+            .delete { (error) in
+                if error == nil {
+                    let indexPath = IndexPath(row: index, section: 0)
+                    self.mPostList.remove(at: index)
+                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    
+                    if let allPostsOffset = self.mAllPostList.firstIndex(where: {$0.id == post.id}) {
+                        self.mAllPostList.remove(at: allPostsOffset)
+                    }
+                    
+                    if let embassyPostsOffset = self.mEmbassyPostList.firstIndex(where: {$0.id == post.id}) {
+                        self.mEmbassyPostList.remove(at: embassyPostsOffset)
+                    }
+                    
+                    if let highlightOffset = self.mHighlightPostList.firstIndex(where: {$0.id == post.id}) {
+                        self.mHighlightPostList.remove(at: highlightOffset)
+                    }
+                }
+        }
+    }
+    
+    func startSingleUserVC(userId: String) {
+        self.mSelectedPostUserID = userId
+        performSegue(withIdentifier: "userSingleSegue", sender: nil)
+    }
+    
+    func startCreatePostVC() {
+        performSegue(withIdentifier: "createPostVC", sender: nil)
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if(segue.identifier == "userSingleSegue") {
+            let vc = segue.destination as! SingleUserVC
+            vc.mUserID = self.mSelectedPostUserID
+        }
+        
         if(segue.identifier == "singlePostSegue") {
             let vc = segue.destination as! SinglePostVC
             vc.mPost = self.mSelectedPost
             vc.mUser = self.mUser
+            vc.delegate = self
+        }
+        
+        if(segue.identifier == "createPostVC") {
+            let vc = segue.destination as! CreatePostVC
+            vc.mUser = self.mUser
+            vc.mPostType = mCreatePostType
+            vc.delegate = self
         }
     }
 
@@ -352,6 +490,7 @@ class RootPostsTableVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.mSelectedIndexPath = indexPath
         self.mSelectedPost = mPostList[indexPath.row]
         performSegue(withIdentifier: "singlePostSegue", sender: nil)
     }
@@ -378,18 +517,24 @@ class RootPostsTableVC: UITableViewController {
         
         if(post.type == "post") {
             let cell = tableView.dequeueReusableCell(withIdentifier: "postPictureCell", for: indexPath) as! PostCell
+            cell.mIndex = indexPath.row
+            cell.mUser = mUser
             cell.rootVC = self
             cell.post = post
             cell.prepare(with: post, postLikes: mListLikes)
             return cell
         } else if(post.type == "thought") {
             let cell = tableView.dequeueReusableCell(withIdentifier: "thoughtCell", for: indexPath) as! ThoughtCell
+            cell.mIndex = indexPath.row
+            cell.mUser = mUser
             cell.rootVC = self
             cell.post = post
             cell.prepare(with: post, postLikes: mListLikes)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "articleCell", for: indexPath) as! ArticleCell
+            cell.mIndex = indexPath.row
+            cell.mUser = mUser
             cell.rootVC = self
             cell.post = post
             cell.prepare(with: post, postLikes: mListLikes)
@@ -444,3 +589,24 @@ class RootPostsTableVC: UITableViewController {
     */
 
 }
+
+/*extension UISegmentedControl {
+    /// Tint color doesn't have any effect on iOS 13.
+    func ensureiOS12Style() {
+        if #available(iOS 13, *) {
+            
+            
+            
+            let tintColorImage = UIImage(color: tintColor)
+            // Must set the background image for normal to something (even clear) else the rest won't work
+            setBackgroundImage(UIImage(color: backgroundColor ?? .clear), for: .normal, barMetrics: .default)
+            setBackgroundImage(tintColorImage, for: .selected, barMetrics: .default)
+            setBackgroundImage(UIImage(color: tintColor.withAlphaComponent(0.2)), for: .highlighted, barMetrics: .default)
+            setBackgroundImage(tintColorImage, for: [.highlighted, .selected], barMetrics: .default)
+            setTitleTextAttributes([.foregroundColor: tintColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .normal)
+            setDividerImage(tintColorImage, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+            layer.borderWidth = 1
+            layer.borderColor = tintColor.cgColor
+        }
+    }
+}*/

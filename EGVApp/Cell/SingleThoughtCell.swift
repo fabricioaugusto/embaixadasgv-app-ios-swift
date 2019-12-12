@@ -18,7 +18,7 @@ class SingleThoughtCell: UITableViewCell {
     @IBOutlet weak var mLbCommentsCount: UILabel!
     @IBOutlet weak var baseView: UIView!
     
-    weak var rootVC: RootPostsTableVC!
+    weak var rootVC: SinglePostVC!
     var post: Post!
     
     override func awakeFromNib() {
@@ -30,6 +30,14 @@ class SingleThoughtCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func onClickBtStartSingleUser(_ sender: Any) {
+        self.rootVC.startSingleUserVC()
+    }
+    
+    @IBAction func onClickBtListLikes(_ sender: UIButton) {
+        self.rootVC.startListLikesVC()
     }
     
     func prepare(with post: Post) {
@@ -47,13 +55,10 @@ class SingleThoughtCell: UITableViewCell {
         }
         
         let bodyHTML = "<span style='font-family: \"-apple-system\", \"HelveticaNeue\" ; font-size:24;  color:#4D4D4F'; padding: 0; margin: 0;>\(post.text!)</span>"
-        let data = Data(bodyHTML.utf8)
-        if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+        if let htmldata = bodyHTML.data(using: String.Encoding.isoLatin1), let attributedString = try? NSAttributedString(data: htmldata, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
             mLbPostDescription.attributedText = attributedString
         }
-        
-        mLbPostDescription.font = .systemFont(ofSize: 24.0)
-        
+                
         if(post.post_likes > 0) {
             if(post.post_likes == 1) {
                 mLbLikesCount.text("\(post.post_likes) curtida")

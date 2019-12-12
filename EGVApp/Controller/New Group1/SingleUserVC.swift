@@ -25,15 +25,11 @@ class SingleUserVC: UIViewController {
     
     private var mDatabase: Firestore!
     private var mSocialNetworking: [[String: Any]] = []
-    var mUser: User!
-
+    private var mUser: User!
+    var mUserID: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let name_array = mUser.name.components(separatedBy: " ")
-        if(name_array.count > 0) {
-            self.title = name_array[0]
-        }
         
         self.mDatabase = MyFirebase.sharedInstance.database()
         self.getUserDetails()
@@ -42,7 +38,7 @@ class SingleUserVC: UIViewController {
     
     private func getUserDetails() {
         self.mDatabase.collection(MyFirebaseCollections.USERS)
-        .document(mUser.id)
+        .document(mUserID)
             .getDocument { (documentSnapshot, error) in
                 if let error = error {
                     
@@ -53,6 +49,12 @@ class SingleUserVC: UIViewController {
                         })
                     }) {
                         self.mUser = user
+                        
+                        let name_array = self.mUser.name.components(separatedBy: " ")
+                        if(name_array.count > 0) {
+                            self.title = name_array[0]
+                        }
+                        
                         self.bindData()
                     } else {
                         print("Documento not exists")
@@ -216,8 +218,26 @@ extension SingleUserVC: UICollectionViewDataSource, UICollectionViewDelegateFlow
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let url = URL(string: mSocialNetworking[indexPath.row]["url"] as! String)!
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        
+        let snName = mSocialNetworking[indexPath.row]["name"] as! String
+        
+        if(snName == "whatsapp") {
+            
+            if var whatsapp = self.mUser.whatsapp {
+                whatsapp = whatsapp.replacingOccurrences(of: " ", with: "")
+                whatsapp = whatsapp.replacingOccurrences(of: "+", with: "")
+                whatsapp = whatsapp.replacingOccurrences(of: "(", with: "")
+                whatsapp = whatsapp.replacingOccurrences(of: ")", with: "")
+                whatsapp = whatsapp.replacingOccurrences(of: "-", with: "")
+                print("evgapplog_sn", whatsapp)
+                let url = URL(string: "https://wa.me/\(whatsapp)")!
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        } else {
+            let url = URL(string: mSocialNetworking[indexPath.row]["url"] as! String)!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

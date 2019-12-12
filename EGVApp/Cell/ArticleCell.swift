@@ -26,6 +26,8 @@ class ArticleCell: UITableViewCell {
     
     weak var rootVC: RootPostsTableVC!
     var post: Post!
+    var mUser: User!
+    var mIndex: Int = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +38,10 @@ class ArticleCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func onClickBtStartSingleUser(_ sender: Any) {
+        self.rootVC.startSingleUserVC(userId: post.user_id)
     }
     
     @IBAction func onClickLikeBt(_ sender: FaveButton) {
@@ -60,6 +66,37 @@ class ArticleCell: UITableViewCell {
         }
     }
     
+    @IBAction func onClickOptionsBt(_ sender: UIButton) {
+        
+        let alert = UIAlertController(title: "Seleciona uma opção", message: "O que você deseja fazer?", preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "Denunciar", style: .default , handler:{ (UIAlertAction)in
+            print("User click Approve button")
+        }))
+        if mUser.id == post.user_id {
+            alert.addAction(UIAlertAction(title: "Deletar", style: .destructive , handler:{ (UIAlertAction)in
+                self.alertDeletePost()
+            }))
+        }
+
+        alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler:{ (UIAlertAction)in
+            print("User click Dismiss button")
+        }))
+
+        self.rootVC.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+    }
+    
+    private func alertDeletePost() {
+        let alert = UIAlertController(title: "Excluir Publicação", message: "Tem certeza que deseja excluir esta publicação?", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Sim, tenho certeza", style: UIAlertAction.Style.destructive, handler: { (alertAction) in
+            self.rootVC.deletePost(post: self.post, index: self.mIndex)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancelar", style: UIAlertAction.Style.cancel, handler: nil))
+        self.rootVC.present(alert, animated: true, completion: nil)
+    }
+    
     func prepare(with post: Post, postLikes: [PostLike]) {
         let user: BasicUser = post.user
         
@@ -72,9 +109,9 @@ class ArticleCell: UITableViewCell {
             mLbPostDate.text = "\(String(describing: formattedDate["date"]!)) às \(String(describing: formattedDate["time"]!))"
         }
         
-        let bodyHTML = "<div>\(post.text!)</div>"
-        let data = Data(bodyHTML.utf8)
-        if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+        let bodyHTML = "<span style='font-family: \"-apple-system\", \"HelveticaNeue\" ; font-size:14;  color:#4D4D4F'>\(post.text!)</span>"
+        
+        if let htmldata = bodyHTML.data(using: String.Encoding.isoLatin1), let attributedString = try? NSAttributedString(data: htmldata, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
             mLbPostDescription.attributedText = attributedString
             mLbPostDescription.font = .systemFont(ofSize: 14.0)
         }

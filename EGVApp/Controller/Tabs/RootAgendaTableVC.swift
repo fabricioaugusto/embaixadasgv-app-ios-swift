@@ -40,7 +40,7 @@ class RootAgendaTableVC: UITableViewController {
         
          print("egvapplog", "veio pra cá")
          self.mDatabase?.collection(MyFirebaseCollections.EVENTS)
-            .whereField("date", isGreaterThan: timestamp)
+            //.whereField("date", isGreaterThan: timestamp)
             .order(by: "date", descending: false)
             .limit(to: 10)
             .getDocuments(completion: { (querySnapshot, err) in
