@@ -18,9 +18,7 @@ class TextEditorVC: UIViewController {
 
     @IBOutlet weak var mTextEditorView: RichEditorView!
     
-    
-    
-    weak var delegate: CreatePostVC?
+    weak var delegate: TextEditorDelegate!
     var previousText: String = ""
     
     lazy var toolbar: RichEditorToolbar = {
@@ -60,7 +58,7 @@ class TextEditorVC: UIViewController {
     }
     
     @IBAction func onClickBtDone(_ sender: UIBarButtonItem) {
-        self.delegate?.editTextDone(text: mTextEditorView.contentHTML, vc: self)
+        self.delegate.editTextDone(text: mTextEditorView.contentHTML, vc: self)
         print(mTextEditorView.contentHTML)
         navigationController?.popViewController(animated: true)
     }

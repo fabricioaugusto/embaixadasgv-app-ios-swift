@@ -17,6 +17,8 @@ class SendInvitationsVC: UIViewController {
     
     @IBOutlet weak var mViewLinkContainer: UIView!
     @IBOutlet weak var mSvFormField: UIStackView!
+    @IBOutlet weak var mLbInvitationLink: UILabel!
+    
    
     var mUser: User!
     private var mDatabase: Firestore!
@@ -41,11 +43,25 @@ class SendInvitationsVC: UIViewController {
         mViewLinkContainer.layer.borderColor = AppColors.colorGrey.cgColor
         mViewLinkContainer.layer.borderWidth = 1.0
         
+        let username: String = mUser.username ?? ""
+        mLbInvitationLink.text = "https://embaixadasgv.app/convite/\(username))"
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func onClickBtSendInvitation(_ sender: UIBarButtonItem) {
+        self.saveData()
+    }
+    
+    
     @IBAction func onClickBtCopyLink(_ sender: Any) {
         
+        let username: String = mUser.username ?? ""
+        
+        UIPasteboard.general.string = "https://embaixadasgv.app/convite/\(username)"
+        
+        let alert = UIAlertController(title: "Link Copiado", message: "O link foi copiado com sucesso!", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     private func addFields() {
@@ -54,6 +70,8 @@ class SendInvitationsVC: UIViewController {
         mSvFormField.insertArrangedSubview(self.mNameField, at: 0)
         
         self.mEmailField = buildTextField(placeholder: "E-mail", icon: String.fontAwesomeIcon(name: .envelope))
+        self.mEmailField.keyboardType = .emailAddress
+        self.mEmailField.textContentType = .emailAddress
         mSvFormField.insertArrangedSubview(self.mEmailField, at: 1)
         
         mSvFormField.alignment = .fill
@@ -81,6 +99,71 @@ class SendInvitationsVC: UIViewController {
         textField.selectedLineHeight = 2.0
         
         return textField
+    }
+    
+    private func saveData() {
+        let name = mNameField.text ?? ""
+        let email = mEmailField.text ?? ""
+        
+        if(name.isEmpty || email.isEmpty) {
+            makeAlert(message: "Todos os campos devem ser preenchidos!")
+            return
+        }
+        
+        if(name.contains("@")) {
+            makeAlert(message: "Por favor preencha um nome válido!")
+            return
+        }
+        
+        if(!email.contains("@")) {
+            makeAlert(message: "Por favor preencha um e-mail válido!")
+            return
+        }
+        
+        mHud.show(in: self.view)
+        
+        let code: Int = Int.random(in: 100000..<999999)
+
+        let invite: [String : Any] = [
+            "name_sender" : mUser.name,
+            "email_sender" : mUser.email,
+            "name_receiver" : name,
+            "email_receiver" : email,
+            "embassy_receiver" : mUser.embassy!.toBasicMap(),
+            "invite_code" : code
+        ]
+
+        self.mDatabase.collection(MyFirebaseCollections.APP_INVITATIONS)
+            .whereField("email_receiver", isEqualTo: email)
+            .getDocuments { (querySnapshot, error) in
+                if let query = querySnapshot {
+                    if query.documents.count > 0 {
+                        self.mHud.dismiss()
+                        self.makeAlert(message: "Um convite já foi enviado para este e-mail")
+                    } else {
+                        self.mDatabase.collection(MyFirebaseCollections.APP_INVITATIONS)
+                            .addDocument(data: invite) { (error) in
+                                
+                                if error == nil {
+                                    self.mNameField.text = ""
+                                    self.mEmailField.text = ""
+                                    
+                                    self.mHud.dismiss()
+                                     let alert = UIAlertController(title: "Convite Enviado!", message: "O convite foi enviado com sucesso!", preferredStyle: UIAlertController.Style.alert)
+                                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                                     self.present(alert, animated: true, completion: nil)
+                                }
+                                
+                        }
+                    }
+                }
+        }
+    }
+    
+    private func makeAlert(message: String) {
+        let alert = UIAlertController(title: "Atenção", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     /*

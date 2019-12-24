@@ -141,6 +141,10 @@ class RootMenuTableVC: UITableViewController {
             performSegue(withIdentifier: "editEmbassySegue", sender: nil)
         }
         
+        if(item_name == MenuItens.sendNotifications) {
+            performSegue(withIdentifier: "sendNotificationsSegue", sender: nil)
+        }
+        
         if(item_name == MenuItens.embassyList) {
             performSegue(withIdentifier: "embassyListSegue", sender: nil)
         }
@@ -185,11 +189,13 @@ class RootMenuTableVC: UITableViewController {
         
         if segue.identifier == "editProfileSegue" {
             let vc = segue.destination as! EditProfileVC
+            vc.mRootMenuTableVC = self
             vc.mUser = self.mUser
         }
         
         if segue.identifier == "changeProfilePhotoSegue" {
             let vc = segue.destination as! ChangeProfilePhotoVC
+            vc.mRootMenuTableVC = self
             vc.mUser = self.mUser
         }
         
@@ -200,6 +206,7 @@ class RootMenuTableVC: UITableViewController {
         
         if segue.identifier == "editSocialNetworkSegue" {
             let vc = segue.destination as! EditSocialNetworkingVC
+            vc.mRootMenuTableVC = self
             vc.mUser = self.mUser
         }
         
@@ -216,12 +223,14 @@ class RootMenuTableVC: UITableViewController {
         
         if segue.identifier == "manageEventsSegue" {
             let vc = segue.destination as! ManageEventsTableVC
-            //vc.mUser = self.mUser
+            vc.mUser = self.mUser
+            vc.mEmbassyID = self.mUser.embassy_id
         }
         
         if segue.identifier == "managePhotosSegue" {
             let vc = segue.destination as! ManagePhotosCollectionVC
-            //vc.mUser = self.mUser
+            vc.mUser = self.mUser
+            vc.mEmbassyID = self.mUser.embassy_id
         }
         
         if segue.identifier == "sendInvitationsSegue" {
@@ -231,12 +240,18 @@ class RootMenuTableVC: UITableViewController {
         
         if segue.identifier == "invitationRequestsSegue" {
             let vc = segue.destination as! InvitationRequestsTableVC
-            //vc.mUser = self.mUser
+            vc.mUser = self.mUser
         }
         
         if segue.identifier == "editEmbassySegue" {
             let vc = segue.destination as! EditEmbassyVC
-            //vc.mUser = self.mUser
+            vc.mUser = self.mUser
+            vc.mEmbassyID = self.mUser.embassy_id
+        }
+        
+        if segue.identifier == "sendNotificationsSegue" {
+            let vc = segue.destination as! CreateNotificationVC
+            vc.mUser = self.mUser
         }
         
         if segue.identifier == "embassyListSegue" {
@@ -308,6 +323,10 @@ class RootMenuTableVC: UITableViewController {
         let alert = UIAlertController(title: "Em breve!", message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func updateUserData() {
+        self.getCurrentUser(uid: self.mUser.id)
     }
     /*
     // Override to support conditional editing of the table view.

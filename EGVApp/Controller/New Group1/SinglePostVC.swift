@@ -26,6 +26,7 @@ class SinglePostVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     var mUser: User!
     var mPost: Post!
+    var mPostID: String!
     private var mCurrentKeyboardHeight: CGFloat = 0.0
     private var mkeyboardWillShowObserver: NSObjectProtocol!
     private var mkeyboardWillHideObserver: NSObjectProtocol!
@@ -95,8 +96,12 @@ class SinglePostVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     private func getPost() {
         
+        if mPostID == nil {
+            mPostID = mPost.id
+        }
+        
         mDatabase.collection(MyFirebaseCollections.POSTS)
-        .document(mPost.id)
+        .document(mPostID)
             .getDocument { (documentoSnapshot, error) in
                 if let error = error {
                     
@@ -234,7 +239,7 @@ class SinglePostVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return mPostCommentList.count + 1
+        return mPost != nil ? mPostCommentList.count + 1 : 0
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -273,8 +278,6 @@ class SinglePostVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             cell.prepare(with: comment)
             return cell
         }
-        
-        
         
     }
 

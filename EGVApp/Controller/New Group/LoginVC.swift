@@ -23,8 +23,8 @@ class LoginVC: UIViewController {
     @IBOutlet weak var mBtForgotPass: UIButton!
     
     private var mAuth: Auth?
-    private var mEmailField: SkyFloatingLabelTextField?
-    private var mPassField: SkyFloatingLabelTextField?
+    private var mEmailField: SkyFloatingLabelTextField!
+    private var mPassField: SkyFloatingLabelTextField!
     private var mHud: JGProgressHUD!
     
     weak var delegate: LoginDelegate?
@@ -50,7 +50,9 @@ class LoginVC: UIViewController {
     private func addFields() {
         
         self.mEmailField = buildTextField(placeholder: "E-mail", icon: String.fontAwesomeIcon(name: .envelope))
-        mSVContainerLogin.insertArrangedSubview(self.mEmailField!, at: 0)
+        self.mEmailField.keyboardType = .emailAddress
+        self.mEmailField.textContentType = .emailAddress
+        mSVContainerLogin.insertArrangedSubview(self.mEmailField, at: 0)
         
         self.mPassField = buildTextField(placeholder: "Senha", icon: String.fontAwesomeIcon(name: .lock))
         self.mPassField?.textContentType = .password
@@ -103,6 +105,7 @@ class LoginVC: UIViewController {
         self.mAuth?.signIn(withEmail: email, password: pass) { [weak self] user, error in
             guard self != nil else { return }
             if let credential = user {
+                
                 self?.mHud.dismiss()
                 self?.delegate?.checkLogin(uid: credential.user.uid, vc: self!)
                 self?.dismiss(animated: true, completion: nil)

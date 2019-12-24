@@ -39,6 +39,7 @@ struct User {
     var fcm_token: String?
     var register_number: Int
     var register_date: Timestamp?
+    var last_read_notification: Timestamp?
     var topic_subscribed: Bool
     var leader: Bool
     var manager: Bool
@@ -86,6 +87,7 @@ struct User {
         self.fcm_token = dictionary["fcm_token"] as? String
         self.register_number = dictionary["register_number"] as? Int ?? 0
         self.register_date = dictionary["register_date"] as? Timestamp
+        self.last_read_notification = dictionary["last_read_notification"] as? Timestamp
         self.topic_subscribed = dictionary["topic_subscribed"] as? Bool ?? false
         self.leader = dictionary["leader"] as? Bool ?? false
         self.manager = dictionary["manager"] as? Bool ?? false
@@ -127,6 +129,7 @@ struct User {
                     "fcm_token": fcm_token,
                     "register_number": register_number,
                     "register_date": register_date,
+                    "last_read_notification": last_read_notification,
                     "topic_subscribed": self.topic_subscribed,
                     "leader": self.leader,
                     "manager": self.manager,

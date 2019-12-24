@@ -35,6 +35,7 @@ class BasicUserCell: UITableViewCell {
         imgProfileUser.layer.masksToBounds = true
         
         imgProfileUser.kf.indicatorType = .activity
+        
         if let profile_img = user.profile_img {
             let url = URL(string: profile_img)
             imgProfileUser.kf.setImage(
@@ -45,6 +46,8 @@ class BasicUserCell: UITableViewCell {
                     .transition(.fade(1)),
                     .cacheOriginalImage
                 ])
+        } else {
+            imgProfileUser.image = UIImage(named: "user_avatar")!
         }
         
     }

@@ -24,6 +24,7 @@ class EditSocialNetworkingVC: UIViewController {
     @IBOutlet var mGroupFields: [UIStackView]!
     
     var mUser: User!
+    weak var mRootMenuTableVC: RootMenuTableVC!
     private var mDatabase: Firestore!
     private var mHud: JGProgressHUD!
     
@@ -45,6 +46,11 @@ class EditSocialNetworkingVC: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    @IBAction func onClickBtSaveData(_ sender: UIBarButtonItem) {
+        self.saveUserData()
+    }
+    
     
     private func bindData() {
     
@@ -132,51 +138,70 @@ class EditSocialNetworkingVC: UIViewController {
             return
         }
     
+        
+        var socialProfiles: [String: Any] = [:]
     
-        if(!whatsapp.isEmpty) {
-            mUser.whatsapp = whatsapp
+        if(!whatsapp.isEmpty && whatsapp != mUser.whatsapp) {
+            socialProfiles["whatsapp"] = whatsapp
+        } else if(whatsapp.isEmpty && whatsapp != mUser.whatsapp) {
+            socialProfiles["whatsapp"] = NSNull()
         }
     
-        if(!facebook.isEmpty) {
-            mUser.facebook = facebook
+        if(!facebook.isEmpty && facebook != mUser.facebook) {
+            socialProfiles["facebook"] = facebook
+        } else if(facebook.isEmpty && facebook != mUser.facebook) {
+            socialProfiles["facebook"] = NSNull()
         }
     
-        if(!instagram.isEmpty) {
-            mUser.instagram = instagram
+        if(!instagram.isEmpty && instagram != mUser.instagram) {
+            socialProfiles["instagram"] = instagram
+        } else if(instagram.isEmpty && instagram != mUser.instagram) {
+            socialProfiles["instagram"] = NSNull()
         }
     
-        if(!twitter.isEmpty) {
-            mUser.twitter = twitter
+        if(!twitter.isEmpty && twitter != mUser.twitter) {
+            socialProfiles["twitter"] = twitter
+        } else if(twitter.isEmpty && twitter != mUser.twitter) {
+            socialProfiles["twitter"] = NSNull()
         }
     
-        if(!linkedin.isEmpty) {
-            mUser.linkedin = linkedin
+        if(!linkedin.isEmpty && linkedin != mUser.linkedin) {
+            socialProfiles["linkedin"] = linkedin
+        } else  if(linkedin.isEmpty && linkedin != mUser.linkedin) {
+            socialProfiles["linkedin"] = NSNull()
         }
     
-        if(!youtube.isEmpty) {
-            mUser.youtube = youtube
+        if(!youtube.isEmpty && youtube != mUser.youtube) {
+            socialProfiles["youtube"] = youtube
+        } else if(youtube.isEmpty && youtube != mUser.youtube) {
+            socialProfiles["youtube"] = NSNull()
         }
     
-        if(!behance.isEmpty) {
-            mUser.behance = behance
+        if(!behance.isEmpty && behance != mUser.behance) {
+            socialProfiles["behance"] = behance
+        } else if(behance.isEmpty && behance != mUser.behance) {
+            socialProfiles["behance"] = NSNull()
         }
-    
-        if(!github.isEmpty) {
-            mUser.github = github
+        
+        if(!github.isEmpty && github != mUser.github) {
+            socialProfiles["github"] = github
+        } else if(github.isEmpty && github != mUser.github) {
+            socialProfiles["github"] = NSNull()
         }
     
         self.mHud.show(in: self.view)
     
         self.mDatabase.collection(MyFirebaseCollections.USERS)
             .document(mUser.id)
-            .setData(mUser.toMap()) { (error) in
+            .updateData(socialProfiles, completion: { (error) in
                 if let error = error {
                     
                 } else {
                     self.mHud.dismiss()
+                    self.mRootMenuTableVC.updateUserData()
                     self.makeAlert(message: "Dados salvos com sucesso")
                 }
-        }
+            })
         
     }
     

@@ -48,6 +48,8 @@ class ResetPasswordVC: UIViewController {
         private func addFields() {
             
             self.mEmailField = buildTextField(placeholder: "E-mail", icon: String.fontAwesomeIcon(name: .envelope))
+            self.mEmailField.keyboardType = .emailAddress
+            self.mEmailField.textContentType = .emailAddress
             svFormFields.insertArrangedSubview(self.mEmailField!, at: 0)
             
             

@@ -18,13 +18,14 @@ class ChangeProfilePhotoVC: UIViewController {
     @IBOutlet weak var mImgUserProfile: UIImageView!
     
     var mUser: User!
-    var tempImagePath: URL?
-    var mImageData: Data?
-    var mImageMetaData: StorageMetadata?
-    var imgExtension: String = ""
-    var mStorage: Storage!
-    var mDatabase: Firestore!
-    var mPhotoSelected: Bool = false
+    weak var mRootMenuTableVC: RootMenuTableVC!
+    private var tempImagePath: URL?
+    private var mImageData: Data?
+    private var mImageMetaData: StorageMetadata?
+    private var imgExtension: String = ""
+    private var mStorage: Storage!
+    private var mDatabase: Firestore!
+    private var mPhotoSelected: Bool = false
     private var mHud: JGProgressHUD!
     
     override func viewDidLoad() {
@@ -85,7 +86,12 @@ class ChangeProfilePhotoVC: UIViewController {
         config.library.onlySquare = true
         config.showsPhotoFilters = false
         let picker = YPImagePicker(configuration: config)
-        picker.didFinishPicking { [unowned picker] items, _ in
+        picker.didFinishPicking { [unowned picker] items, cancelled in
+            
+            if cancelled {
+                picker.dismiss(animated: true, completion: nil)
+            }
+            
             if let photo = items.singlePhoto {
                 print(photo.fromCamera) // Image source (camera or library)
                 print(photo.image) // Final image selected by the user
@@ -116,7 +122,6 @@ class ChangeProfilePhotoVC: UIViewController {
             
         }
         self.present(picker, animated: true, completion: nil)
-        
     }
     
     private func uploadToStorage() {
@@ -159,7 +164,8 @@ class ChangeProfilePhotoVC: UIViewController {
                                 
                             } else {
                                 self.mHud.dismiss()
-                                self.startCheckAuthVC()
+                                self.mRootMenuTableVC.updateUserData()
+                                self.makeAlert(message: "Foto atualizada com sucesso")
                                 //Doc Updated
                             }
                     }

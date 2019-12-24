@@ -13,8 +13,11 @@ class ListEmbassyTableVC: UITableViewController {
 
     var mUser: User!
     var mDatabase: Firestore!
-    var mEmbassyList: [Embassy] = []
-    var mEmbassySelected: Embassy!
+    private var mEmbassyList: [Embassy] = []
+    private var mSearchList: [Embassy] = []
+    private var mEmbassySelected: Embassy!
+    private var isSearching: Bool = false
+    @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +30,9 @@ class ListEmbassyTableVC: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    
+    
     
     private func listEmbassy() {
         mDatabase.collection(MyFirebaseCollections.EMBASSY)
@@ -80,7 +86,16 @@ class ListEmbassyTableVC: UITableViewController {
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.mEmbassySelected = mEmbassyList[indexPath.row]
+        
+        var list: [Embassy] = []
+        
+        if(self.isSearching) {
+            list = self.mSearchList
+        } else {
+            list = self.mEmbassyList
+        }
+        
+        self.mEmbassySelected = list[indexPath.row]
         performSegue(withIdentifier: "singleEmbassySegue", sender: nil)
     }
 
@@ -91,13 +106,31 @@ class ListEmbassyTableVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return mEmbassyList.count
+        
+        var list: [Embassy] = []
+        
+        if(self.isSearching) {
+            list = self.mSearchList
+        } else {
+            list = self.mEmbassyList
+        }
+        
+        return list.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "embassyCell", for: indexPath) as! EmbassyCell
-        let embassy = mEmbassyList[indexPath.row]
+        
+        var list: [Embassy] = []
+        
+        if(self.isSearching) {
+            list = self.mSearchList
+        } else {
+            list = self.mEmbassyList
+        }
+        
+        let embassy = list[indexPath.row]
         cell.prepare(with: embassy)
         return cell
     }
@@ -144,4 +177,48 @@ class ListEmbassyTableVC: UITableViewController {
     
     */
 
+}
+
+extension ListEmbassyTableVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.isEmpty {
+            self.isSearching = false
+            mSearchList.removeAll()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        } else {
+            self.isSearching = true
+            mSearchList.removeAll()
+            mSearchList = mEmbassyList.filter{ $0.name.lowercased().contains(searchText.lowercased()) }
+            let cityList = mEmbassyList.filter{ $0.city.lowercased().contains(searchText.lowercased()) }
+            let stateList = mEmbassyList.filter{ $0.state.lowercased().contains(searchText.lowercased()) }
+            mSearchList.append(contentsOf: cityList)
+            mSearchList.append(contentsOf: stateList)
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        
+        /*if mWorkItem != nil {
+            mWorkItem.cancel()
+        }
+        
+        self.mWorkItem = DispatchWorkItem {
+            UserService.searchUsers(query: searchText) { (users) in
+                self.users = users
+                self.count_users = users.count
+             
+ 
+        }
+        
+        //DispatchQueue.main.asyncAfter(deadline: .now(), execute: self.mWorkItem!)}*/
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        
+    }
 }

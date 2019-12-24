@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
+        UNService.shared.autorize()
         GMSServices.provideAPIKey("AIzaSyDvgQgQmRhjvJ3_n84gtf2ueRRvjlKHBzA")
         GMSPlacesClient.provideAPIKey("AIzaSyDvgQgQmRhjvJ3_n84gtf2ueRRvjlKHBzA")
         
@@ -27,6 +28,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("did register for notifications")
+        
+        let pushToken = deviceToken.map{String(format:"%02.2hhx", $0)}.joined()
+        //KeychainWrapper.standard.set(pushToken, forKey: "pushToken")
+        print("firebaseToken", Messaging.messaging().fcmToken)
+        print("pushToken", pushToken)
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        print("notification_action", userInfo)
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

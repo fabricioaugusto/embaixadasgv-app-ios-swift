@@ -62,6 +62,7 @@ class MyFirebaseCollections {
     static let POST_LIKES = "post_likes"
     static let POST_COMMENTS = "post_comments"
     static let SPONSORS = "sponsors"
+    static let MODERATORS = "moderators"
     static let APP_INVITATIONS = "app_invitations"
     static let APP_MESSAGES = "app_messages"
     static let APP_SERVER = "server_data"

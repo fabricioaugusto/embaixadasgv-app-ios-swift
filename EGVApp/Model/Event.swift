@@ -12,7 +12,7 @@ import Firebase
 class Event {
     var id: String
     let theme: String
-    let tag: String
+    let tag: String?
     let description: String
     let date: Timestamp?
     let schedule: String?
@@ -40,12 +40,11 @@ class Event {
         
         guard let id = dictionary["id"] as? String else { return nil }
         guard let theme = dictionary["theme"] as? String else { return nil }
-        guard let tag = dictionary["tag"] as? String else { return nil }
         guard let description = dictionary["description"] as? String else { return nil }
         
         self.id = id
         self.theme = theme
-        self.tag = tag
+        self.tag = dictionary["tag"] as? String
         self.description = description
         self.date = dictionary["date"] as? Timestamp
         self.schedule = dictionary["schedule"] as? String

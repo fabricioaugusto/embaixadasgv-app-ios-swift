@@ -149,7 +149,12 @@ class CreatePostVC: UIViewController, TextEditorDelegate {
         config.screens = [.library]
         config.showsPhotoFilters = false
         let picker = YPImagePicker(configuration: config)
-        picker.didFinishPicking { [unowned picker] items, _ in
+        picker.didFinishPicking { [unowned picker] items, cancelled in
+        
+            if cancelled {
+                picker.dismiss(animated: true, completion: nil)
+            }
+        
             if let photo = items.singlePhoto {
                 print(photo.fromCamera) // Image source (camera or library)
                 print(photo.image) // Final image selected by the user

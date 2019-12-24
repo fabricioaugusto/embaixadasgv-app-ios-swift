@@ -28,12 +28,20 @@ class RootDashboardVC: UIViewController {
     
     @IBOutlet weak var mViewContainerEvent: UIView!
     @IBOutlet weak var mLbNoEvents: UILabel!
-    private var mDatabase: Firestore!
     
+    private var mDatabase: Firestore!
+    private var mListNotifications: [Notification] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         print("evgapplog root", mUser.id)
         mDatabase = MyFirebase.sharedInstance.database()
+        
+        
+        
+        if let last_read_notification = mUser.last_read_notification {
+            getListNotifications(timestamp: last_read_notification)
+        }
+        
         setLayout()
         getNextEvent()
         // Do any additional setup after loading the view.
@@ -42,7 +50,6 @@ class RootDashboardVC: UIViewController {
     @IBAction func onClickBtNotifications(_ sender: UIBarButtonItem) {
         self.makeAlert(message: "Este recurso estará disponível nas próximas atualizações!")
     }
-    
     
     @IBAction func onClickBtEmbassyMembers(_ sender: UIButton) {
         performSegue(withIdentifier: "embassyMembersSegue", sender: nil)
@@ -78,6 +85,112 @@ class RootDashboardVC: UIViewController {
             vc.mEmbassyID = mUser.embassy_id
             vc.mUser = mUser
         }
+        
+        if segue.identifier == "notificationsSegue" {
+            let vc = segue.destination as! NotificationsTableVC
+            vc.mUser = self.mUser
+            vc.mRoodDashboardVC = self
+        }
+    }
+    
+    
+    private func getListNotifications(timestamp: Timestamp) {
+
+        //isPostsOver = false
+
+        mDatabase.collection(MyFirebaseCollections.NOTIFICATIONS)
+            .whereField("created_at", isGreaterThan: timestamp)
+            .whereField("receiver_id", isEqualTo: mUser.id)
+            .order(by: "created_at", descending: true)
+            .getDocuments { (querySnapshot, error) in
+                if error == nil {
+                    if let documents = querySnapshot?.documents {
+                        for document in documents {
+                            if let notification = Notification(dictionary: document.data()) {
+                                self.mListNotifications.append(notification)
+                            }
+                        }
+                        self.getManagerNotifications(timestamp: timestamp)
+                    }
+                }
+        }
+    }
+    
+    private func getManagerNotifications(timestamp: Timestamp) {
+        
+        
+        mDatabase.collection(MyFirebaseCollections.NOTIFICATIONS)
+            .whereField("created_at", isGreaterThan: timestamp)
+            .whereField("type", isEqualTo: "manager_notification")
+            .whereField("only_leaders", isEqualTo: false)
+            .order(by: "created_at", descending: true)
+            .limit(to: 30)
+            .getDocuments { (querySnapshot, error) in
+                if error == nil {
+                    if let documents = querySnapshot?.documents {
+                        for document in documents {
+                            if let notification = Notification(dictionary: document.data()) {
+                                self.mListNotifications.append(notification)
+                            }
+                        }
+                        
+                        if(self.mUser.leader) {
+                            self.getLeaderNotifications(timestamp: timestamp)
+                        } else {
+                            self.setNotificationBarButton(count: self.mListNotifications.count)
+                        }
+            
+                    }
+                }
+        }
+    }
+    
+    private func getLeaderNotifications(timestamp: Timestamp) {
+
+
+        mDatabase.collection(MyFirebaseCollections.NOTIFICATIONS)
+            .whereField("created_at", isGreaterThan: timestamp)
+            .whereField("type", isEqualTo: "manager_notification")
+            .whereField("only_leaders", isEqualTo: true)
+            .order(by: "created_at", descending: true)
+            .limit(to: 30)
+            .getDocuments { (querySnapshot, error) in
+                if error == nil {
+                    if let documents = querySnapshot?.documents {
+                        for document in documents {
+                            if let notification = Notification(dictionary: document.data()) {
+                                self.mListNotifications.append(notification)
+                            }
+                        }
+                        self.setNotificationBarButton(count: self.mListNotifications.count)
+                    }
+                }
+        }
+
+    }
+    
+    func clearCountNotificationBarButton() {
+        self.setNotificationBarButton(count: 0)
+    }
+    
+    private func setNotificationBarButton(count: Int) {
+        let notificationButton = SSBadgeButton()
+        notificationButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        notificationButton.setImage(UIImage(named: "icon_notifications")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        notificationButton.badgeEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 15)
+        
+        if count > 0 {
+            notificationButton.badge = String(count)
+        } else {
+            notificationButton.badge = nil
+        }
+        notificationButton.addTarget(self, action: #selector(onClickBtStartNotificationTableVC), for: .touchUpInside)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationButton)
+    }
+    
+    @objc func onClickBtStartNotificationTableVC(sender: UIButton!) {
+        performSegue(withIdentifier: "notificationsSegue", sender: nil)
     }
     
     private func getNextEvent() {
@@ -145,16 +258,6 @@ class RootDashboardVC: UIViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 

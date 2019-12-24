@@ -41,8 +41,25 @@ class CompleteRegisterVC: UIViewController {
         super.viewDidLoad()
         
         addFields()
-        mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .normal)
-        mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .selected)
+        
+        if #available(iOS 13, *) {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                for i in 0...(self.mGenderSegmented.numberOfSegments-1)  {
+                    let backgroundSegmentView = self.mGenderSegmented.subviews[i]
+                    //it is not enogh changing the background color. It has some kind of shadow layer
+                    backgroundSegmentView.isHidden = true
+                }
+            }
+            mGenderSegmented.selectedSegmentTintColor = AppColors.colorLink
+            mGenderSegmented.layer.borderColor = AppColors.colorLink.cgColor
+            mGenderSegmented.layer.borderWidth = 1.0
+            mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorLink], for: .normal)
+            mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .selected)
+        }
+        
+        //mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .normal)
+        //mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .selected)
         
         mAuth = MyFirebase.sharedInstance.auth()
         mDatabase = MyFirebase.sharedInstance.database()

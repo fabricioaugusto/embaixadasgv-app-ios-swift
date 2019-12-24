@@ -26,6 +26,8 @@ class EditProfileVC: UIViewController {
     
     var mUser: User!
     var mInvite: Invite!
+    weak var mRootMenuTableVC: RootMenuTableVC!
+    private var mUserInfo: [String: Any] = [:]
     private var mAuth: Auth!
     private var mDatabase: Firestore!
     private var mNameField: SkyFloatingLabelTextField!
@@ -44,8 +46,22 @@ class EditProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addFields()
-    mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .normal)
-    mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .selected)
+        
+        if #available(iOS 13, *) {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                for i in 0...(self.mGenderSegmented.numberOfSegments-1)  {
+                    let backgroundSegmentView = self.mGenderSegmented.subviews[i]
+                    //it is not enogh changing the background color. It has some kind of shadow layer
+                    backgroundSegmentView.isHidden = true
+                }
+            }
+            mGenderSegmented.selectedSegmentTintColor = AppColors.colorLink
+            mGenderSegmented.layer.borderColor = AppColors.colorLink.cgColor
+            mGenderSegmented.layer.borderWidth = 1.0
+            mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorLink], for: .normal)
+            mGenderSegmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.colorWhite], for: .selected)
+        }
         
         
         
@@ -67,9 +83,9 @@ class EditProfileVC: UIViewController {
         let selectedOption = sender.selectedSegmentIndex
         
         if (selectedOption == 0) {
-            mUser.gender = "male"
+            mUserInfo["gender"] = "male"
         } else {
-            mUser.gender = "female"
+            mUserInfo["gender"] = "female"
         }
     }
     
@@ -80,6 +96,8 @@ class EditProfileVC: UIViewController {
         svFormFields.insertArrangedSubview(self.mNameField, at: 0)
         
         self.mEmailField = buildTextField(placeholder: "E-mail", icon: String.fontAwesomeIcon(name: .envelope))
+        self.mEmailField.keyboardType = .emailAddress
+        self.mEmailField.textContentType = .emailAddress
         svFormFields.insertArrangedSubview(self.mEmailField, at: 1)
         
         self.mBirthDateField = buildTextField(placeholder: "Data de Nascimento", icon: String.fontAwesomeIcon(name: .birthdayCake))
@@ -173,17 +191,30 @@ class EditProfileVC: UIViewController {
             return
         }
         
+        if(!name.isEmpty && name != mUser.name) {
+            mUserInfo["name"] = name
+        }
+        
+        if(!email.isEmpty && email != mUser.email) {
+            mUserInfo["email"] = email
+        }
+        
+        if(!occupation.isEmpty && occupation != mUser.occupation) {
+            mUserInfo["occupation"] = occupation
+        }
+        
+        if(!birthdate.isEmpty && birthdate != mUser.birthdate) {
+            mUserInfo["birthdate"] = birthdate
+        }
+        
+        if(!biography.isEmpty && biography != mUser.description) {
+            mUserInfo["description"] = biography
+        }
+        
         self.mHud.show(in: self.view)
         
-        mUser.name = name
-        mUser.description = biography
-        mUser.birthdate = birthdate
-        mUser.occupation = occupation
-        
         if(email != mUser.email) {
-            
-            mUser.email = email
-            
+                        
             let user = mAuth.currentUser
             
             if let user = user {
@@ -191,11 +222,13 @@ class EditProfileVC: UIViewController {
                     if(error == nil) {
                         self.mDatabase.collection(MyFirebaseCollections.USERS)
                             .document(self.mUser.id)
-                            .setData(self.mUser.toMap(), completion: { (error) in
+                            .updateData(self.mUserInfo, completion: { (error) in
                                 if let error = error {
                                     print(error.localizedDescription.description)
                                 } else {
                                     self.mHud.dismiss()
+                                    self.mRootMenuTableVC.updateUserData()
+                                    self.makeAlert(message: "Dados salvos com sucesso")
                                 }
                             })
                     }
@@ -204,11 +237,13 @@ class EditProfileVC: UIViewController {
         } else {
             self.mDatabase.collection(MyFirebaseCollections.USERS)
                 .document(mUser.id)
-                .setData(mUser.toMap(), completion: { (error) in
+                .updateData(self.mUserInfo, completion: { (error) in
                     if let error = error {
                         print(error.localizedDescription.description)
                     } else {
                         self.mHud.dismiss()
+                        self.mRootMenuTableVC.updateUserData()
+                        self.makeAlert(message: "Dados salvos com sucesso")
                     }
                 })
         }
@@ -229,13 +264,13 @@ extension EditProfileVC: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         
         mSearchCityField?.text = place.name
-        mUser.city = place.name
+        mUserInfo["city"] = place.name
         
         if let components = place.addressComponents {
             for component in components {
                 if(component.types[0] == "administrative_area_level_1") {
-                    mUser.state = component.name
-                    mUser.state_short = component.shortName
+                    mUserInfo["state"] = component.name
+                    mUserInfo["state_short"] = component.shortName
                 }
             }
         }

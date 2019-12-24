@@ -35,7 +35,7 @@ class CheckAuthVC: UIViewController, LoginDelegate {
         if let authUser = loggedUser {
             let uid = authUser.uid
             if(!mLoginDone) {
-               getCurrentUser(uid: uid)
+                getCurrentUser(uid: uid, login: false)
             }
         } else {
             startLoginViewController()
@@ -79,9 +79,6 @@ class CheckAuthVC: UIViewController, LoginDelegate {
             let menuVC = menuTab.topViewController as! RootMenuTableVC
             menuVC.mUser = mUser
         }
-        
-        
-        
     }
     
     private func startLoginViewController() {
@@ -92,10 +89,10 @@ class CheckAuthVC: UIViewController, LoginDelegate {
     
     func checkLogin(uid: String, vc: LoginVC) {
         self.mLoginDone = true
-        getCurrentUser(uid: uid)
+        getCurrentUser(uid: uid, login: true)
     }
     
-    private func getCurrentUser(uid: String) {
+    private func getCurrentUser(uid: String, login: Bool) {
         mDatabase?.collection(MyFirebaseCollections.USERS).document(uid).getDocument(completion:
             { (documentSnapshot, error) in
                 
@@ -105,7 +102,7 @@ class CheckAuthVC: UIViewController, LoginDelegate {
                     })
                 }) {
                     
-                    if(user.last_device_os != "android") {
+                    if(user.last_device_os != "ios") {
                         documentSnapshot?.reference.updateData(["last_device_os": "ios"])
                     }
                     
@@ -113,22 +110,24 @@ class CheckAuthVC: UIViewController, LoginDelegate {
                         documentSnapshot?.reference.updateData(["last_device_version": "version"])
                     }
                     
-                    if(user.last_app_update != "14") {
-                        documentSnapshot?.reference.updateData(["last_app_update": "14"])
+                    if(user.last_app_update != "2") {
+                        documentSnapshot?.reference.updateData(["last_app_update": "2"])
                     }
-                    
-                    if(user.leader) {
-                        self.mMessaging?.subscribe(toTopic: "egv_topic_leaders")
-                    }
-                    
-                    self.mMessaging?.subscribe(toTopic: "egv_topic_members")
-                    
                     
                     if(user.fcm_token != nil) {
                         //obterToken(documentSnapshot.reference)
                     }
                     
                     self.mUser = user
+                    
+                    if(login) {
+                        if(self.mUser.leader) {
+                            FIRMessagingService.shared.subscribe(to: .leaders)
+                        }
+                        FIRMessagingService.shared.subscribe(to: .members)
+                        FIRMessagingService.shared.subscribe(to: .ios)
+                    }
+                    
                     self.checkUser()
                 } else {
                     do {

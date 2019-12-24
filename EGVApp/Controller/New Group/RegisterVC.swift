@@ -105,9 +105,12 @@ class RegisterVC: UIViewController {
         user["status"] = "registered"
         user["last_read_notification"] = FieldValue.serverTimestamp()
     
-    
+        FIRMessagingService.shared.subscribe(to: .members)
+        FIRMessagingService.shared.subscribe(to: .ios)
+        
         if(mInvite.isLeader) {
             user["leader"] = true
+            FIRMessagingService.shared.subscribe(to: .leaders)
         }
     
         if let embassy = mInvite.embassy_receiver {
@@ -133,7 +136,7 @@ class RegisterVC: UIViewController {
                         if(self.mInvite.isLeader) {
                             self.setEmbassy(currentUser: User(dictionary: user)!)
                         } else {
-                            self.setUsername(currentUser: User(dictionary: user)!)
+                            self.setUsername(currentUser: User(dictionary: user)!, embassyDocRef: nil)
                         }
                     }
                 }
@@ -141,7 +144,7 @@ class RegisterVC: UIViewController {
     
     }
     
-    private func setUsername(currentUser: User) {
+    private func setUsername(currentUser: User, embassyDocRef: DocumentReference?) {
         print("egvapplog", currentUser)
         let collection = mDatabase.collection(MyFirebaseCollections.USERS)
     
@@ -171,6 +174,9 @@ class RegisterVC: UIViewController {
                         if let err = error {
                             print("Error updating document: \(err)")
                         } else {
+                            if let ref = embassyDocRef {
+                                ref.updateData(["leader_username": username])
+                            }
                             self.mHud.dismiss()
                             self.startCheckAuthVC()
                         }
@@ -180,6 +186,9 @@ class RegisterVC: UIViewController {
                         if let err = error {
                             print("Error updating document: \(err)")
                         } else {
+                            if let ref = embassyDocRef {
+                                ref.updateData(["leader_username": username])
+                            }
                             self.mHud.dismiss()
                             self.startCheckAuthVC()
                         }
@@ -192,13 +201,16 @@ class RegisterVC: UIViewController {
     private func setEmbassy(currentUser: User) {
     
         if let embassy = mInvite.embassy_receiver {
-            self.mDatabase.collection(MyFirebaseCollections.EMBASSY)
+            
+            var ref: DocumentReference? = nil
+            
+            ref = self.mDatabase.collection(MyFirebaseCollections.EMBASSY)
                 .document(embassy.id)
-                .updateData(["leader":currentUser.toBasicMap(), "leader_id":currentUser.id], completion: { (error) in
-                    if let error = error {
-                        
-                    } else {
-                        self.setUsername(currentUser: currentUser)
+            ref!.updateData([
+                    "leader":currentUser.toBasicMap(),
+                    "leader_id":currentUser.id], completion: { (error) in
+                    if error == nil {
+                        self.setUsername(currentUser: currentUser, embassyDocRef: ref)
                     }
                 })
         }
@@ -241,6 +253,8 @@ class RegisterVC: UIViewController {
         svFormFields.insertArrangedSubview(self.mUserField!, at: 0)
         
         self.mEmailField = buildTextField(placeholder: "E-mail", icon: String.fontAwesomeIcon(name: .envelope))
+        self.mEmailField.keyboardType = .emailAddress
+        self.mEmailField.textContentType = .emailAddress
         svFormFields.insertArrangedSubview(self.mEmailField!, at: 1)
         
         self.mPasswordField = buildTextField(placeholder: "Senha", icon: String.fontAwesomeIcon(name: .lock))
