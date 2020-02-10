@@ -59,6 +59,25 @@ class UserCell: UITableViewCell {
             identifierView.backgroundColor = AppColors.colorCommitteeLeader
         }
         
+        
+        if(user.influencer) {
+            if(user.gender == "female") {
+                lbUserStatus.text = "Influenciadora"
+            } else {
+                lbUserStatus.text = "Influenciador"
+            }
+            identifierView.backgroundColor = AppColors.colorInfluencer
+        }
+        
+        if(user.counselor) {
+            if(user.gender == "female") {
+                lbUserStatus.text = "Conselheira"
+            } else {
+                lbUserStatus.text = "Conselheiro"
+            }
+            identifierView.backgroundColor = AppColors.colorCounselor
+        }
+        
         imgProfileUser.layer.cornerRadius = 30
         imgProfileUser.layer.masksToBounds = true
         

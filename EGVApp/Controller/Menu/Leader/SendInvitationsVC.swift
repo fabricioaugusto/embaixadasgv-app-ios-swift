@@ -15,6 +15,16 @@ import JGProgressHUD
 class SendInvitationsVC: UIViewController {
 
     
+    @IBOutlet weak var mBtWhatsapp: UIButton!
+    @IBOutlet weak var mBtCopy: UIButton!
+    @IBOutlet weak var mBtGenerateCode: UIButton!
+    @IBOutlet weak var mBtNewCode: UIButton!
+       
+    @IBOutlet weak var mViewCodeContainer: UIView!
+    @IBOutlet weak var mViewShareOptions: UIView!
+    @IBOutlet weak var mLbCode: UILabel!
+    @IBOutlet weak var mLbShareCodeText: UILabel!
+    
     @IBOutlet weak var mViewLinkContainer: UIView!
     @IBOutlet weak var mSvFormField: UIStackView!
     @IBOutlet weak var mLbInvitationLink: UILabel!
@@ -25,6 +35,7 @@ class SendInvitationsVC: UIViewController {
     private var mNameField: SkyFloatingLabelTextField!
     private var mEmailField: SkyFloatingLabelTextField!
     private var mHud: JGProgressHUD!
+    private var mCurrentInviteID: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,14 +55,56 @@ class SendInvitationsVC: UIViewController {
         mViewLinkContainer.layer.borderWidth = 1.0
         
         let username: String = mUser.username ?? ""
-        mLbInvitationLink.text = "https://embaixadasgv.app/convite/\(username))"
+        mLbInvitationLink.text = "https://embaixadasgv.app/convite/\(username)"
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func onClickBtSendInvitation(_ sender: UIBarButtonItem) {
+    @IBAction func onClickBtSendInvitation(_ sender: UIButton) {
         self.saveData()
     }
     
+    
+    @IBAction func onClickBtWhatsapp(_ sender: Any) {
+        
+        let name = mNameField.text ?? ""
+        let text = "Olá *\(name)*, este é um convite para você ter acesso ao aplicativo das Embaixadas GV. Bastar baixar o *EGV App* na Google Play (para Android) ou na AppStore (para iOS), clicar em *CADASTRE-SE* e utilizar o seguinte código de acesso: *\(mLbCode.text ?? "")*. Vamos lá? https://embaixadasgv.app"
+        
+        let escapedString = text.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        print(escapedString!)
+        
+        //print(message)
+        
+        let url = URL(string: "https://wa.me/?text=\(escapedString!)")
+        
+        if let url = url {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    @IBAction func onClickBtCopy(_ sender: UIButton) {
+        
+        let name = mNameField.text ?? ""
+        let text = "Olá \(name), este é um convite para você ter acesso ao aplicativo das Embaixadas GV. Bastar baixar o EGV App na Google Play (para Android) ou na AppStore (para iOS), clicar em CADASTRE-SE e utilizar o seguinte código de acesso: \(mLbCode.text ?? ""). Vamos lá? https://embaixadasgv.app"
+        
+        UIPasteboard.general.string = text
+        
+        let alert = UIAlertController(title: "Texto do convite copiado!", message: "Agora você pode colar no Mensager do Facebook, Direct do Instagram, Telegram ou onde preferir", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func onClickNewCode(_ sender: UIButton) {
+        mViewCodeContainer.isHidden = true
+        mLbShareCodeText.isHidden = true
+        mViewShareOptions.isHidden = true
+        mNameField.text = ""
+        mEmailField.text = ""
+        mBtNewCode.isHidden = true
+        mNameField.isHidden = false
+        mEmailField.isHidden = false
+        mBtGenerateCode.isHidden = false
+    }
     
     @IBAction func onClickBtCopyLink(_ sender: Any) {
         
@@ -68,11 +121,13 @@ class SendInvitationsVC: UIViewController {
         
         self.mNameField = buildTextField(placeholder: "Nome", icon: String.fontAwesomeIcon(name: .user))
         mSvFormField.insertArrangedSubview(self.mNameField, at: 0)
+        self.mNameField.delegate = self
         
         self.mEmailField = buildTextField(placeholder: "E-mail", icon: String.fontAwesomeIcon(name: .envelope))
         self.mEmailField.keyboardType = .emailAddress
         self.mEmailField.textContentType = .emailAddress
         mSvFormField.insertArrangedSubview(self.mEmailField, at: 1)
+        self.mEmailField.delegate = self
         
         mSvFormField.alignment = .fill
         mSvFormField.distribution = .fill
@@ -142,17 +197,32 @@ class SendInvitationsVC: UIViewController {
                         self.makeAlert(message: "Um convite já foi enviado para este e-mail")
                     } else {
                         self.mDatabase.collection(MyFirebaseCollections.APP_INVITATIONS)
-                            .addDocument(data: invite) { (error) in
+                        .document("\(code)")
+                        .setData(invite) { (error) in
                                 
-                                if error == nil {
-                                    self.mNameField.text = ""
-                                    self.mEmailField.text = ""
-                                    
-                                    self.mHud.dismiss()
-                                     let alert = UIAlertController(title: "Convite Enviado!", message: "O convite foi enviado com sucesso!", preferredStyle: UIAlertController.Style.alert)
-                                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-                                     self.present(alert, animated: true, completion: nil)
-                                }
+                            if error == nil {
+                                self.mNameField.isHidden = true
+                                self.mEmailField.isHidden = true
+                                
+                                self.mCurrentInviteID = "\(code)"
+                                
+                                self.mBtGenerateCode.isHidden = true
+                                self.mBtNewCode.isHidden = false
+                                                                
+                                self.mLbCode.text = "\(code)"
+                                self.mLbShareCodeText.text = "Você também pode escolher uma opção abaixo para enviar o código para \(name)"
+                                self.mLbShareCodeText.isHidden = false
+                                
+                                self.mViewCodeContainer.isHidden = false
+                                self.mViewShareOptions.isHidden = false
+                                
+                                self.mHud.dismiss()
+                                
+                                self.mHud.dismiss()
+                                 let alert = UIAlertController(title: "Convite Enviado!", message: "O convite foi enviado com sucesso!", preferredStyle: UIAlertController.Style.alert)
+                                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                                 self.present(alert, animated: true, completion: nil)
+                            }
                                 
                         }
                     }
@@ -176,4 +246,11 @@ class SendInvitationsVC: UIViewController {
     }
     */
 
+}
+
+extension SendInvitationsVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 }

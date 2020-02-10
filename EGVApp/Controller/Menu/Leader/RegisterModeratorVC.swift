@@ -113,9 +113,24 @@ class RegisterModeratorVC: UIViewController {
         config.screens = [.library]
         config.library.onlySquare = true
         config.showsPhotoFilters = false
+        config.wordings.next = "Avançar"
+        config.wordings.cancel = "Cancelar"
+        config.wordings.libraryTitle = "Galeria"
+        config.colors.tintColor = AppColors.colorLink
+        
         let picker = YPImagePicker(configuration: config)
+        UINavigationBar.appearance().tintColor = AppColors.colorText
+        
+        if #available(iOS 13.0, *) {
+            picker.overrideUserInterfaceStyle = .light
+        } else {
+            // Fallback on earlier versions
+        }
+        
         picker.didFinishPicking { [unowned picker] items, cancelled in
         
+            UINavigationBar.appearance().tintColor = .white
+            
             if cancelled {
                 picker.dismiss(animated: true, completion: nil)
             }

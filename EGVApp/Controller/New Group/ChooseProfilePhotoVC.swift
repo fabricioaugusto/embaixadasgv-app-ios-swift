@@ -59,9 +59,24 @@ class ChooseProfilePhotoVC: UIViewController {
         config.screens = [.library]
         config.library.onlySquare = true
         config.showsPhotoFilters = false
-        let picker = YPImagePicker(configuration: config)
-        picker.didFinishPicking { [unowned picker] items, cancelled in
+        config.wordings.next = "Avançar"
+        config.wordings.cancel = "Cancelar"
+        config.wordings.libraryTitle = "Galeria"
+        config.colors.tintColor = AppColors.colorLink
         
+        let picker = YPImagePicker(configuration: config)
+        UINavigationBar.appearance().tintColor = AppColors.colorText
+        
+        if #available(iOS 13.0, *) {
+            picker.overrideUserInterfaceStyle = .light
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        picker.didFinishPicking { [unowned picker] items, cancelled in
+            
+            UINavigationBar.appearance().tintColor = .white
+            
             if cancelled {
                 picker.dismiss(animated: true, completion: nil)
             }
@@ -110,8 +125,12 @@ class ChooseProfilePhotoVC: UIViewController {
         
         // Data in memory
         if let data = mImageData {
+            
+            let uuid = UUID().uuidString
+            let image_name = "\(uuid).\(self.imgExtension)"
+            
             // Create a reference to the file you want to upload
-            let riversRef = mStorage.reference().child("ios_images/rivers.jpg")
+            let riversRef = mStorage.reference().child("images/user/profile/\(image_name)")
 
             // Upload the file to the path "images/rivers.jpg"
             riversRef.putData(data, metadata: self.mImageMetaData)
@@ -130,7 +149,6 @@ class ChooseProfilePhotoVC: UIViewController {
                   return
                 }
                 
-                print("egvapplog", downloadURL.absoluteString)
                 self.mDatabase
                     .collection(MyFirebaseCollections.USERS)
                     .document(self.mUser.id)

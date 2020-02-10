@@ -91,6 +91,7 @@ PODS:
     - FirebaseCore (~> 6.0)
     - GTMSessionFetcher/Core (~> 1.1)
   - FontAwesome.swift (1.8.2)
+  - Gallery (2.2.2)
   - GoogleAppMeasurement (6.1.5):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -196,6 +197,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Firebase/Storage
   - FontAwesome.swift
+  - Gallery
   - GoogleMaps
   - GooglePlaces
   - INSPhotoGallery
@@ -241,6 +243,7 @@ SPEC REPOS:
     - FirebaseMessaging
     - FirebaseStorage
     - FontAwesome.swift
+    - Gallery
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
@@ -296,6 +299,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: de30f83a372a390be6f2ba44ec43a45b7ccdb43f
   FirebaseStorage: b7c6d00997bc21d4465453bdcc5cc65513110fed
   FontAwesome.swift: 7938d6a03113ff3f39001bde7f50be8a0903d605
+  Gallery: 634ea7d58b93fcb8e787a846febac73ec354e7d9
   GoogleAppMeasurement: 037f46d1d8ae8b312720f1042585ab961a1289e3
   GoogleDataTransport: 166f9b9f82cbf60a204e8fe2daa9db3e3ec1fb15
   GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
@@ -331,6 +335,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   YPImagePicker: bdaa46782668e260fdd9709f19043a9f469fd2ad
 
-PODFILE CHECKSUM: 96e20466718d3ccdfd0d5248ef7abc3fa4ca0922
+PODFILE CHECKSUM: 2fefbd8b0bcc496e1e85b5c9329257908bb9b690
 
 COCOAPODS: 1.8.4

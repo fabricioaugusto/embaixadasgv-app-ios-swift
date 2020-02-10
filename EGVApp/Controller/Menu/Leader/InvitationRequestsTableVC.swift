@@ -77,7 +77,8 @@ class InvitationRequestsTableVC: UITableViewController {
             "name_receiver" : mSelectedInvitationRequest.requestorName,
             "email_receiver" : mSelectedInvitationRequest.requestorEmail,
             "embassy_receiver" : mUser.embassy!.toBasicMap(),
-            "invite_code" : code
+            "invite_code" : code,
+            "created_at" : FieldValue.serverTimestamp()
         ]
 
         self.mDatabase.collection(MyFirebaseCollections.APP_INVITATIONS)
@@ -89,7 +90,8 @@ class InvitationRequestsTableVC: UITableViewController {
                         self.makeAlert(message: "Um convite já foi enviado para este e-mail")
                     } else {
                         self.mDatabase.collection(MyFirebaseCollections.APP_INVITATIONS)
-                            .addDocument(data: invite) { (error) in
+                        .document("\(code)")
+                        .setData(invite) { (error) in
                                 
                                 if error == nil {
                                     
@@ -108,7 +110,7 @@ class InvitationRequestsTableVC: UITableViewController {
     
     private func alertDeleteInvitationRequest() {
         
-        let alert = UIAlertController(title: "Excluir Foto", message: "Tem certeza que deseja excluir esta foto?", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Excluir solicitante", message: "Tem certeza que deseja excluir esta pessoa?", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Sim, tenho certeza", style: UIAlertAction.Style.destructive, handler: { (alertAction) in
             self.deleteInvitationRequest()
         }))
@@ -155,8 +157,23 @@ class InvitationRequestsTableVC: UITableViewController {
             self.saveData()
         }))
         alert.addAction(UIAlertAction(title: "Chamar no Whatsapp", style: .default , handler:{ (UIAlertAction)in
-            let url = URL(string: "https://wa.me/\(self.mSelectedInvitationRequest.requestorWhatsapp)")!
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            
+            var whatsapp = self.mSelectedInvitationRequest.requestorWhatsapp
+            whatsapp = whatsapp.replacingOccurrences(of: " ", with: "")
+            whatsapp = whatsapp.replacingOccurrences(of: "+", with: "")
+            whatsapp = whatsapp.replacingOccurrences(of: "(", with: "")
+            whatsapp = whatsapp.replacingOccurrences(of: ")", with: "")
+            whatsapp = whatsapp.replacingOccurrences(of: "-", with: "")
+            
+            if(whatsapp.contains("+")) {
+                whatsapp = whatsapp.replacingOccurrences(of: "+", with: "")
+                let url = URL(string: "https://wa.me/\(whatsapp)")!
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                let url = URL(string: "https://wa.me/55\(whatsapp)")!
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            
         }))
         alert.addAction(UIAlertAction(title: "Enviar e-mail", style: .default , handler:{ (UIAlertAction)in
             let url = URL(string: "mailto:\(self.mSelectedInvitationRequest.requestorEmail)")!

@@ -72,13 +72,16 @@ class RegisterVC: UIViewController {
         let email = mEmailField.text ?? ""
         let pass = mPasswordField.text ?? ""
         let passConfirm = mConfirmPasswordField.text ?? ""
-    
+        
     
     
         if(validateRegister(name: name, email: email, pass: pass, passConfirm: passConfirm)) {
-            if(email != mInvite.email_receiver) {
-                makeAlert(message: "Você deve cadastrar o mesmo e-mail em que o convite foi enviado")
-                return
+            
+            if(!mInvite.influencer && !mInvite.counselor) {
+                if(email != mInvite.email_receiver) {
+                    makeAlert(message: "Você deve cadastrar o mesmo e-mail em que o convite foi enviado")
+                    return
+                }
             }
             
             self.mHud.show(in: self.view)
@@ -111,6 +114,14 @@ class RegisterVC: UIViewController {
         if(mInvite.isLeader) {
             user["leader"] = true
             FIRMessagingService.shared.subscribe(to: .leaders)
+        }
+        
+        if(mInvite.influencer) {
+            user["influencer"] = true
+        }
+        
+        if(mInvite.counselor) {
+            user["counselor"] = true
         }
     
         if let embassy = mInvite.embassy_receiver {

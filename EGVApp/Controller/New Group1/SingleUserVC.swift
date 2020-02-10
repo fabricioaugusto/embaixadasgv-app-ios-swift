@@ -22,6 +22,8 @@ class SingleUserVC: UIViewController {
     @IBOutlet weak var mSvContainerCollection: UIStackView!
     @IBOutlet weak var mCollectionView: UICollectionView!
     @IBOutlet weak var mSvConstraintBottom: NSLayoutConstraint!
+    @IBOutlet weak var lbUserStatus: UILabel!
+    @IBOutlet weak var identifierView: UIView!
     
     private var mDatabase: Firestore!
     private var mSocialNetworking: [[String: Any]] = []
@@ -70,6 +72,48 @@ class SingleUserVC: UIViewController {
         mLbUserEmbassy.text = self.mUser.embassy?.name
         mLbUserCity.text = self.mUser.city
         mLbUserDescription.text = self.mUser.description
+        
+        lbUserStatus.text = "Membro"
+        identifierView.layer.cornerRadius = 12
+        identifierView.layer.masksToBounds = true
+        identifierView.layer.backgroundColor = AppColors.colorMember.cgColor
+        
+        if(self.mUser.leader) {
+            lbUserStatus.text = "Líder"
+            identifierView.backgroundColor = AppColors.colorLeader
+        }
+        
+        if(self.mUser.sponsor) {
+            if(self.mUser.gender == "female") {
+                lbUserStatus.text = "Madrinha"
+            } else {
+                lbUserStatus.text = "Padrinho"
+            }
+            identifierView.backgroundColor = AppColors.colorSponsor
+        }
+        
+        if(self.mUser.committee_leader) {
+            lbUserStatus.text = "Líder de Comitê"
+            identifierView.backgroundColor = AppColors.colorCommitteeLeader
+        }
+        
+        if(mUser.influencer) {
+            if(mUser.gender == "female") {
+                lbUserStatus.text = "Influenciadora"
+            } else {
+                lbUserStatus.text = "Influenciador"
+            }
+            identifierView.backgroundColor = AppColors.colorInfluencer
+        }
+        
+        if(mUser.counselor) {
+            if(mUser.gender == "female") {
+                lbUserStatus.text = "Conselheira"
+            } else {
+                lbUserStatus.text = "Conselheiro"
+            }
+            identifierView.backgroundColor = AppColors.colorCounselor
+        }
         
         mImgUserProfile.layer.cornerRadius = 80
         mImgUserProfile.layer.masksToBounds = true
@@ -229,9 +273,15 @@ extension SingleUserVC: UICollectionViewDataSource, UICollectionViewDelegateFlow
                 whatsapp = whatsapp.replacingOccurrences(of: "(", with: "")
                 whatsapp = whatsapp.replacingOccurrences(of: ")", with: "")
                 whatsapp = whatsapp.replacingOccurrences(of: "-", with: "")
-                print("evgapplog_sn", whatsapp)
-                let url = URL(string: "https://wa.me/\(whatsapp)")!
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                
+                if(whatsapp.contains("+")) {
+                    whatsapp = whatsapp.replacingOccurrences(of: "+", with: "")
+                    let url = URL(string: "https://wa.me/\(whatsapp)")!
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    let url = URL(string: "https://wa.me/55\(whatsapp)")!
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
             }
         } else {
             let url = URL(string: mSocialNetworking[indexPath.row]["url"] as! String)!

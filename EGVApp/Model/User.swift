@@ -44,6 +44,10 @@ struct User {
     var leader: Bool
     var manager: Bool
     var sponsor: Bool
+    var influencer: Bool
+    var counselor: Bool
+    var influencerManager: Bool
+    var counselor_manager: Bool
     var committee_leader: Bool
     var committee_manager: Bool
     var committee_member: Bool
@@ -92,6 +96,10 @@ struct User {
         self.leader = dictionary["leader"] as? Bool ?? false
         self.manager = dictionary["manager"] as? Bool ?? false
         self.sponsor = dictionary["sponsor"] as? Bool ?? false
+        self.influencer = dictionary["influencer"] as? Bool ?? false
+        self.counselor = dictionary["counselor"] as? Bool ?? false
+        self.influencerManager = dictionary["influencerManager"] as? Bool ?? false
+        self.counselor_manager = dictionary["counselor_manager"] as? Bool ?? false
         self.committee_leader = dictionary["committee_leader"] as? Bool ?? false
         self.committee_manager = dictionary["committee_manager"] as? Bool ?? false
         self.committee_member = dictionary["committee_member"] as? Bool ?? false
@@ -134,6 +142,10 @@ struct User {
                     "leader": self.leader,
                     "manager": self.manager,
                     "sponsor": self.sponsor,
+                    "influencer": self.influencer,
+                    "counselor": self.counselor,
+                    "influencerManager": self.influencerManager,
+                    "counselor_manager": self.counselor_manager,
                     "committee_leader": self.committee_leader,
                     "committee_manager": self.committee_manager,
                     "committee_member": self.committee_member,
@@ -153,7 +165,10 @@ struct User {
                 "leader": self.leader,
                 "manager": self.manager,
                 "sponsor": self.sponsor,
+                "influencer": self.influencer,
+                "counselor": self.counselor,
                 "committee_leader": self.committee_leader,
+                "counselor_manager": self.counselor_manager,
                 "username": self.username,
                 "embassy_id": self.embassy_id,
         ]
@@ -170,6 +185,8 @@ struct BasicUser {
     let leader: Bool
     let manager: Bool
     let sponsor: Bool
+    var influencer: Bool
+    var counselor: Bool
     let committee_leader: Bool
     let verified: Bool
     
@@ -187,6 +204,8 @@ struct BasicUser {
         self.leader = dictionary["leader"] as? Bool ?? false
         self.manager = dictionary["manager"] as? Bool ?? false
         self.sponsor = dictionary["sponsor"] as? Bool ?? false
+        self.influencer = dictionary["influencer"] as? Bool ?? false
+        self.counselor = dictionary["counselor"] as? Bool ?? false
         self.committee_leader = dictionary["committee_leader"] as? Bool ?? false
         self.username = dictionary["username"] as? String
         self.embassy_id = dictionary["embassy_id"] as? String

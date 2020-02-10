@@ -15,11 +15,11 @@ class RootAgendaTableVC: UITableViewController {
     var mUser: User!
     var mSelectedEvent: Event!
     private var mDatabase: Firestore?
-    private var mLastDocument: DocumentSnapshot?
-    private var mLastDocumentRequested: DocumentSnapshot?
     private var mEventList: [Event] = []
-    private var isPostsOver: Bool = false
     private var mAdapterPosition: Int = 0
+    private var mLastDocument: DocumentSnapshot!
+    private var mIsDocumentsOver: Bool = false
+    private var mIsLoadingList: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,19 +48,72 @@ class RootAgendaTableVC: UITableViewController {
                  } else {
                      if let query = querySnapshot {
                          if query.documents.count > 0 {
-                             self.mLastDocument = query.documents[query.count - 1]
+                             
+                            self.mLastDocument = query.documents[query.documents.count - 1]
+                            
+                            if query.documents.count < 10 {
+                                self.mIsDocumentsOver = true
+                            }
+                            
                              for document in querySnapshot!.documents {
                                  let event = Event(dictionary: document.data())
                                  if(event != nil) {
                                      self.mEventList.append(event!)
                                  }
                              }
+                            
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            
                          } else {
-                             self.isPostsOver = true
+                             self.mIsDocumentsOver = true
                          }
-                         
-                         DispatchQueue.main.async {
-                             self.tableView.reloadData()
+                     }
+                     
+                 }
+             })
+    }
+    
+    private func loadMoreEvents() {
+        
+        self.mIsLoadingList = true
+        
+        let today = Date()
+        let timestamp = Timestamp(date: today)
+        
+         self.mDatabase?.collection(MyFirebaseCollections.EVENTS)
+            //.whereField("date", isGreaterThan: timestamp)
+            .order(by: "date", descending: false)
+            .start(afterDocument: self.mLastDocument)
+            .limit(to: 10)
+            .getDocuments(completion: { (querySnapshot, err) in
+                 if let err = err {
+                     print("Error getting documents: \(err)")
+                 } else {
+                     if let query = querySnapshot {
+                         if query.documents.count > 0 {
+                             
+                            self.mLastDocument = query.documents[query.documents.count - 1]
+                            
+                            if query.documents.count < 10 {
+                                self.mIsDocumentsOver = true
+                            }
+                            
+                             for document in querySnapshot!.documents {
+                                 let event = Event(dictionary: document.data())
+                                 if(event != nil) {
+                                     self.mEventList.append(event!)
+                                 }
+                             }
+                            
+                            DispatchQueue.main.async {
+                                self.mIsLoadingList = false
+                                self.tableView.reloadData()
+                            }
+                            
+                         } else {
+                             self.mIsDocumentsOver = true
                          }
                      }
                      
@@ -102,6 +155,12 @@ class RootAgendaTableVC: UITableViewController {
         cell.prepare(with: event)
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == self.mEventList.count-5 && !self.mIsLoadingList && !self.mIsDocumentsOver{
+            self.loadMoreEvents()
+        }
     }
     
 

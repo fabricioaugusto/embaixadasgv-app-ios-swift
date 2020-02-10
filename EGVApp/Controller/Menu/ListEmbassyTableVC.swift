@@ -17,6 +17,7 @@ class ListEmbassyTableVC: UITableViewController {
     private var mSearchList: [Embassy] = []
     private var mEmbassySelected: Embassy!
     private var isSearching: Bool = false
+    private var mCountEmbassies: Int = 0
     @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
@@ -24,6 +25,7 @@ class ListEmbassyTableVC: UITableViewController {
         
         mDatabase = MyFirebase.sharedInstance.database()
         listEmbassy()
+        countEmbassies()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -31,8 +33,30 @@ class ListEmbassyTableVC: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    @IBAction func onClickBarBtInfo(_ sender: UIBarButtonItem) {
+        
+        let alert = UIAlertController(title: "\(mCountEmbassies)", message: "Embaixadas cadastradas", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
+    }
     
-    
+    private func countEmbassies() {
+        mDatabase.collection(MyFirebaseCollections.APP_SERVER)
+            .document("embassies_count")
+            .getDocument { (documentSnapshot, error) in
+                
+                if error == nil {
+                    if let document = documentSnapshot {
+                        let data = document.data()
+                        if let data = data {
+                            self.mCountEmbassies = data["value"] as? Int ?? 0
+                            print(self.mCountEmbassies)
+                        }
+                    }
+                }
+            }
+    }
     
     private func listEmbassy() {
         mDatabase.collection(MyFirebaseCollections.EMBASSY)

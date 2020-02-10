@@ -17,6 +17,10 @@ protocol TextEditorDelegate: class {
 class TextEditorVC: UIViewController {
 
     @IBOutlet weak var mTextEditorView: RichEditorView!
+    private var mCurrentKeyboardHeight: CGFloat = 0.0
+    private var mkeyboardWillShowObserver: NSObjectProtocol!
+    private var mkeyboardWillHideObserver: NSObjectProtocol!
+    private var mTabBarHeight: CGFloat = 0
     
     weak var delegate: TextEditorDelegate!
     var previousText: String = ""
@@ -24,7 +28,6 @@ class TextEditorVC: UIViewController {
     lazy var toolbar: RichEditorToolbar = {
         let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
         toolbar.options = [RichEditorDefaultOption.bold, RichEditorDefaultOption.italic,
-            RichEditorDefaultOption.link,
             RichEditorDefaultOption.undo,
             RichEditorDefaultOption.redo,
             RichEditorDefaultOption.clear]
@@ -56,6 +59,8 @@ class TextEditorVC: UIViewController {
         
         // Do any additional setup after loading the view.
     }
+    
+    
     
     @IBAction func onClickBtDone(_ sender: UIBarButtonItem) {
         self.delegate.editTextDone(text: mTextEditorView.contentHTML, vc: self)

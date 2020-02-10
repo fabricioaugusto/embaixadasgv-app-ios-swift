@@ -18,6 +18,8 @@ class Post {
     let picture: String?
     let picture_file_name: String?
     let title: String?
+    let link: String?
+    let action_button_text: String?
     var post_likes: Int
     let picture_width: Int
     let picture_height: Int
@@ -44,6 +46,8 @@ class Post {
         self.picture = dictionary["picture"] as? String
         self.picture_file_name = dictionary["picture_file_name"] as? String
         self.title = dictionary["title"] as? String
+        self.link = dictionary["link"] as? String
+        self.action_button_text = dictionary["action_button_text"] as? String
         self.post_likes = dictionary["post_likes"] as? Int ?? 0
         self.picture_width = dictionary["picture_width"] as? Int ?? 0
         self.picture_height = dictionary["picture_height"] as? Int ?? 0

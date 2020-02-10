@@ -135,11 +135,26 @@ class CreateNotificationVC: UIViewController, TextEditorDelegate {
          var config = YPImagePickerConfiguration()
          config.screens = [.library]
          config.showsPhotoFilters = false
+         config.wordings.next = "Avançar"
+         config.wordings.cancel = "Cancelar"
+         config.wordings.libraryTitle = "Galeria"
+         config.colors.tintColor = AppColors.colorLink
+        
          let picker = YPImagePicker(configuration: config)
+         UINavigationBar.appearance().tintColor = AppColors.colorText
+        
+         if #available(iOS 13.0, *) {
+            picker.overrideUserInterfaceStyle = .light
+         } else {
+           // Fallback on earlier versions
+         }
+        
          picker.didFinishPicking { [unowned picker] items, cancelled in
-         
-             if cancelled {
-                 picker.dismiss(animated: true, completion: nil)
+             
+            UINavigationBar.appearance().tintColor = .white
+             
+            if cancelled {
+                picker.dismiss(animated: true, completion: nil)
              }
          
              if let photo = items.singlePhoto {

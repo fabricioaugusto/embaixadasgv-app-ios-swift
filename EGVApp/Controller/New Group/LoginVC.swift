@@ -27,7 +27,7 @@ class LoginVC: UIViewController {
     private var mPassField: SkyFloatingLabelTextField!
     private var mHud: JGProgressHUD!
     
-    weak var delegate: LoginDelegate?
+    weak var delegate: LoginDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,8 +107,7 @@ class LoginVC: UIViewController {
             if let credential = user {
                 
                 self?.mHud.dismiss()
-                self?.delegate?.checkLogin(uid: credential.user.uid, vc: self!)
-                self?.dismiss(animated: true, completion: nil)
+                self?.delegate.checkLogin(uid: credential.user.uid, vc: self!)
             } else {
                 self?.mHud.dismiss()
                 self?.makeAlert(message: "Dados de login incorretos, tente novamente!")

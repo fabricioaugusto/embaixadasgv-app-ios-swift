@@ -14,7 +14,7 @@ class PostComment {
     let post_id: String
     let user_id: String
     let text: String
-    //let date: Timestamp?
+    let date: Timestamp?
     let user: BasicUser
     
     init?(dictionary: [String: Any]) {
@@ -25,6 +25,7 @@ class PostComment {
         self.post_id = dictionary["post_id"] as! String
         self.user_id = dictionary["user_id"] as! String
         self.text = dictionary["text"] as! String
+        self.date = dictionary["date"] as? Timestamp
         self.user =  BasicUser(dictionary: dictionary["user"] as! [String : Any])!
     }
 }

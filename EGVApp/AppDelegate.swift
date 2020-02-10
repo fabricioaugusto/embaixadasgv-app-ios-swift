@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import GooglePlaces
 import GoogleMaps
+import AVKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNService.shared.autorize()
         GMSServices.provideAPIKey("AIzaSyDvgQgQmRhjvJ3_n84gtf2ueRRvjlKHBzA")
         GMSPlacesClient.provideAPIKey("AIzaSyDvgQgQmRhjvJ3_n84gtf2ueRRvjlKHBzA")
+        
+        do {
+              try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+              try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print(error)
+        }
         
         // Override point for customization after application launch.
         return true

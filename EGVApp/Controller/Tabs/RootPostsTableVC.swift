@@ -21,14 +21,18 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
     private var mSelectedPostUserID: String!
     private var mSelectedIndexPath: IndexPath!
     private var mDatabase: Firestore!
-    private var mLastDocument: DocumentSnapshot?
-    private var mLastDocumentRequested: DocumentSnapshot?
     private var mPostList: [Post] = []
     private var mHighlightPostList: [Post] = []
     private var mEmbassyPostList: [Post] = []
     private var mAllPostList: [Post] = []
     private var mListLikes: [PostLike] = []
-    private var isPostsOver: Bool = false
+    private var mHighlightLastDocument: DocumentSnapshot!
+    private var mEmbassyLastDocument: DocumentSnapshot!
+    private var mAllLastDocument: DocumentSnapshot!
+    private var mIsHighlightDocumentsOver: Bool = false
+    private var mIsEmbassyDocumentsOver: Bool = false
+    private var mIsAllDocumentsOver: Bool = false
+    private var mIsLoadingList: Bool = false
     private var mAdapterPosition: Int = 0
     private var mUserID: String!
     private var mLikeIsProcessing: Bool = false
@@ -41,6 +45,11 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
         print("evgapplog root", mUser.id)
         mAuth = MyFirebase.sharedInstance.auth()
         mDatabase = MyFirebase.sharedInstance.database()
+        
+        if(mUser.influencer || mUser.counselor) {
+            self.mSegmentControl.removeSegment(at: 1, animated: false)
+        }
+        
         
         if #available(iOS 13, *) {
             
@@ -85,12 +94,16 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
     }
     
     @IBAction func onClickCreatePost(_ sender: UIBarButtonItem) {
+        
+        self.mCreatePostType = "photo"
+        self.startCreatePostVC()
+        
         //self.makeAlert(message: "Este recurso estará disponível nas próximas atualizações!")
         /*let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "createPostMenuVC") as! CreatePostMenuVC
         viewController.mRootPostsTableVC = self
         let popupController = STPopupController(rootViewController: viewController)
-        popupController.present(in: self)*/
+        popupController.present(in: self)
         
         
         let item1 = MenuItem(title: "Foto", subtitle: nil, value: "photo", image: UIImage(named: "icon_picture"), isEnabled: true, tapBehavior: .dismiss)
@@ -116,7 +129,7 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
             }
         }
         
-        sheet.present(in: self, from: self.view)
+        sheet.present(in: self, from: self.view)*/
         
         
         /*let sheet = ActionSheet(items: items) { sheet, item in
@@ -129,7 +142,14 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
     
     
     @IBAction func onChangePostCategory(_ sender: UISegmentedControl) {
-        
+        if(mUser.influencer || mUser.counselor) {
+            changePostCategoryInfluencer(sender: sender)
+        } else {
+            changePostCategory(sender: sender)
+        }
+    }
+    
+    private func changePostCategory(sender: UISegmentedControl) {
         let indexSelected = sender.selectedSegmentIndex
         
         if(indexSelected == 0) {
@@ -169,6 +189,34 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
         }
     }
     
+    private func changePostCategoryInfluencer(sender: UISegmentedControl) {
+        let indexSelected = sender.selectedSegmentIndex
+        
+        if(indexSelected == 0) {
+            if(mHighlightPostList.count == 0) {
+                self.getHighlightListPosts()
+            } else {
+                self.mPostList.removeAll()
+                self.mPostList = self.mHighlightPostList
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        
+        if(indexSelected == 1) {
+            if(mAllPostList.count == 0) {
+                self.getAllPosts()
+            } else {
+                self.mPostList.removeAll()
+                self.mPostList = self.mAllPostList
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
     
     // MARK: - Table view data source
 
@@ -180,27 +228,79 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
             .limit(to: 10)
             .getDocuments(completion: { (querySnapshot, err) in
                 if let err = err {
-                    print("egvapplog", "deu erro")
                     print("Error getting documents: \(err)")
                 } else {
-                    print("egvapplog", "deu certo ")
                     if let query = querySnapshot {
-                        print("egvapplog", "achou a query")
+                        
                         if query.documents.count > 0 {
-                            self.mLastDocument = query.documents[query.count - 1]
+                            
+                            self.mHighlightLastDocument = query.documents[query.documents.count - 1]
+                            
+                            if query.documents.count < 10 {
+                                self.mIsHighlightDocumentsOver = true
+                            }
                             
                             for document in querySnapshot!.documents {
                                 let post = Post(dictionary: document.data())
                                 if(post != nil) {
-                                    self.mHighlightPostList.append(post!)
+                                    if(post!.type != "video") {
+                                        self.mHighlightPostList.append(post!)
+                                    }
                                 }
                             }
                             self.mPostList = self.mHighlightPostList
                         } else {
-                            self.isPostsOver = true
+                            self.mIsHighlightDocumentsOver = true
                         }
                         
                         DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                    
+                }
+            })
+    }
+    
+    private func loadMoreHighlightListPosts() {
+        
+        self.mIsLoadingList = true
+        
+        self.mDatabase?.collection(MyFirebaseCollections.POSTS)
+            .whereField("user_verified", isEqualTo: true)
+            .order(by: "date", descending: true)
+            .start(afterDocument: self.mHighlightLastDocument)
+            .limit(to: 10)
+            .getDocuments(completion: { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    
+                    if let query = querySnapshot {
+                        
+                        if query.documents.count > 0 {
+                            
+                            self.mHighlightLastDocument = query.documents[query.documents.count - 1]
+                            
+                            if query.documents.count < 10 {
+                                self.mIsHighlightDocumentsOver = true
+                            }
+                            
+                            for document in querySnapshot!.documents {
+                                let post = Post(dictionary: document.data())
+                                if(post != nil) {
+                                    if(post!.type != "video") {
+                                        self.mHighlightPostList.append(post!)
+                                    }
+                                }
+                            }
+                            self.mPostList = self.mHighlightPostList
+                        } else {
+                            self.mIsHighlightDocumentsOver = true
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.mIsLoadingList = false
                             self.tableView.reloadData()
                         }
                     }
@@ -213,6 +313,7 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
         
         self.mDatabase?.collection(MyFirebaseCollections.POSTS)
             .whereField("embassy_id", isEqualTo: mUser.embassy_id)
+            .whereField("user_verified", isEqualTo: false)
             .order(by: "date", descending: true)
             .limit(to: 10)
             .getDocuments(completion: { (querySnapshot, err) in
@@ -223,21 +324,29 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
                     if let query = querySnapshot {
                         
                         if query.documents.count > 0 {
-                            self.mLastDocument = query.documents[query.count - 1]
+                            
+                            self.mEmbassyLastDocument = query.documents[query.documents.count - 1]
+                            
+                            if query.documents.count < 10 {
+                                self.mIsEmbassyDocumentsOver = true
+                            }
                             
                             for document in querySnapshot!.documents {
                                 let post = Post(dictionary: document.data())
                                 if(post != nil) {
-                                    self.mEmbassyPostList.append(post!)
+                                    if(post!.type != "video") {
+                                        self.mEmbassyPostList.append(post!)
+                                    }
                                 }
                             }
                             self.mPostList = self.mEmbassyPostList
+                            
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            
                         } else {
-                            self.isPostsOver = true
-                        }
-                        
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
+                            self.mIsEmbassyDocumentsOver = true
                         }
                     }
                     
@@ -245,11 +354,111 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
             })
     }
     
+    private func loadMoreEmbassyPosts() {
+        
+        self.mIsLoadingList = true
+        
+        self.mDatabase?.collection(MyFirebaseCollections.POSTS)
+            .whereField("embassy_id", isEqualTo: mUser.embassy_id)
+            .whereField("user_verified", isEqualTo: false)
+            .order(by: "date", descending: true)
+            .start(afterDocument: self.mEmbassyLastDocument)
+            .limit(to: 10)
+            .getDocuments(completion: { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    
+                    if let query = querySnapshot {
+                        
+                        if query.documents.count > 0 {
+                            
+                            self.mEmbassyLastDocument = query.documents[query.documents.count - 1]
+                            
+                            if query.documents.count < 10 {
+                                self.mIsEmbassyDocumentsOver = true
+                            }
+                            
+                            for document in querySnapshot!.documents {
+                                let post = Post(dictionary: document.data())
+                                if(post != nil) {
+                                    if(post!.type != "video") {
+                                        self.mEmbassyPostList.append(post!)
+                                    }
+                                }
+                            }
+                            self.mPostList = self.mEmbassyPostList
+                            
+                            DispatchQueue.main.async {
+                                self.mIsLoadingList = false
+                                self.tableView.reloadData()
+                            }
+                            
+                        } else {
+                            self.mIsEmbassyDocumentsOver = true
+                        }
+                        
+                        
+                    }
+                    
+                }
+            })
+    }
+    
     private func getAllPosts() {
+        
+        self.mIsLoadingList = true
 
         self.mDatabase?.collection(MyFirebaseCollections.POSTS)
             .whereField("user_verified", isEqualTo: false)
             .order(by: "date", descending: true)
+            .limit(to: 10)
+            .getDocuments(completion: { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    
+                    if let query = querySnapshot {
+                        
+                        if query.documents.count > 0 {
+                            
+                            self.mAllLastDocument = query.documents[query.documents.count - 1]
+                            
+                            if query.documents.count < 10 {
+                                self.mIsAllDocumentsOver = true
+                            }
+                            
+                            for document in querySnapshot!.documents {
+                                let post = Post(dictionary: document.data())
+                                if(post != nil) {
+                                    if(post!.type != "video") {
+                                        self.mAllPostList.append(post!)
+                                    }
+                                }
+                            }
+                            self.mPostList = self.mAllPostList
+                            
+                            DispatchQueue.main.async {
+                                self.mIsLoadingList = false
+                                self.tableView.reloadData()
+                            }
+                            
+                        } else {
+                            self.mIsAllDocumentsOver = true
+                        }
+                        
+                    }
+                    
+                }
+            })
+    }
+    
+    private func loadMoreAllPosts() {
+
+        self.mDatabase?.collection(MyFirebaseCollections.POSTS)
+            .whereField("user_verified", isEqualTo: false)
+            .order(by: "date", descending: true)
+            .start(afterDocument: self.mAllLastDocument)
             .limit(to: 30)
             .getDocuments(completion: { (querySnapshot, err) in
                 if let err = err {
@@ -259,37 +468,44 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
                     if let query = querySnapshot {
                         
                         if query.documents.count > 0 {
-                            self.mLastDocument = query.documents[query.count - 1]
+                            
+                            self.mAllLastDocument = query.documents[query.documents.count - 1]
+                            
+                            if query.documents.count < 10 {
+                                self.mIsAllDocumentsOver = true
+                            }
                             
                             for document in querySnapshot!.documents {
                                 let post = Post(dictionary: document.data())
                                 if(post != nil) {
-                                    self.mAllPostList.append(post!)
+                                    if(post!.type != "video") {
+                                        self.mAllPostList.append(post!)
+                                    }
                                 }
                             }
                             self.mPostList = self.mAllPostList
+                            
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            
                         } else {
-                            self.isPostsOver = true
+                            self.mIsAllDocumentsOver = true
                         }
                         
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
                     }
                     
                 }
             })
     }
     
-    
-    private func loadMore() {
-        
-        
-    }
+
     
     private func getPostLikes() {
-        print("egvapplog", "postlikes vai ser chamado")
-        isPostsOver = false
+        
+        mIsHighlightDocumentsOver = false
+        mIsEmbassyDocumentsOver = false
+        mIsAllDocumentsOver = false
         mListLikes.removeAll()
         
         self.mDatabase?.collection(MyFirebaseCollections.POST_LIKES)
@@ -302,8 +518,6 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
                     if let query = querySnapshot {
                         
                         if query.documents.count > 0 {
-                            print("egvapplog", "postlikes deu certo")
-                            self.mLastDocument = query.documents[query.count - 1]
                             
                             for document in querySnapshot!.documents {
                                 let postLike = PostLike(dictionary: document.data())
@@ -396,12 +610,20 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
         }
     }
     
-    func postWasPublished(vc: CreatePostVC) {
+    func postWasPublished(vc: CreatePostVC, highlightPost: Bool) {
         mHighlightPostList.removeAll()
         mAllPostList.removeAll()
         mEmbassyPostList.removeAll()
-        mSegmentControl.selectedSegmentIndex = 1
-        self.getEmbassyPosts()
+        
+        if(highlightPost) {
+            mSegmentControl.selectedSegmentIndex = 0
+            self.getHighlightListPosts()
+        } else {
+            mSegmentControl.selectedSegmentIndex = 1
+            self.getEmbassyPosts()
+        }
+        
+        
     }
     
     func postWasCommented(post: Post, vc: SinglePostVC) {
@@ -480,15 +702,6 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
 
     // MARK: - Table view data source
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if(mPostList.count > 0) {
-            print("egvapplog", "last item \(indexPath.row + 1)")
-            if indexPath.row + 1 == mPostList.count {
-                print("egvapplog", "last item \(indexPath.row + 1)")
-            }
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.mSelectedIndexPath = indexPath
         self.mSelectedPost = mPostList[indexPath.row]
@@ -539,6 +752,46 @@ class RootPostsTableVC: UITableViewController, CreatePostDelegate, SinglePostDel
             cell.post = post
             cell.prepare(with: post, postLikes: mListLikes)
             return cell
+        }
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        let indexSelected = self.mSegmentControl.selectedSegmentIndex
+        
+        
+        if(mUser.influencer || mUser.counselor) {
+            
+            if(indexSelected == 0) {
+                if indexPath.row == self.mHighlightPostList.count-5 && !self.mIsLoadingList && !self.mIsHighlightDocumentsOver{
+                    self.loadMoreHighlightListPosts()
+                }
+            }
+            
+            if(indexSelected == 1) {
+                if indexPath.row == self.mAllPostList.count-5 && !self.mIsLoadingList && !self.mIsAllDocumentsOver{
+                    self.loadMoreAllPosts()            }
+            }
+            
+        } else {
+            if(indexSelected == 0) {
+                if indexPath.row == self.mHighlightPostList.count-5 && !self.mIsLoadingList && !self.mIsHighlightDocumentsOver{
+                    self.loadMoreHighlightListPosts()
+                }
+            }
+            
+            if(indexSelected == 1) {
+                if indexPath.row == self.mEmbassyPostList.count-5 && !self.mIsLoadingList && !self.mIsEmbassyDocumentsOver{
+                    self.loadMoreEmbassyPosts()
+                }
+            }
+            
+            if(indexSelected == 2) {
+                if indexPath.row == self.mAllPostList.count-5 && !self.mIsLoadingList && !self.mIsAllDocumentsOver{
+                    self.loadMoreAllPosts()            }
+            }
+        
         }
         
     }

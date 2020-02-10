@@ -26,6 +26,7 @@ class CheckAuthVC: UIViewController, LoginDelegate {
         mAuth = MyFirebase.sharedInstance.auth()
         mMessaging = MyFirebase.sharedInstance.messaging()
         
+        
         // Do any additional setup after loading the view.
     }
     
@@ -44,6 +45,7 @@ class CheckAuthVC: UIViewController, LoginDelegate {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if(segue.identifier == "completeRegisterSegue") {
             let vc = segue.destination as! CompleteRegisterVC
             vc.mUser = mUser
@@ -79,6 +81,26 @@ class CheckAuthVC: UIViewController, LoginDelegate {
             let menuVC = menuTab.topViewController as! RootMenuTableVC
             menuVC.mUser = mUser
         }
+        
+        if(segue.identifier == "influencerMainTabBarSegue") {
+            let barViewControllers = segue.destination as! UITabBarController
+            
+            let contentTab = barViewControllers.viewControllers![0] as! UINavigationController
+            let contentVC = contentTab.topViewController as! RootPostsTableVC
+            contentVC.mUser = mUser
+            
+            let usersTab = barViewControllers.viewControllers![1] as! UINavigationController
+            let usersVC = usersTab.topViewController as! RootUsersTableVC
+            usersVC.mUser = mUser
+            
+            let agendaTab = barViewControllers.viewControllers![2] as! UINavigationController
+            let agendaVC = agendaTab.topViewController as! RootAgendaTableVC
+            agendaVC.mUser = mUser
+            
+            let menuTab = barViewControllers.viewControllers![3] as! UINavigationController
+            let menuVC = menuTab.topViewController as! RootMenuTableVC
+            menuVC.mUser = mUser
+        }
     }
     
     private func startLoginViewController() {
@@ -89,7 +111,9 @@ class CheckAuthVC: UIViewController, LoginDelegate {
     
     func checkLogin(uid: String, vc: LoginVC) {
         self.mLoginDone = true
-        getCurrentUser(uid: uid, login: true)
+        vc.dismiss(animated: true) {
+            self.getCurrentUser(uid: uid, login: true)
+        }
     }
     
     private func getCurrentUser(uid: String, login: Bool) {
@@ -101,6 +125,8 @@ class CheckAuthVC: UIViewController, LoginDelegate {
                         return User(dictionary: data)
                     })
                 }) {
+                    print("loginvc", "achou usuãrio")
+                    
                     
                     if(user.last_device_os != "ios") {
                         documentSnapshot?.reference.updateData(["last_device_os": "ios"])
@@ -110,8 +136,8 @@ class CheckAuthVC: UIViewController, LoginDelegate {
                         documentSnapshot?.reference.updateData(["last_device_version": "version"])
                     }
                     
-                    if(user.last_app_update != "2") {
-                        documentSnapshot?.reference.updateData(["last_app_update": "2"])
+                    if(user.last_app_update != "1.2") {
+                        documentSnapshot?.reference.updateData(["last_app_update": "1.2"])
                     }
                     
                     if(user.fcm_token != nil) {
@@ -119,7 +145,7 @@ class CheckAuthVC: UIViewController, LoginDelegate {
                     }
                     
                     self.mUser = user
-                    
+                    print("loginvc", "fez as atualizacoes")
                     if(login) {
                         if(self.mUser.leader) {
                             FIRMessagingService.shared.subscribe(to: .leaders)
@@ -142,12 +168,18 @@ class CheckAuthVC: UIViewController, LoginDelegate {
     }
     
     private func checkUser() {
-    
+        print("loginvc", "checkUser")
         if(mUser.description == nil) {
             performSegue(withIdentifier: "completeRegisterSegue", sender: nil)
             return
         } else if(mUser.profile_img == nil) {
             performSegue(withIdentifier: "chooseProfilePhotoSegue", sender: nil)
+            return
+        } else if(mUser.influencer) {
+            performSegue(withIdentifier: "influencerMainTabBarSegue", sender: nil)
+            return
+        } else if(mUser.counselor) {
+            performSegue(withIdentifier: "influencerMainTabBarSegue", sender: nil)
             return
         } else {
             performSegue(withIdentifier: "mainTabBarSegue", sender: nil)

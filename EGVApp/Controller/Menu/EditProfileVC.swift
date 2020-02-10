@@ -312,6 +312,12 @@ extension EditProfileVC: UITextFieldDelegate {
             let autocompleteController = GMSAutocompleteViewController()
             autocompleteController.delegate = self
             
+            if #available(iOS 13.0, *) {
+                autocompleteController.overrideUserInterfaceStyle = .light
+            } else {
+                // Fallback on earlier versions
+            }
+            
             // Specify the place data types to return.
             let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
                 UInt(GMSPlaceField.placeID.rawValue) | UInt(GMSPlaceField.addressComponents.rawValue))!

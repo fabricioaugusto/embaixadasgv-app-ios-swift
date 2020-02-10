@@ -39,4 +39,5 @@ target 'EGVApp' do
   pod 'STPopup'
   pod 'RichEditorView'
   pod 'Sheeeeeeeeet'
+  pod 'Gallery'
 end

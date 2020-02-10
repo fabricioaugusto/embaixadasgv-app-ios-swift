@@ -34,7 +34,11 @@ class PostCommentCell: UITableViewCell {
         mLbUserName.text = comment.user.name
         mLbCommentText.text = comment.text
         
-        
+        if let stamp = comment.date {
+            let date = stamp.dateValue()
+            let formattedDate = FormatDate().dateToString(date: date)
+            mLbCommentDate.text = "\(String(describing: formattedDate["date"]!)) às \(String(describing: formattedDate["time"]!))"
+        }
         
         mImgUserProfile.layer.cornerRadius = 12.5
         mImgUserProfile.layer.masksToBounds = true

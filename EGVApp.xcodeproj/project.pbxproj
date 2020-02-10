@@ -28,6 +28,9 @@
 		0412661E237271A7009C5E2B /* fa-regular-400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0412661B237271A6009C5E2B /* fa-regular-400.ttf */; };
 		0412662023727341009C5E2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0412661F23727340009C5E2B /* GoogleService-Info.plist */; };
 		0424772E2396D5D700A40BDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F25D0D32379EFF200EEA08C /* Assets.xcassets */; };
+		043518DE23D2AE45007133AF /* SendInviteToInfluencersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043518DD23D2AE45007133AF /* SendInviteToInfluencersVC.swift */; };
+		043518E023D2AF34007133AF /* ListInfluencersTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043518DF23D2AF34007133AF /* ListInfluencersTableVC.swift */; };
+		043518E223D2AF66007133AF /* ListInfluencersCodesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043518E123D2AF66007133AF /* ListInfluencersCodesTableVC.swift */; };
 		04394193237A516800E0B848 /* ThoughtCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04394192237A516700E0B848 /* ThoughtCell.swift */; };
 		04394195237A519000E0B848 /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04394194237A519000E0B848 /* ArticleCell.swift */; };
 		044AEDA52385BD2900D53928 /* app_layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044AEDA42385BD2900D53928 /* app_layout.swift */; };
@@ -63,12 +66,16 @@
 		04832C8423A1813600F31866 /* CreatePhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832C8323A1813600F31866 /* CreatePhotoVC.swift */; };
 		04832C8623A1815900F31866 /* EditEmbassyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832C8523A1815900F31866 /* EditEmbassyVC.swift */; };
 		04832C8823A181D100F31866 /* SendInvitationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832C8723A181D100F31866 /* SendInvitationsVC.swift */; };
+		04892B5723E4790B00DAA803 /* ListCounselorsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04892B5623E4790B00DAA803 /* ListCounselorsTableVC.swift */; };
+		04892B5923E47BA300DAA803 /* ListCounselorsCodesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04892B5823E47BA300DAA803 /* ListCounselorsCodesTableVC.swift */; };
 		048CB23223AB9CE300D4EA6A /* FIRMessagingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048CB23123AB9CE300D4EA6A /* FIRMessagingService.swift */; };
 		048CB23523ABAA0700D4EA6A /* SSBadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048CB23423ABAA0700D4EA6A /* SSBadgeButton.swift */; };
 		048CB23723AC063E00D4EA6A /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048CB23623AC063D00D4EA6A /* NotificationCell.swift */; };
 		048CB23923AC3F7400D4EA6A /* SingleNotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048CB23823AC3F7200D4EA6A /* SingleNotificationVC.swift */; };
 		048CB23C23AC76B700D4EA6A /* CreateNotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048CB23B23AC76B600D4EA6A /* CreateNotificationVC.swift */; };
 		04A1A92323998F15003EF55F /* CreatePostMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A1A92223998F15003EF55F /* CreatePostMenuVC.swift */; };
+		04A741EA23DA200A004B0DE3 /* EditDashboardPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A741E923DA200A004B0DE3 /* EditDashboardPostVC.swift */; };
+		04B4548823D66FA2000B1B4F /* MembersCodesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B4548723D66FA2000B1B4F /* MembersCodesTableVC.swift */; };
 		04B46E61238D47A4005C0961 /* ChangeProfilePhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E60238D47A4005C0961 /* ChangeProfilePhotoVC.swift */; };
 		04B46E63238D47C7005C0961 /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E62238D47C7005C0961 /* ChangePasswordVC.swift */; };
 		04B46E65238D47E5005C0961 /* EditSocialNetworkingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E64238D47E5005C0961 /* EditSocialNetworkingVC.swift */; };
@@ -77,7 +84,9 @@
 		04B46E6B238D487C005C0961 /* SuggestFeaturesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E6A238D487C005C0961 /* SuggestFeaturesVC.swift */; };
 		04B46E6D238D489D005C0961 /* SendMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E6C238D489D005C0961 /* SendMessageVC.swift */; };
 		04B46E6F238D48D2005C0961 /* ListEmbassyTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E6E238D48D2005C0961 /* ListEmbassyTableVC.swift */; };
+		04B89C6323E2734100864502 /* AboutAppVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B89C6223E2734100864502 /* AboutAppVC.swift */; };
 		04C3569A23AAFF7900E00B40 /* UNService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C3569923AAFF7900E00B40 /* UNService.swift */; };
+		04C7A1CB23E3623F007DEFFF /* SendInviteToCounselorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A1CA23E3623F007DEFFF /* SendInviteToCounselorVC.swift */; };
 		04D644DE238EA5B400EB0954 /* EmbassyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D644DD238EA5B400EB0954 /* EmbassyCell.swift */; };
 		04D644E2238EC83700EB0954 /* EmbassyEventsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D644E1238EC83700EB0954 /* EmbassyEventsTableVC.swift */; };
 		04D644E4238EC85200EB0954 /* EmbassyMembersTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D644E3238EC85200EB0954 /* EmbassyMembersTableVC.swift */; };
@@ -137,6 +146,9 @@
 		0412661A237271A6009C5E2B /* fa-brands-400.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-brands-400.ttf"; sourceTree = "<group>"; };
 		0412661B237271A6009C5E2B /* fa-regular-400.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-regular-400.ttf"; sourceTree = "<group>"; };
 		0412661F23727340009C5E2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		043518DD23D2AE45007133AF /* SendInviteToInfluencersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteToInfluencersVC.swift; sourceTree = "<group>"; };
+		043518DF23D2AF34007133AF /* ListInfluencersTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListInfluencersTableVC.swift; sourceTree = "<group>"; };
+		043518E123D2AF66007133AF /* ListInfluencersCodesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListInfluencersCodesTableVC.swift; sourceTree = "<group>"; };
 		04394192237A516700E0B848 /* ThoughtCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThoughtCell.swift; sourceTree = "<group>"; };
 		04394194237A519000E0B848 /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
 		044AEDA42385BD2900D53928 /* app_layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = app_layout.swift; sourceTree = "<group>"; };
@@ -172,12 +184,16 @@
 		04832C8323A1813600F31866 /* CreatePhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePhotoVC.swift; sourceTree = "<group>"; };
 		04832C8523A1815900F31866 /* EditEmbassyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEmbassyVC.swift; sourceTree = "<group>"; };
 		04832C8723A181D100F31866 /* SendInvitationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInvitationsVC.swift; sourceTree = "<group>"; };
+		04892B5623E4790B00DAA803 /* ListCounselorsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCounselorsTableVC.swift; sourceTree = "<group>"; };
+		04892B5823E47BA300DAA803 /* ListCounselorsCodesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCounselorsCodesTableVC.swift; sourceTree = "<group>"; };
 		048CB23123AB9CE300D4EA6A /* FIRMessagingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIRMessagingService.swift; sourceTree = "<group>"; };
 		048CB23423ABAA0700D4EA6A /* SSBadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSBadgeButton.swift; sourceTree = "<group>"; };
 		048CB23623AC063D00D4EA6A /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		048CB23823AC3F7200D4EA6A /* SingleNotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleNotificationVC.swift; sourceTree = "<group>"; };
 		048CB23B23AC76B600D4EA6A /* CreateNotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNotificationVC.swift; sourceTree = "<group>"; };
 		04A1A92223998F15003EF55F /* CreatePostMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostMenuVC.swift; sourceTree = "<group>"; };
+		04A741E923DA200A004B0DE3 /* EditDashboardPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDashboardPostVC.swift; sourceTree = "<group>"; };
+		04B4548723D66FA2000B1B4F /* MembersCodesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersCodesTableVC.swift; sourceTree = "<group>"; };
 		04B46E60238D47A4005C0961 /* ChangeProfilePhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeProfilePhotoVC.swift; sourceTree = "<group>"; };
 		04B46E62238D47C7005C0961 /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		04B46E64238D47E5005C0961 /* EditSocialNetworkingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSocialNetworkingVC.swift; sourceTree = "<group>"; };
@@ -186,8 +202,10 @@
 		04B46E6A238D487C005C0961 /* SuggestFeaturesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestFeaturesVC.swift; sourceTree = "<group>"; };
 		04B46E6C238D489D005C0961 /* SendMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageVC.swift; sourceTree = "<group>"; };
 		04B46E6E238D48D2005C0961 /* ListEmbassyTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListEmbassyTableVC.swift; sourceTree = "<group>"; };
+		04B89C6223E2734100864502 /* AboutAppVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppVC.swift; sourceTree = "<group>"; };
 		04C3569923AAFF7900E00B40 /* UNService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UNService.swift; sourceTree = "<group>"; };
 		04C3569B23AB04DD00E00B40 /* EGVApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EGVApp.entitlements; sourceTree = "<group>"; };
+		04C7A1CA23E3623F007DEFFF /* SendInviteToCounselorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteToCounselorVC.swift; sourceTree = "<group>"; };
 		04D644DD238EA5B400EB0954 /* EmbassyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyCell.swift; sourceTree = "<group>"; };
 		04D644E1238EC83700EB0954 /* EmbassyEventsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyEventsTableVC.swift; sourceTree = "<group>"; };
 		04D644E3238EC85200EB0954 /* EmbassyMembersTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbassyMembersTableVC.swift; sourceTree = "<group>"; };
@@ -379,6 +397,16 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		043518DC23D2ADC9007133AF /* Influencer */ = {
+			isa = PBXGroup;
+			children = (
+				043518DD23D2AE45007133AF /* SendInviteToInfluencersVC.swift */,
+				043518DF23D2AF34007133AF /* ListInfluencersTableVC.swift */,
+				043518E123D2AF66007133AF /* ListInfluencersCodesTableVC.swift */,
+			);
+			path = Influencer;
+			sourceTree = "<group>";
+		};
 		0471A82C23772B8100CF2B9C /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
@@ -432,6 +460,7 @@
 				04EF815923A3D48600A07A5D /* RegisterModeratorVC.swift */,
 				0411220023A5211C00FB590D /* ManageModeratorsTableVC.swift */,
 				0411220223A55A0300FB590D /* SelectUserModeratorTableVC.swift */,
+				04B4548723D66FA2000B1B4F /* MembersCodesTableVC.swift */,
 			);
 			path = Leader;
 			sourceTree = "<group>";
@@ -448,6 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				048CB23B23AC76B600D4EA6A /* CreateNotificationVC.swift */,
+				04A741E923DA200A004B0DE3 /* EditDashboardPostVC.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -462,6 +492,16 @@
 				04079D3D239FD61900941D1D /* ListUsersTableVC.swift */,
 			);
 			path = Feed;
+			sourceTree = "<group>";
+		};
+		04C7A1C923E36211007DEFFF /* Counselor */ = {
+			isa = PBXGroup;
+			children = (
+				04C7A1CA23E3623F007DEFFF /* SendInviteToCounselorVC.swift */,
+				04892B5623E4790B00DAA803 /* ListCounselorsTableVC.swift */,
+				04892B5823E47BA300DAA803 /* ListCounselorsCodesTableVC.swift */,
+			);
+			path = Counselor;
 			sourceTree = "<group>";
 		};
 		04D644E0238EC80200EB0954 /* Dashboard */ = {
@@ -480,6 +520,8 @@
 		7F2411A023841C2A00D7C901 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				04C7A1C923E36211007DEFFF /* Counselor */,
+				043518DC23D2ADC9007133AF /* Influencer */,
 				048CB23A23AC768A00D4EA6A /* Manager */,
 				04832C7823A17FBF00F31866 /* Leader */,
 				7F2411A123841D4800D7C901 /* EditProfileVC.swift */,
@@ -491,6 +533,7 @@
 				04B46E6A238D487C005C0961 /* SuggestFeaturesVC.swift */,
 				04B46E6C238D489D005C0961 /* SendMessageVC.swift */,
 				04B46E6E238D48D2005C0961 /* ListEmbassyTableVC.swift */,
+				04B89C6223E2734100864502 /* AboutAppVC.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -675,13 +718,18 @@
 				044AEDA72386252A00D53928 /* PostPictureCollectionCell.swift in Sources */,
 				041266102372554E009C5E2B /* colors.swift in Sources */,
 				0411220523A5622F00FB590D /* Moderator.swift in Sources */,
+				043518DE23D2AE45007133AF /* SendInviteToInfluencersVC.swift in Sources */,
 				041265F323722A27009C5E2B /* AppDelegate.swift in Sources */,
+				04C7A1CB23E3623F007DEFFF /* SendInviteToCounselorVC.swift in Sources */,
 				04B46E6B238D487C005C0961 /* SuggestFeaturesVC.swift in Sources */,
 				04832C8423A1813600F31866 /* CreatePhotoVC.swift in Sources */,
 				047452792373BC23002FDDE7 /* Event.swift in Sources */,
 				04D644E6238EC86F00EB0954 /* EmbassyPhotosTableVC.swift in Sources */,
+				04892B5723E4790B00DAA803 /* ListCounselorsTableVC.swift in Sources */,
+				043518E223D2AF66007133AF /* ListInfluencersCodesTableVC.swift in Sources */,
 				0406853C23786021000EF764 /* RootUsersTableVC.swift in Sources */,
 				04B46E61238D47A4005C0961 /* ChangeProfilePhotoVC.swift in Sources */,
+				04B89C6323E2734100864502 /* AboutAppVC.swift in Sources */,
 				047452652373B600002FDDE7 /* AppMessage.swift in Sources */,
 				7F08B03C23730BA90013EE62 /* CheckAuthVC.swift in Sources */,
 				7F351049237AF55B004FC2D3 /* menu_items.swift in Sources */,
@@ -702,6 +750,7 @@
 				0406C3CA237B9A9F0012BF50 /* UserProfileCell.swift in Sources */,
 				7F947001237C330500742CF0 /* SingleUserVC.swift in Sources */,
 				04D644E8238EC88600EB0954 /* NotificationsTableVC.swift in Sources */,
+				04B4548823D66FA2000B1B4F /* MembersCodesTableVC.swift in Sources */,
 				0412660D23724D6F009C5E2B /* LoginVC.swift in Sources */,
 				7F947007237C33EF00742CF0 /* SinglePostVC.swift in Sources */,
 				0406853E23786072000EF764 /* RootDashboardVC.swift in Sources */,
@@ -709,11 +758,13 @@
 				0411220323A55A0300FB590D /* SelectUserModeratorTableVC.swift in Sources */,
 				04520EA22392D8CC00A8B9DC /* FormatDate.swift in Sources */,
 				044AEDA52385BD2900D53928 /* app_layout.swift in Sources */,
+				04892B5923E47BA300DAA803 /* ListCounselorsCodesTableVC.swift in Sources */,
 				0471A83023772BE900CF2B9C /* RootAgendaTableVC.swift in Sources */,
 				0474526F2373BB7E002FDDE7 /* Company.swift in Sources */,
 				04832C7A23A1802C00F31866 /* ManageEventsTableVC.swift in Sources */,
 				04B46E69238D484F005C0961 /* AboutEmbassiesVC.swift in Sources */,
 				04EF815823A3D45B00A07A5D /* SelectModeratorVC.swift in Sources */,
+				04A741EA23DA200A004B0DE3 /* EditDashboardPostVC.swift in Sources */,
 				04C3569A23AAFF7900E00B40 /* UNService.swift in Sources */,
 				04B46E6F238D48D2005C0961 /* ListEmbassyTableVC.swift in Sources */,
 				047452852373BCD8002FDDE7 /* PostComment.swift in Sources */,
@@ -757,6 +808,7 @@
 				047452672373B704002FDDE7 /* User.swift in Sources */,
 				047452712373BB99002FDDE7 /* DateStr.swift in Sources */,
 				7F947005237C33A700742CF0 /* SingleEmbassyVC.swift in Sources */,
+				043518E023D2AF34007133AF /* ListInfluencersTableVC.swift in Sources */,
 				04F4A96D23896E1600049C11 /* SinglePostCell.swift in Sources */,
 				04D644E2238EC83700EB0954 /* EmbassyEventsTableVC.swift in Sources */,
 			);
@@ -907,14 +959,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EGVApp/EGVApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 4SZV57S5AH;
 				INFOPLIST_FILE = EGVApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.agenciaballoon.EGVApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -929,14 +981,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EGVApp/EGVApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 4SZV57S5AH;
 				INFOPLIST_FILE = EGVApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.agenciaballoon.EGVApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

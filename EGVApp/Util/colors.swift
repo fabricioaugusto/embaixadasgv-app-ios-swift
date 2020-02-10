@@ -24,6 +24,8 @@ class AppColors {
     static let colorLeader = UIColor(named: "colorLeader")!
     static let colorSponsor = UIColor(named: "colorSponsor")!
     static let colorCommitteeLeader = UIColor(named: "colorCommitteeLeader")!
+    static let colorInfluencer = UIColor(named: "colorInfluencer")!
+    static let colorCounselor = UIColor(named: "colorCounselor")!
     static let colorBorderGrey = UIColor(named: "colorBorderGrey")!
     
 }

@@ -20,6 +20,7 @@ class MenuItens {
     static let myFavoriteEvents : String = "Meus Eventos Favoritos"
     static let newEvent : String = "Gerenciar Eventos"
     static let sendInvites : String = "Convidar Membros"
+    static let membersCodes : String = "Lista de Códigos de Acesso"
     static let invitationRequests : String = "Aprovar Solicitações de Membros"
     static let sentEmbassyPhotos : String = "Gerenciar Fotos"
     static let editEmbassy : String = "Editar Dados da Embaixada"
@@ -28,6 +29,13 @@ class MenuItens {
     static let createBulletin : String = "Gerenciar Informativos"
     static let sendNotifications : String = "Enviar Notificações"
     static let manageSponsors : String = "Gerenciar Padrinhos"
+    static let editDashboardPost : String = "Editar Post de Dashboard"
+    static let registeredInfluencers : String = "Lista de Influenciadores"
+    static let sendInviteToInfluencers : String = "Convidar Influenciadores"
+    static let listInfluencersCodes : String = "Códigos Gerados para Influenciadores"
+    static let registeredCounselors : String = "Lista de Conselheiros"
+    static let sendInviteToCounselors : String = "Convidar Conselheiros"
+    static let listCounselorsCodes : String = "Códigos Gerados para Conselheiros"
     static let report : String = "Informações"
     static let setPrivacy : String = "Configurações de Privacidade"
     static let policyPrivacy : String = "Políticas de Privacidade"
@@ -65,6 +73,7 @@ class MenuItens {
         list.append(AppMenuItem(item_name: MenuItens.newEvent, type: "item", item_icon: UIImage(named: "icon_menu_calendar")))
         list.append(AppMenuItem(item_name: MenuItens.sentEmbassyPhotos, type: "item", item_icon: UIImage(named: "icon_menu_manager_photos")))
         list.append(AppMenuItem(item_name: MenuItens.sendInvites, type: "item", item_icon: UIImage(named: "icon_menu_invite_member")))
+        list.append(AppMenuItem(item_name: MenuItens.membersCodes, type: "item", item_icon: UIImage(named: "icon_menu_list_codes")))
         list.append(AppMenuItem(item_name: MenuItens.invitationRequests, type: "item", item_icon: UIImage(named: "icon_menu_approve_user")))
         list.append(AppMenuItem(item_name: MenuItens.editEmbassy, type: "item", item_icon: UIImage(named: "icon_menu_edit_embassy")))
 
@@ -73,10 +82,30 @@ class MenuItens {
 
     func getSponsorSection() -> [AppMenuItem] {
 
-            var list: [AppMenuItem] = []
+        var list: [AppMenuItem] = []
         list.append(AppMenuItem(item_name: MenuItens.affiliatedEmbassies, type: "item", item_icon: UIImage(named: "icon_menu_sponsor_embassies")))
 
-            return list
+        return list
+    }
+    
+    func getInfluencerSection() -> [AppMenuItem] {
+
+        var list: [AppMenuItem] = []
+        list.append(AppMenuItem(item_name: MenuItens.registeredInfluencers, type: "item", item_icon: UIImage(named: "icon_menu_influencer")))
+        list.append(AppMenuItem(item_name: MenuItens.sendInviteToInfluencers, type: "item", item_icon: UIImage(named: "icon_menu_generate_code")))
+        list.append(AppMenuItem(item_name: MenuItens.listInfluencersCodes, type: "item", item_icon: UIImage(named: "icon_menu_list_codes")))
+        
+        return list
+    }
+    
+    func getCounselorSection() -> [AppMenuItem] {
+
+        var list: [AppMenuItem] = []
+        list.append(AppMenuItem(item_name: MenuItens.registeredCounselors, type: "item", item_icon: UIImage(named: "icon_menu_influencer")))
+        list.append(AppMenuItem(item_name: MenuItens.sendInviteToCounselors, type: "item", item_icon: UIImage(named: "icon_menu_generate_code")))
+        list.append(AppMenuItem(item_name: MenuItens.listCounselorsCodes, type: "item", item_icon: UIImage(named: "icon_menu_list_codes")))
+        
+        return list
     }
 
     func getManagerSection() -> [AppMenuItem] {
@@ -85,6 +114,7 @@ class MenuItens {
         list.append(AppMenuItem(item_name: MenuItens.embassyForApproval, type: "item", item_icon: UIImage(named: "icon_menu_approve_embassies")))
         list.append(AppMenuItem(item_name: MenuItens.manageSponsors, type: "item", item_icon: UIImage(named: "icon_menu_manage_sponsors")))
         list.append(AppMenuItem(item_name: MenuItens.createBulletin, type: "item", item_icon: UIImage(named: "icon_menu_manager_bulletin")))
+        list.append(AppMenuItem(item_name: MenuItens.editDashboardPost, type: "item", item_icon: UIImage(named: "icon_menu_edit_dashboard_post")))
         list.append(AppMenuItem(item_name: MenuItens.sendNotifications, type: "item", item_icon: UIImage(named: "icon_menu_add_notification")))
         list.append(AppMenuItem(item_name: MenuItens.report, type: "item", item_icon: UIImage(named: "icon_menu_report")))
 
@@ -96,6 +126,7 @@ class MenuItens {
             var list: [AppMenuItem] = []
         list.append(AppMenuItem(item_name: MenuItens.embassyList, type: "item", item_icon: UIImage(named: "icon_menu_embasy_list")))
         list.append(AppMenuItem(item_name: MenuItens.aboutEmbassy, type: "item", item_icon: UIImage(named: "icon_menu_about_embassies")))
+        list.append(AppMenuItem(item_name: MenuItens.aboutApp, type: "item", item_icon: UIImage(named: "icon_menu_about_app")))
         list.append(AppMenuItem(item_name: MenuItens.suggestFeatures, type: "item", item_icon: UIImage(named: "icon_menu_lamp")))
         list.append(AppMenuItem(item_name: MenuItens.rateApp, type: "item", item_icon: UIImage(named: "icon_menu_star")))
         list.append(AppMenuItem(item_name: MenuItens.sendUsMessage, type: "item", item_icon: UIImage(named: "icon_menu_message")))

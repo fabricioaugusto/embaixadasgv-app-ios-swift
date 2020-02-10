@@ -23,10 +23,10 @@ class EditEmbassyVC: UIViewController {
     var mEmbassyID: String!
     private var mEmbassy: Embassy!
     private var mDatabase: Firestore!
-    private var mNameField: SkyFloatingLabelTextField!
-    private var mEmailField: SkyFloatingLabelTextField!
-    private var mPhoneField: SkyFloatingLabelTextField!
-    private var mNumberOfParticipants: SkyFloatingLabelTextField!
+    private var mNameField: SkyFloatingLabelTextFieldWithIcon!
+    private var mEmailField: SkyFloatingLabelTextFieldWithIcon!
+    private var mPhoneField: SkyFloatingLabelTextFieldWithIcon!
+    private var mNumberOfParticipants: SkyFloatingLabelTextFieldWithIcon!
     private var mHud: JGProgressHUD!
     private var mPickerData: [String] = ["Semanal", "Quinzenal", "Mensal"]
     private var mFrequencyList: [String] = ["weekly", "biweekly", "monthly"]
@@ -35,6 +35,12 @@ class EditEmbassyVC: UIViewController {
         super.viewDidLoad()
         
         mDatabase = MyFirebase.sharedInstance.database()
+        
+        if #available(iOS 13.0, *) {
+            self.overrideUserInterfaceStyle = .light
+        } else {
+            // Fallback on earlier versions
+        }
         
         addFields()
         
@@ -64,9 +70,10 @@ class EditEmbassyVC: UIViewController {
         mPhoneField.keyboardType = .phonePad
         svFormFields.insertArrangedSubview(self.mPhoneField, at: 2)
         
-        self.mNumberOfParticipants = buildTextField(placeholder: "Média de Participantes por Reunião", icon: String.fontAwesomeIcon(name: .users))
+        mNumberOfParticipants = buildTextField(placeholder: "Média de Participantes por Encontro", icon: String.fontAwesomeIcon(name: .users))
         mNumberOfParticipants.keyboardType = .numberPad
-        svFormFields.insertArrangedSubview(self.mNumberOfParticipants, at: 3)
+        mNumberOfParticipants.iconFont = UIFont.fontAwesome(ofSize: 16, style: .solid)
+        svFormFields.insertArrangedSubview(mNumberOfParticipants, at: 3)
         
         
         svFormFields.alignment = .fill
@@ -78,7 +85,7 @@ class EditEmbassyVC: UIViewController {
     }
     
     
-    private func buildTextField(placeholder: String, icon: String) -> SkyFloatingLabelTextField {
+    private func buildTextField(placeholder: String, icon: String) -> SkyFloatingLabelTextFieldWithIcon {
         
         let textField = SkyFloatingLabelTextFieldWithIcon(frame: CGRect(x: 10, y: 10, width: 120, height: 64))
         textField.placeholder = placeholder
@@ -133,8 +140,6 @@ class EditEmbassyVC: UIViewController {
         if mEmbassy.frequency == "monthly" {
             mPickerView.selectRow(2, inComponent: 0, animated: false)
         }
-        
-        
     }
     
     
@@ -145,8 +150,18 @@ class EditEmbassyVC: UIViewController {
         let number_of_participants = Int(mNumberOfParticipants.text  ?? "0")
         let frequency = mFrequencyList[mPickerView.selectedRow(inComponent: 0)]
         
-        if(name.isEmpty || email.isEmpty || phone.isEmpty || number_of_participants == 0 || frequency.isEmpty) {
+        if(name.isEmpty || email.isEmpty || phone.isEmpty) {
             makeAlert(title: "Atenção", message: "Todos os campos devem ser preenchidos!")
+            return
+        }
+        
+        if(number_of_participants == 0) {
+            makeAlert(title: "Atenção", message: "Você precisa informar o número de participantes por reunião")
+            return
+        }
+        
+        if(frequency.isEmpty) {
+            makeAlert(title: "Atenção", message: "Você precisa informar a frequência dos encontros de sua embaixada")
             return
         }
         

@@ -105,10 +105,21 @@ class ThoughtCell: UITableViewCell {
         }
         
         
-        let bodyHTML = "<span style='font-family: \"-apple-system\", \"HelveticaNeue\" ; font-size:24;  color:#4D4D4F'; padding: 0; margin: 0;>\(post.text!)</span>"
-        if let htmldata = bodyHTML.data(using: String.Encoding.isoLatin1), let attributedString = try? NSAttributedString(data: htmldata, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-            mLbPostDescription.attributedText = attributedString
+        let post_text: String = post.text ?? ""
+        
+        if(post_text.count <= 300) {
+            let bodyHTML = "<span style='font-family: \"-apple-system\", \"HelveticaNeue\" ; font-size:24;  color:#4D4D4F'; padding: 0; margin: 0;>\(post.text!)</span>"
+            if let htmldata = bodyHTML.data(using: String.Encoding.isoLatin1), let attributedString = try? NSAttributedString(data: htmldata, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                mLbPostDescription.attributedText = attributedString
+            }
+        } else {
+            let bodyHTML = "<span style='font-family: \"-apple-system\", \"HelveticaNeue\" ; font-size:16;  color:#4D4D4F'; padding: 0; margin: 0;>\(post.text!)</span>"
+            if let htmldata = bodyHTML.data(using: String.Encoding.isoLatin1), let attributedString = try? NSAttributedString(data: htmldata, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                mLbPostDescription.attributedText = attributedString
+            }
         }
+        
+        //mLbPostDescription.text = post.text
         
         if(post.post_likes > 0) {
             mLbLikesCount.text = "\(post.post_likes)"

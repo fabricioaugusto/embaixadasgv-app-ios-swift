@@ -63,11 +63,17 @@ class RootMenuTableVC: UITableViewController {
         mMenuDict[mNumSections] = [AppMenuItem(item_name: "Perfil", type: "profile", item_icon: nil)]
         self.mNumSections += 1
         
-        self.mMenuDict[mNumSections] = MenuItens().getAccountSection()
+        var account_items = MenuItens().getAccountSection()
+        if(mUser.influencer || mUser.counselor) {
+            account_items.remove(at: MenuItens().getAccountSection().count-1)
+        }
+        
+        self.mMenuDict[mNumSections] = account_items
         mSectionList.append("Configurações de Conta")
         self.mNumSections += 1
         
         mMenuList.append(contentsOf: MenuItens().getAccountSection())
+        
         if(mUser!.leader) {
             self.mMenuDict[mNumSections] = MenuItens().getLeaderSection()
             mSectionList.append("Líderes")
@@ -78,6 +84,19 @@ class RootMenuTableVC: UITableViewController {
             mSectionList.append("Padrinhos")
             self.mNumSections += 1
         }
+        
+        if(mUser!.influencerManager) {
+            self.mMenuDict[mNumSections] = MenuItens().getInfluencerSection()
+            mSectionList.append("Gerenciar Influenciadores")
+            self.mNumSections += 1
+        }
+        
+        if(mUser!.counselor_manager) {
+            self.mMenuDict[mNumSections] = MenuItens().getCounselorSection()
+            mSectionList.append("Gerenciar Conselheiros")
+            self.mNumSections += 1
+        }
+        
         if(mUser!.manager) {
             self.mMenuDict[mNumSections] = MenuItens().getManagerSection()
             mSectionList.append("Gestores")
@@ -133,12 +152,40 @@ class RootMenuTableVC: UITableViewController {
             performSegue(withIdentifier: "sendInvitationsSegue", sender: nil)
         }
         
+        if(item_name == MenuItens.membersCodes) {
+            performSegue(withIdentifier: "listMembersCodesSegue", sender: nil)
+        }
+        
         if(item_name == MenuItens.invitationRequests) {
             performSegue(withIdentifier: "invitationRequestsSegue", sender: nil)
         }
         
         if(item_name == MenuItens.editEmbassy) {
             performSegue(withIdentifier: "editEmbassySegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.registeredInfluencers) {
+            performSegue(withIdentifier: "listInfluencersSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.sendInviteToInfluencers) {
+            performSegue(withIdentifier: "sendInviteToInfluencersSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.listInfluencersCodes) {
+            performSegue(withIdentifier: "listInfluencersCodesSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.registeredCounselors) {
+            performSegue(withIdentifier: "listCounselorsSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.sendInviteToCounselors) {
+            performSegue(withIdentifier: "sendInviteToCounselorsSegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.listCounselorsCodes) {
+            performSegue(withIdentifier: "listCounselorsCodesSegue", sender: nil)
         }
         
         if(item_name == MenuItens.sendNotifications) {
@@ -149,8 +196,16 @@ class RootMenuTableVC: UITableViewController {
             performSegue(withIdentifier: "embassyListSegue", sender: nil)
         }
         
+        if(item_name == MenuItens.editDashboardPost) {
+            performSegue(withIdentifier: "editDashboardPostSegue", sender: nil)
+        }
+        
         if(item_name == MenuItens.aboutEmbassy) {
             performSegue(withIdentifier: "aboutEmbassySegue", sender: nil)
+        }
+        
+        if(item_name == MenuItens.aboutApp) {
+            performSegue(withIdentifier: "aboutAppSegue", sender: nil)
         }
         
         if(item_name == MenuItens.suggestFeatures) {
@@ -162,7 +217,8 @@ class RootMenuTableVC: UITableViewController {
         }
         
         if(item_name == MenuItens.rateApp) {
-            self.makeAlert(message: "Este recurso estará disponível nas próximas atualizações!")
+            let url = URL(string: "https://apps.apple.com/br/app/egvapp/id1489822815")!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
         
         
@@ -238,6 +294,11 @@ class RootMenuTableVC: UITableViewController {
             vc.mUser = self.mUser
         }
         
+        if segue.identifier == "listMembersCodesSegue" {
+            let vc = segue.destination as! MembersCodesTableVC
+            vc.mUser = self.mUser
+        }
+        
         if segue.identifier == "invitationRequestsSegue" {
             let vc = segue.destination as! InvitationRequestsTableVC
             vc.mUser = self.mUser
@@ -249,13 +310,38 @@ class RootMenuTableVC: UITableViewController {
             vc.mEmbassyID = self.mUser.embassy_id
         }
         
+        if segue.identifier == "sendInviteToInfluencersSegue" {
+           let vc = segue.destination as! SendInviteToInfluencersVC
+           vc.mUser = self.mUser
+       }
+        
+        if segue.identifier == "listCounselorsSegue" {
+            let vc = segue.destination as! ListCounselorsTableVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "sendInviteToCounselorsSegue" {
+            let vc = segue.destination as! SendInviteToCounselorVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "listCounselorsCodesSegue" {
+            let vc = segue.destination as! ListCounselorsCodesTableVC
+            vc.mUser = self.mUser
+        }
+        
         if segue.identifier == "sendNotificationsSegue" {
             let vc = segue.destination as! CreateNotificationVC
             vc.mUser = self.mUser
         }
         
-        if segue.identifier == "embassyListSegue" {
-            let vc = segue.destination as! ListEmbassyTableVC
+        if segue.identifier == "sendNotificationsSegue" {
+            let vc = segue.destination as! CreateNotificationVC
+            vc.mUser = self.mUser
+        }
+        
+        if segue.identifier == "editDashboardPostSegue" {
+            let vc = segue.destination as! EditDashboardPostVC
             vc.mUser = self.mUser
         }
         

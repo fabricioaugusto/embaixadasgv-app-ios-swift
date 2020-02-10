@@ -12,8 +12,6 @@ import JGProgressHUD
 
 class SingleEmbassyVC: UIViewController {
     
-    
-    
     @IBOutlet weak var mLbEmbassyName: UILabel!
     @IBOutlet weak var mLbEmbassyCity: UILabel!
     @IBOutlet weak var mBtEmbassyPhone: UIButton!
@@ -23,9 +21,11 @@ class SingleEmbassyVC: UIViewController {
     @IBOutlet weak var mImgEmbassyLeaderPhoto: UIImageView!
     @IBOutlet weak var mLbEmbassyLeaderName: UILabel!
     @IBOutlet weak var mEmbassyLeaderOccupation: UILabel!
+    @IBOutlet weak var mViewEmbassyLeaderContainer: UIView!
     @IBOutlet weak var mEmbassyPhoto1: UIImageView!
     @IBOutlet weak var mEmbassyPhoto2: UIImageView!
     @IBOutlet weak var mEmbassyPhoto3: UIImageView!
+    @IBOutlet weak var mViewEmbassyPhotosContainer: UIView!
     @IBOutlet weak var mConstraintContainerPhotos: NSLayoutConstraint!
     
     @IBOutlet var mGroupViews: [UIView]!
@@ -51,6 +51,15 @@ class SingleEmbassyVC: UIViewController {
             button.layer.masksToBounds = true
         }
         
+        let onTapLeaderContainer = UITapGestureRecognizer(target: self, action: #selector(self.onClickLeaderContainer))
+        mViewEmbassyLeaderContainer.isUserInteractionEnabled = true
+        mViewEmbassyLeaderContainer.addGestureRecognizer(onTapLeaderContainer)
+        
+        let onTapPhotosContainer = UITapGestureRecognizer(target: self, action: #selector(self.onClickPhotosContainer))
+        mViewEmbassyPhotosContainer.isUserInteractionEnabled = true
+        mViewEmbassyPhotosContainer.addGestureRecognizer(onTapPhotosContainer)
+        
+        
         mDatabase = MyFirebase.sharedInstance.database()
         getEmbassyDetails()
         // Do any additional setup after loading the view.
@@ -59,13 +68,18 @@ class SingleEmbassyVC: UIViewController {
     @IBAction func onClickBtEmbassyPhone(_ sender: UIButton) {
         if var whatsapp = self.mEmbassy.phone {
             whatsapp = whatsapp.replacingOccurrences(of: " ", with: "")
-            whatsapp = whatsapp.replacingOccurrences(of: "+", with: "")
             whatsapp = whatsapp.replacingOccurrences(of: "(", with: "")
             whatsapp = whatsapp.replacingOccurrences(of: ")", with: "")
             whatsapp = whatsapp.replacingOccurrences(of: "-", with: "")
-            print("evgapplog_sn", whatsapp)
-            let url = URL(string: "https://wa.me/\(whatsapp)")!
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            
+            if(whatsapp.contains("+")) {
+                whatsapp = whatsapp.replacingOccurrences(of: "+", with: "")
+                let url = URL(string: "https://wa.me/\(whatsapp)")!
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                let url = URL(string: "https://wa.me/55\(whatsapp)")!
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
         }
     }
     
@@ -84,15 +98,24 @@ class SingleEmbassyVC: UIViewController {
         performSegue(withIdentifier: "embassyMembersSegue", sender: nil)
     }
     
+    @objc func onClickLeaderContainer() {
+        
+        if let embassy_leader = mEmbassy.leader {
+            if !embassy_leader.id.isEmpty {
+                performSegue(withIdentifier: "embassyLeaderSegue", sender: nil)
+            }
+        }
+    }
+    
+    @objc func onClickPhotosContainer() {
+        if mEmbassyPhotoList.count > 0 {
+            performSegue(withIdentifier: "embassyPhotosSegue", sender: nil)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embassyMembersSegue" {
             let vc = segue.destination as! EmbassyMembersTableVC
-            vc.mUser = mUser
-            vc.mEmbassyID = mEmbassy.id
-        }
-        
-        if segue.identifier == "embassyEventsSegue" {
-            let vc = segue.destination as! EmbassyEventsTableVC
             vc.mUser = mUser
             vc.mEmbassyID = mEmbassy.id
         }
@@ -101,6 +124,17 @@ class SingleEmbassyVC: UIViewController {
             let vc = segue.destination as! EmbassyPhotosCollectionVC
             vc.mEmbassyID = mEmbassy.id
             vc.mUser = mUser
+        }
+        
+        if segue.identifier == "embassyLeaderSegue" {
+            let vc = segue.destination as! SingleUserVC
+            vc.mUserID = mEmbassy.leader?.id
+        }
+        
+        if segue.identifier == "embassyEventsSegue" {
+            let vc = segue.destination as! EmbassyEventsTableVC
+            vc.mUser = mUser
+            vc.mEmbassyID = mEmbassy.id
         }
     }
     

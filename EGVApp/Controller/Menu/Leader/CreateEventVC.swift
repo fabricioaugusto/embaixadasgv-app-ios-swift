@@ -52,13 +52,17 @@ class CreateEventVC: UIViewController, SelectModeratorDelegate {
     private var mDateField: SkyFloatingLabelTextField!
     private var mTimeField: SkyFloatingLabelTextField!
     private var mLocationField: SkyFloatingLabelTextField!
+    private var mkeyboardWillShowObserver: NSObjectProtocol!
+    private var mkeyboardWillHideObserver: NSObjectProtocol!
+    private var mTabBarHeight: CGFloat = 0
+    private var mCurrentKeyboardHeight: CGFloat = 0.0
     private var mHud: JGProgressHUD!
     private var mSelectedModerator: Moderator?
     private var mSelectedPlace: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         mDatabase = MyFirebase.sharedInstance.database()
         mStorage = MyFirebase.sharedInstance.storage()
         
@@ -68,6 +72,36 @@ class CreateEventVC: UIViewController, SelectModeratorDelegate {
         mHud.textLabel.text = "Salvando..."
         
         addFields()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+         mTabBarHeight = self.tabBarController?.tabBar.frame.size.height ?? 0
+        
+        let center = NotificationCenter.default
+        
+        self.mkeyboardWillShowObserver = center.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { (notification) in
+            guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+            let height = value.cgRectValue.height
+            
+            print(self.view.frame.origin.y)
+        
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= height - self.mTabBarHeight
+            } else if self.view.frame.origin.y == (0 - (self.mCurrentKeyboardHeight - self.mTabBarHeight)) {
+                self.view.frame.origin.y = 0 - (height - self.mTabBarHeight)
+            }
+            
+            self.mCurrentKeyboardHeight = height
+            // use the height of the keyboard to layout your UI so the prt currently in
+            // foxus remains visible
+        }
+        
+        self.mkeyboardWillHideObserver = center.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { (notification) in
+            if self.view.frame.origin.y != 0 {
+                self.view.frame.origin.y = 0
+            }
+        }
     }
     
     
@@ -153,9 +187,25 @@ class CreateEventVC: UIViewController, SelectModeratorDelegate {
         config.screens = [.library]
         config.showsPhotoFilters = false
         config.showsCrop = .rectangle(ratio: 3/2)
-        let picker = YPImagePicker(configuration: config)
-        picker.didFinishPicking { [unowned picker] items, cancelled in
+        config.wordings.next = "Avançar"
+        config.wordings.cancel = "Cancelar"
+        config.wordings.libraryTitle = "Galeria"
+        config.colors.tintColor = AppColors.colorLink
         
+        let picker = YPImagePicker(configuration: config)
+        
+        UINavigationBar.appearance().tintColor = AppColors.colorText
+        
+        if #available(iOS 13.0, *) {
+            picker.overrideUserInterfaceStyle = .light
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        picker.didFinishPicking { [unowned picker] items, cancelled in
+            
+            UINavigationBar.appearance().tintColor = .white
+            
             if cancelled {
                 picker.dismiss(animated: true, completion: nil)
             }
@@ -457,6 +507,12 @@ extension CreateEventVC: UITextFieldDelegate {
         if textField == mLocationField {
             let autocompleteController = GMSAutocompleteViewController()
             autocompleteController.delegate = self
+            
+            if #available(iOS 13.0, *) {
+                autocompleteController.overrideUserInterfaceStyle = .light
+            } else {
+                // Fallback on earlier versions
+            }
             
             // Specify the place data types to return.
             let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
