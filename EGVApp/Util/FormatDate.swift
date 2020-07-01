@@ -49,6 +49,4 @@ class FormatDate {
         
         return dictDate
     }
-    
-    
 }
