@@ -62,7 +62,6 @@ class SendInviteToInfluencersVC: UIViewController {
         let text = "Olá *\(name)*, este é um convite para você ter acesso ao aplicativo das Embaixadas GV. Bastar baixar o *EGV App* na Google Play (para Android) ou na AppStore (para iOS), clicar em *CADASTRE-SE* e utilizar o seguinte código de acesso: *\(mLbCode.text ?? "")*. Vamos lá? https://embaixadasgv.app"
         
         let message = text.replacingOccurrences(of: " ", with: "%20", options: .literal, range: nil)
-        
         let escapedString = text.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         print(escapedString!)
         
