@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         UNService.shared.autorize()
-        GMSServices.provideAPIKey("AIzaSyDvgQgQmRhjvJ3_n84gtf2ueRRvjlKHBzA")
-        GMSPlacesClient.provideAPIKey("AIzaSyDvgQgQmRhjvJ3_n84gtf2ueRRvjlKHBzA")
+        GMSServices.provideAPIKey("")
+        GMSPlacesClient.provideAPIKey("")
         
         do {
               try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
