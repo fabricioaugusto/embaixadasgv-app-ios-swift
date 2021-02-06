@@ -35,7 +35,7 @@ class SelectUserModeratorTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.mClient = Client(appID: "2IGM62FIAI", apiKey: "fc7745fc8140b2f1851132bfb5948b51")
+        self.mClient = Client(appID: "", apiKey: "")
         self.mIndex = mClient.index(withName: "users")
             
         mDatabase = MyFirebase.sharedInstance.database()
